@@ -16,9 +16,11 @@ I'm attaching the non-license to all parts of the code:
 
     If you do any of the following: 
     
-    - copy this code from the original location to your own project
+    - modify this code 
+    - copy the original or modified code from the original location to your own project
     - modify this code in a fork of this project
-    - use this code in any form (including in presentations, in a compiled form)
+    - use the original or modified code in any form 
+      (including in presentations, in a compiled form, etc.)
     
     Then you are required to:
     

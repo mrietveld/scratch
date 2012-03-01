@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.Test;
+
 import nl.rietveld.test.objects.Bom;
 import nl.rietveld.test.objects.BomComparator;
 public class CollectionsTest {
 
-	public CollectionsTest() { }
-	
-	public static void arrayTest() { 
+	@Test
+	public void arrayTest() { 
 		
 		String [] strarr = new String [5];
 		
@@ -24,7 +25,8 @@ public class CollectionsTest {
 		}
 	}
 	
-	public static void comparatorTest() { 
+	@Test
+	public void comparatorTest() { 
 		List<Bom> bomList = new ArrayList<Bom>();
 	
 		Bom b = null;

@@ -5,6 +5,8 @@ import static java.lang.System.out;
 import java.security.MessageDigest;
 import java.util.UUID;
 
+import org.junit.Test;
+
 public class HashTest {
 	public HashTest() {}
 
@@ -12,6 +14,7 @@ public class HashTest {
 	 * Testen van de SHA-256 hash met random UUID. 
 	 * @throws Exception Als er iets mis gaat. 
 	 */
+    @Test
 	public void testSHA2() throws Exception {
 		String uuid = UUID.randomUUID().toString();
 		byte[] hashBytes = getHash(uuid);

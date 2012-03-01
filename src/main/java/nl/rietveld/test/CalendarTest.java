@@ -12,14 +12,14 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 import org.jbpm.calendar.BusinessCalendar;
 import org.jbpm.calendar.Duration;
+import org.junit.Test;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.DatatypeFactoryImpl;
 
 public class CalendarTest {
 
-	CalendarTest() {  	}
 	
-	
+    @Test
 	public void testAdd() throws Exception { 
 		
 		DatatypeFactory df = DatatypeFactoryImpl.newInstance();
@@ -72,6 +72,7 @@ public class CalendarTest {
 		}
 	}
 	
+    @Test
 	public void timeZoneTest() { 
 		GregorianCalendar gc = new GregorianCalendar();
 		TimeZone tz = gc.getTimeZone();

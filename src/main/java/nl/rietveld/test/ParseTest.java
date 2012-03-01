@@ -1,17 +1,17 @@
 package nl.rietveld.test;
 
-import static java.lang.System.out;
-public class ParseTest {
-	public ParseTest() {}
+import org.junit.Test;
+import org.ocram.ScratchBaseTest;
+public class ParseTest extends ScratchBaseTest {
 	
-
-	
+    @Test
 	public void testLong() throws Exception { 
 		long asdf = 120301201L;
 		Long testLong = new Long(asdf);
 		out.println(testLong.toString());
 	}
 	
+    @Test
 	public void testReplaceAll() throws Exception {
 		String test = "asdf<\r>asdfasdf<\n>asdfasdfsdf<\r\n>asdfasdfdas<\n\r>asdfd";
 		
@@ -37,6 +37,7 @@ public class ParseTest {
 
 	// ---------------
 	
+    @Test
 	public void testRegex() { 
 	
 		String alleenEenEmailAdres = "marco@log.com; marco@log.com";
@@ -45,10 +46,9 @@ public class ParseTest {
 		out.println(regex);
 		
 		if( nietAlleenEenEmailAdres.matches( regex ) ) { 
-			out.println( "Hacker krijgt ook een email!" );
+			fail( "Hacker krijgt ook een email!" );
 		}
 		else { 
-			out.println( "Denied! Regex heeft gewerkt." );
 			out.println( nietAlleenEenEmailAdres + ": [" + regex + "]" );
 		}
 	}

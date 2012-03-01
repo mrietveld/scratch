@@ -8,12 +8,13 @@ import java.lang.reflect.Method;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 
+import org.junit.Test;
+
 import nl.rietveld.test.objects.Bam;
 
 public class ObjectTest {
 
-	public ObjectTest() {}
-	
+    @Test
 	public void testMethodReflection( ) { 
 		Bam bam = new Bam();
 		Method SASMethod = null;
@@ -45,6 +46,7 @@ public class ObjectTest {
 	
 	}
 
+    @Test
 	public void testNullPointerLoop() { 
 		String [] arguments = new String [10];
 	
@@ -98,11 +100,13 @@ public class ObjectTest {
 		}
 	}
 
+    @Test
 	public void testDataHandler() { 
 		DataSource dataSource = null;
 		DataHandler datahandler = new DataHandler(dataSource);
 	}
 
+    @Test
 	public void testClassReflection() { 
 		Class intClass = int.class;
 		

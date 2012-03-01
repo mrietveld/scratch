@@ -6,11 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+import org.junit.Test;
+
 public class DateTest {
 
-	DateTest() { 
-	}
-	
+    @Test
 	public void testFormat() { 
 	
 		GregorianCalendar gregorianCalendar = new GregorianCalendar();
@@ -38,7 +38,8 @@ public class DateTest {
 		String peildatum = day + "-" + month + "-" + year;
 		return peildatum;
 	}
-
+	
+    @Test
 	public void testDate() {
 		GregorianCalendar date = new GregorianCalendar( 2008, 6, 11 );
 		
@@ -52,6 +53,7 @@ public class DateTest {
 		
 	}
 
+    @Test
 	public void testTimeZone() {
 		GregorianCalendar date = new GregorianCalendar();
 		

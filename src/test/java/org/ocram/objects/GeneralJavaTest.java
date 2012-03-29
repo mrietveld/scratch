@@ -1,5 +1,6 @@
 package org.ocram.objects;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -34,5 +35,20 @@ public class GeneralJavaTest extends ScratchBaseTest {
         
         assertTrue("Apparently, two primitive arrays should have an equal (identity) hash code?", thisCharArr != thatCharArr);
         assertTrue(Arrays.equals(thisCharArr, thatCharArr));
+    }
+    
+    @Test
+    public void byteArrayIsSerializable() { 
+        byte [] testByteArray = new byte[10];
+        Arrays.fill(testByteArray, "0".getBytes()[0]);
+        Serializable serTestArray = null;
+        try { 
+            serTestArray = (Serializable) testByteArray;
+        } catch(Exception e ){
+            e.printStackTrace();
+            fail( "Could not cast B[ to Serializable.");
+        }
+        
+        assertNotNull(serTestArray);
     }
 }

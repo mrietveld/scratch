@@ -44,7 +44,7 @@ public class ThreadMethodsTest extends ScratchBaseTest {
         
         public void run() {
             System.out.println( "[" + id + "] running." );
-            synchronized(this) { 
+            synchronized(lock) { 
                 System.out.println( "[" + id + "] has lock and will sleep." );
                 try { 
                     Thread.sleep(5*1000);

@@ -13,16 +13,17 @@ public class ThreadMethodsTest extends ScratchBaseTest {
     
     @Test
     public void joinTest() throws Exception { 
-       Runner one = new Runner(lock); 
-       Runner two = new Runner(lock); 
-       System.out.println( "Runner one is Thread " + one.getId() );
-       System.out.println( "Runner two is Thread " + two.getId() );
+       Runner [] runners = new Runner [600];
        
-       one.start();
-       two.start();
+       for( int i =0; i < runners.length; ++i ) { 
+           runners[i] = new Runner(lock);
+           runners[i].start();
+       }
        
-       System.out.println( "Getting ready to join two/" + two.getId() );
-       two.join();
+       Runner joiner = runners[runners.length-5];
+       assertTrue( joiner.ran == false );
+       joiner.join();
+       assertTrue( joiner.ran == false );
        System.out.println("Two has joined.");
     }
   
@@ -31,6 +32,7 @@ public class ThreadMethodsTest extends ScratchBaseTest {
         private Thread thread;
         private Object lock;
         private final int id = idGenerator.getAndIncrement();
+        private volatile boolean ran = false;
         
         public Runner(Object lock) { 
             this.lock = lock;
@@ -38,12 +40,12 @@ public class ThreadMethodsTest extends ScratchBaseTest {
 
         public void start() {
             thread = new Thread(this);
-            System.out.println("[" + id + "] is NOT alive: " + thread.isAlive() );
             thread.start();
         }
         
         public void run() {
             System.out.println( "[" + id + "] running." );
+            ran = true;
             synchronized(lock) { 
                 System.out.println( "[" + id + "] has lock and will sleep." );
                 try { 
@@ -64,6 +66,7 @@ public class ThreadMethodsTest extends ScratchBaseTest {
         public int getId() { 
             return id;
         }
+        
     }
     
 }

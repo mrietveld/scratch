@@ -1,10 +1,13 @@
 package org.ocram.objects;
 
+import static java.lang.System.out;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
+import org.ocram.collections.objects.Bam;
 
 public class GeneralJavaTest extends ScratchBaseTest {
 
@@ -50,5 +53,60 @@ public class GeneralJavaTest extends ScratchBaseTest {
         }
         
         assertNotNull(serTestArray);
+    }
+    
+
+    @Test
+    public void testNullPointerLoop() { 
+        String [] arguments = new String [10];
+    
+        String een,twe,dri,vie,fij;
+    
+        een = "Er was een ";
+        twe = StringIndexOutOfBoundsException.class.getSimpleName();
+        dri = "+";
+        vie = null;
+        fij = dri + dri + dri;
+        
+        Integer one,two,thr;
+        
+        one = 123123123;
+        two = 45238934;
+        thr = null;
+    
+        Bam ich = new Bam();
+        Bam ni = null;
+        
+        for( int i = 0; i < 9; ) { 
+            try {
+                switch(i) { 
+                case 0:
+                    arguments[i++] = ich.toString();
+                case 1:
+                    arguments[i++] = een + twe + dri + vie + fij;
+                case 2:
+                    arguments[i++] = vie.concat(een);
+                case 3:
+                    arguments[i++] = Integer.toString(thr);
+                case 4:
+                    arguments[i++] = Integer.toString(ich.geta_1());
+                case 5:
+                    arguments[i++] = Integer.toString(ni.geta_4());
+                case 6:
+                    arguments[i++] = dri + one + two;
+                case 7: 
+                    arguments[i++] = thr.toString();
+                case 8:     
+                    arguments[i++] = "asdfasdffasdf" + fij;
+                }
+            }
+            catch( NullPointerException npe ) { 
+                arguments[i-1] = "";
+            }
+        }
+        
+        for( int i = 0; i < 10; ++i ) { 
+            out.println( "" + i + ": " + arguments[i] );
+        }
     }
 }

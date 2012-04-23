@@ -1,4 +1,4 @@
-package nl.rietveld.test;
+package org.ocram.hash;
 
 import static java.lang.System.out;
 

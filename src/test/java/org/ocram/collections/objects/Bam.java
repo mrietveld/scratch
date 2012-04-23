@@ -1,4 +1,4 @@
-package nl.rietveld.test.objects;
+package org.ocram.collections.objects;
 
 public class Bam {
 

@@ -1,4 +1,4 @@
-package nl.rietveld.test;
+package org.ocram.objects;
 
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;

@@ -1,4 +1,4 @@
-package nl.rietveld.test;
+package org.ocram.collections;
 
 import static java.lang.System.out;
 
@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
+import org.ocram.collections.objects.Bom;
+import org.ocram.collections.objects.BomComparator;
 
-import nl.rietveld.test.objects.Bom;
-import nl.rietveld.test.objects.BomComparator;
 public class CollectionsTest {
 
 	@Test

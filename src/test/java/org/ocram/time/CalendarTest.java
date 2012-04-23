@@ -1,6 +1,5 @@
-package nl.rietveld.test;
+package org.ocram.time;
 
-import static java.lang.System.out;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,10 +12,11 @@ import javax.xml.datatype.XMLGregorianCalendar;
 import org.jbpm.calendar.BusinessCalendar;
 import org.jbpm.calendar.Duration;
 import org.junit.Test;
+import org.ocram.ScratchBaseTest;
 
 import com.sun.org.apache.xerces.internal.jaxp.datatype.DatatypeFactoryImpl;
 
-public class CalendarTest {
+public class CalendarTest extends ScratchBaseTest {
 
 	
     @Test
@@ -52,18 +52,18 @@ public class CalendarTest {
 		out.println( "Offset : " + xmlGC.getTimezone());
 
 		Date now = new Date();
-		// Is aanvraag too old? 
+		// Is state too old? 
 		if( eindDatum.before(now)) { 
-			// Why is this aanvraag being polled!?
-			out.println("Aanvraag from " 
+			// Why is this state being polled!?
+			out.println("state from " 
 				+ format.format(beginDatum)
 				+ " expired on "
 				+ format.format(eindDatum)
 				+ " but has status: " + "DOC_BEW"
-				+ "; the aanvraag will be polled.");
+				+ "; the state will be polled.");
 		}
 		else { 
-			out.println("Aanvraag from " 
+			out.println("State from " 
 				+ format.format(beginDatum)
 				+ " will expire on "
 				+ format.format(eindDatum)

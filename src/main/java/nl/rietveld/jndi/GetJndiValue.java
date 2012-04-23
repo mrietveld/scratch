@@ -26,7 +26,6 @@ public class GetJndiValue {
         
         String result = (String) initialContext.lookup(valueName);
         System.out.println(result);
-        
     }
 
 }

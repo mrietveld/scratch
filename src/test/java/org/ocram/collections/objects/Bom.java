@@ -1,4 +1,4 @@
-package nl.rietveld.test.objects;
+package org.ocram.collections.objects;
 
 import java.util.Random;
 

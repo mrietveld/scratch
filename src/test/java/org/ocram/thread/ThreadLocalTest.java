@@ -13,5 +13,8 @@ public class ThreadLocalTest extends ScratchBaseTest {
         assertNull(threadLocalLong.get());
         threadLocalLong.set(new Long(2));
         assertNotNull(threadLocalLong.get());
+        
+        threadLocalLong.set(null);
+        assertNull(threadLocalLong.get());
     }
 }

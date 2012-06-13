@@ -1,4 +1,4 @@
-package org.ocram.objects;
+package org.ocram.string;
 
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
@@ -52,4 +52,30 @@ public class ParseTest extends ScratchBaseTest {
 			out.println( nietAlleenEenEmailAdres + ": [" + regex + "]" );
 		}
 	}
+    
+    @Test
+    public void caseInsensitiveMatchTest() { 
+        String [] queryStrs = new String [3];
+        queryStrs[0] = " select blah blah";
+        queryStrs[1] = " sElect blah blah";
+        queryStrs[2] = "  SELECT blah blah";
+       
+        String regex = "(?i) *select .*";
+        String badRegex = "(?i).*(delete|update).*";
+        
+        for( int i = 0; i < queryStrs.length; ++i ) { 
+            assertTrue( queryStrs[i] + " should have matched [" + regex + "]", queryStrs[i].matches(regex) ); 
+            assertFalse( queryStrs[i] + " should NOT have matched [" + badRegex + "]", queryStrs[i].matches(badRegex) );
+        }
+        
+        queryStrs[0] = "selec adsf fds (DELete from)";
+        queryStrs[1] = "update select adsf fds";
+        queryStrs[2] = " select_ delete adsf fds";
+        for( int i = 0; i < queryStrs.length; ++i ) { 
+            assertFalse( queryStrs[i] + " should NOT have matched [" + regex + "]", queryStrs[i].matches(regex) ); 
+            assertTrue( queryStrs[i] + " should have matched [" + badRegex + "]", queryStrs[i].matches(badRegex) );
+        }
+        
+        
+    }
 }

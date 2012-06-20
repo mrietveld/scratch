@@ -10,10 +10,10 @@
 
   <properties>
     <junit.version>4.10</junit.version>
-    
+
     <spring.version>2.5.6</spring.version>
     <hibernate-main.version>3.4.0.GA</hibernate-main.version>
-    
+
     <jbpm-3.version>3.2.12</jbpm-3.version>
     <jbpm.version>5.3.0-SNAPSHOT</jbpm.version>
     <drools.version>5.4.0-SNAPSHOT</drools.version>
@@ -40,7 +40,7 @@
       <artifactId>activation</artifactId>
       <version>1.1.1</version>
     </dependency>
-    
+
     <!-- persistence -->
     <dependency>
       <groupId>javax.transaction</groupId>
@@ -72,7 +72,7 @@
       <version>2.1.2</version>
       <scope>test</scope>
     </dependency>
-    
+
     <!-- spring -->
     <dependency>
       <groupId>org.springframework</groupId>
@@ -84,8 +84,8 @@
       <artifactId>hibernate-entitymanager</artifactId>
       <version>${hibernate-main.version}</version>
     </dependency>
-    
-    <!--  jbpm/drools -->
+
+    <!-- jbpm/drools -->
     <dependency>
       <groupId>org.drools</groupId>
       <artifactId>drools-core</artifactId>
@@ -105,6 +105,13 @@
       <groupId>org.jbpm.jbpm3</groupId>
       <artifactId>jbpm-jpdl</artifactId>
       <version>${jbpm-3.version}</version>
+    </dependency>
+
+    <!-- EJB Stuff -->
+    <dependency>
+      <groupId>javax.ejb</groupId>
+      <artifactId>ejb-api</artifactId>
+      <version>3.0</version>
     </dependency>
   </dependencies>
 </project>

@@ -2,6 +2,7 @@ package org.ocram.thread;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 
@@ -12,6 +13,7 @@ public class ThreadMethodsTest extends ScratchBaseTest {
     private final int lockTime = 5 * 1000;
     
     @Test
+    @Ignore //OCRAM only if not run by maven
     public void joinTest() throws Exception { 
        Runner [] runners = new Runner [600];
        

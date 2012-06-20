@@ -1,6 +1,7 @@
 package org.ocram.reflection;
 
 import static java.lang.System.out;
+
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -10,11 +11,13 @@ import junit.framework.Assert;
 
 import org.jbpm.process.audit.JPAProcessInstanceDbLog;
 import org.jbpm.process.audit.ProcessInstanceDbLog;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class ProcessInstanceDbLogInterfaceTest extends Assert {
 
     @Test
+    @Ignore //OCRAM only if not run by maven
     public void compareMethodsJPAAndHibernate() throws Exception {
 
         List<Method[]> methodMethods = new ArrayList<Method[]>();

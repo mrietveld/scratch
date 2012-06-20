@@ -43,7 +43,7 @@ public class SystemPropertiesTest extends ScratchBaseTest {
     }
 
     @Test
-    @Ignore
+    @Ignore //OCRAM only if not run by maven
     public void testRootClassPathForFindingPropertiesFiles() {
         Class clazz = getClass();
         out.println("c: " + clazz.getSimpleName());

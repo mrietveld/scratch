@@ -1,6 +1,9 @@
 package nl.rietveld.reactor;
 
 
+import org.junit.Ignore;
+import org.junit.Test;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -9,9 +12,11 @@ import junit.framework.TestCase;
  *  
  */
 
-public class ThreadPoolTest extends TestCase {
+@Ignore
+public class ThreadPoolTest {
     public static final int POOL_SIZE = 10;
 
+    @Test
     public void testThreadPool() {
         ThreadPool pool = new ThreadPool(POOL_SIZE);
         Assert.assertTrue(
@@ -19,6 +24,7 @@ public class ThreadPoolTest extends TestCase {
                 pool.size() == 0);
     }
 
+    @Test
     public void testStartPool() {
         ThreadPool pool = new ThreadPool(POOL_SIZE);
         pool.startPool();
@@ -28,6 +34,7 @@ public class ThreadPoolTest extends TestCase {
 
     }
 
+    @Test
     public void testStopPool() {
         ThreadPool pool = new ThreadPool(POOL_SIZE);
         pool.startPool();
@@ -38,6 +45,7 @@ public class ThreadPoolTest extends TestCase {
                         .size() == 0);
     }
 
+    @Test
     public void testAddTask() {
         TaskTest task = new TaskTest(false);
         ThreadPool pool = new ThreadPool(POOL_SIZE);
@@ -49,6 +57,7 @@ public class ThreadPoolTest extends TestCase {
       
     }
 
+    @Test
     public void testAddTask_Dirty() {
         TaskTest task = new TaskTest(true);
         ThreadPool pool = new ThreadPool(POOL_SIZE);

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Stack;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 
@@ -58,6 +59,7 @@ public class IterationTest extends ScratchBaseTest {
 
     @Test
     // LIFO
+    @Ignore //OCRAM only if not run by maven
     public void stackIterationTest() { 
         Stack<Integer> lis = new Stack<Integer>();
         for( int i = 0; i < 10; ++i ) { 

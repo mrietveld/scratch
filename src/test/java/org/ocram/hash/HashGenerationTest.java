@@ -23,7 +23,7 @@ public class HashGenerationTest extends ScratchBaseTest {
     }
 
     @Test
-    @Ignore
+    @Ignore //OCRAM only if not run by maven
     public void objectBytesHashIdGenerationTest() throws Exception {
 
         ClassToBeProxied object = new ClassToBeProxied();
@@ -48,7 +48,7 @@ public class HashGenerationTest extends ScratchBaseTest {
     }
 
     @Test
-    @Ignore
+    @Ignore  //OCRAM only if not run by maven
     public void identityHashCodeTest() {
         ClassToBeProxied object = new ClassToBeProxied();
 
@@ -58,6 +58,7 @@ public class HashGenerationTest extends ScratchBaseTest {
     }
 
     @Test
+    @Ignore  //OCRAM only if not run by maven
     public void modifiationIdentityHashCodeTest() throws Exception {
         ClassToBeProxied object;
 
@@ -74,7 +75,7 @@ public class HashGenerationTest extends ScratchBaseTest {
     }
 
     @Test
-    @Ignore
+    @Ignore  //OCRAM only if not run by maven
     public void hashClassTest() {
         final Object obj = new Object();
         final int target = obj.hashCode();

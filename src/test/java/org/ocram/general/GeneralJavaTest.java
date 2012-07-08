@@ -1,4 +1,4 @@
-package org.ocram;
+package org.ocram.general;
 
 import static java.lang.System.out;
 import static junit.framework.Assert.assertTrue;
@@ -7,10 +7,11 @@ import java.io.Serializable;
 import java.util.Arrays;
 
 import org.junit.Test;
+import org.ocram.ScratchBaseTest;
 import org.ocram.collections.objects.Bam;
 
 public class GeneralJavaTest extends ScratchBaseTest {
-
+    
     @Test
     public void modTest() { 
         int testNum = 10;

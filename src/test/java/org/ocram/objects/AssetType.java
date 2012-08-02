@@ -12,4 +12,18 @@ public enum AssetType {
     public int value() { 
         return value;
     }
+    
+    public static AssetType getType(int value) { 
+        switch(value) {
+            case 1: 
+                return IMAGE;
+            case 2: 
+                return FORM;
+            case 3: 
+                return BPMN;
+            default: 
+                throw new IllegalStateException("Unknown type");
+        }
+    }
+    
 }

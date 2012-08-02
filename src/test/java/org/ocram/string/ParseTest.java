@@ -1,5 +1,7 @@
 package org.ocram.string;
 
+import java.util.Scanner;
+
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 public class ParseTest extends ScratchBaseTest {
@@ -8,31 +10,21 @@ public class ParseTest extends ScratchBaseTest {
 	public void testLong() throws Exception { 
 		long asdf = 120301201L;
 		Long testLong = new Long(asdf);
-		out.println(testLong.toString());
+		assertTrue( testLong.longValue() == 120301201L );
 	}
 	
     @Test
 	public void testReplaceAll() throws Exception {
 		String test = "asdf<\r>asdfasdf<\n>asdfasdfsdf<\r\n>asdfasdfdas<\n\r>asdfd";
 		
-		out.println( "---" );
-		out.println( test );
-		
 		String testRep = test.replaceAll("\\r", "");
-		
-		out.println( "---" );
-		out.println( testRep );
+		assertTrue( testRep.equals("asdf<>asdfasdf<\n>asdfasdfsdf<\n>asdfasdfdas<\n>asdfd") );
 		
 		testRep = testRep.replaceAll("\\n", "");
-		
-		out.println( "---" );
-		out.println( testRep );
+		assertTrue( testRep.equals("asdf<>asdfasdf<>asdfasdfsdf<>asdfasdfdas<>asdfd") );
 		
 		testRep = test.replaceAll("\r|\n", "");
-		
-		out.println( "---" );
-		out.println( testRep );
-		
+		assertTrue( testRep.equals("asdf<>asdfasdf<>asdfasdfsdf<>asdfasdfdas<>asdfd") );
 	}
 
 	// ---------------
@@ -43,13 +35,10 @@ public class ParseTest extends ScratchBaseTest {
 		String alleenEenEmailAdres = "marco@log.com; marco@log.com";
 		String nietAlleenEenEmailAdres = "marco@log.com;marco@log.com";
 		String regex = "^[\\w]([\\w\\.-]*[\\w])?@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$'";
-		out.println(regex);
-		
+
+		// assertTrue( alleenEenEmailAdres.matches(regex) );
 		if( nietAlleenEenEmailAdres.matches( regex ) ) { 
 			fail( "Hacker krijgt ook een email!" );
-		}
-		else { 
-			out.println( nietAlleenEenEmailAdres + ": [" + regex + "]" );
 		}
 	}
     
@@ -75,7 +64,23 @@ public class ParseTest extends ScratchBaseTest {
             assertFalse( queryStrs[i] + " should NOT have matched [" + regex + "]", queryStrs[i].matches(regex) ); 
             assertTrue( queryStrs[i] + " should have matched [" + badRegex + "]", queryStrs[i].matches(badRegex) );
         }
-        
-        
+    }
+    
+    @Test
+    public void scannerTest() { 
+        String [] tags = { "tag1", "tag2", "adsf", "whoahPigsAreFlying!" };
+       String input = "{ ";
+       int i = 0;
+       input += tags[i];
+       for( i = 1; i < tags.length; ++i ) { 
+          input += ", " + tags[i]; 
+       }
+       input += "} ";
+                   
+       Scanner s = new Scanner(input).useDelimiter("\\s*[{},]\\s*");
+       i = 0;
+       while(s.hasNext()) { 
+          assertEquals(s.next(), tags[i++]);
+       }
     }
 }

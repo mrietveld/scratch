@@ -28,6 +28,10 @@ public class StringTest extends ScratchBaseTest {
     @Test
     public void java5StringMethod() {
         String javaVersion = System.getProperty("java.version");
+        if( ! javaVersion.matches("1.5.*") ) { 
+            return;
+        }
+        
         String test = "Does this work?";
         boolean og = test.contains("work");
         out.println(test + " : " + og);

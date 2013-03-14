@@ -4,6 +4,7 @@ import static java.lang.System.out;
 import static junit.framework.Assert.assertTrue;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.junit.Test;
@@ -11,6 +12,15 @@ import org.ocram.ScratchBaseTest;
 import org.ocram.collections.objects.Bam;
 
 public class GeneralJavaTest extends ScratchBaseTest {
+    
+    @Test
+    public void nullPointerFromNull() { 
+        try { 
+            String og = (String) (null);
+        } catch( Exception cce ) { 
+            fail( "No exception should have been thrown: " + cce.getMessage() );
+        }
+    }
     
     @Test
     public void modTest() { 

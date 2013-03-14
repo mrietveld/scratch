@@ -5,15 +5,28 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 import org.ocram.persistence.objects.Stuff;
 
 public class LocalTransactionsTest extends ScratchBaseTest {
 
+    private EntityManagerFactory emf;
+    
+    @Before
+    public void before() { 
+        emf = Persistence.createEntityManagerFactory("org.ocram.test");
+    }
+
+    @After
+    public void after() { 
+        emf.close();
+    }
+    
     @Test
     public void localTxStatuses() {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("org.ocram.test");
         EntityManager em = emf.createEntityManager();
         
         EntityTransaction et = em.getTransaction();
@@ -62,6 +75,7 @@ public class LocalTransactionsTest extends ScratchBaseTest {
         et.rollback();
         printStatus(et, "after rollback");
         
+        em.close();
     }
     
     private void printStatus(EntityTransaction et, String state) { 

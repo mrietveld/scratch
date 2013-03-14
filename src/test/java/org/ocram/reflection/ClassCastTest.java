@@ -17,6 +17,13 @@ public class ClassCastTest extends ScratchBaseTest {
         
         assertEquals(ioe.getCause(), cause);
     }
+
+    @Test(expected=Throwable.class)
+    public void throwableCastTest() { 
+        RuntimeException runner = new RuntimeException("weave");
+        Throwable rug = (Throwable) runner;
+        throw runner;
+    }
     
     @Test
     public void primitiveCastBoxedTest() { 
@@ -37,4 +44,5 @@ public class ClassCastTest extends ScratchBaseTest {
         assertTrue( "null is an instance of String", og instanceof String );
         
     }
+    
 }

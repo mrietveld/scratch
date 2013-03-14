@@ -22,7 +22,12 @@ public class EnumTest {
     
     @Test
     public void testCreationError() { 
-        AssetType one = AssetType.valueOf("BPMNX");
+        try { 
+            AssetType one = AssetType.valueOf("BPMNX");
+            fail( "An exception should have been thrown.");
+        } catch( IllegalArgumentException iae ) { 
+            assertTrue( iae != null );
+        }
     }
     
     @Test

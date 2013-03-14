@@ -10,18 +10,18 @@ import java.util.List;
 import junit.framework.Assert;
 
 import org.jbpm.process.audit.JPAProcessInstanceDbLog;
-import org.jbpm.process.audit.ProcessInstanceDbLog;
+import org.jbpm.process.audit.ProcessInstanceLog;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class ProcessInstanceDbLogInterfaceTest extends Assert {
 
     @Test
-    @Ignore //OCRAM only if not run by maven
+    @Ignore // Doesn't work because ProcessInstanceDBLog disappeared (by me! :) )
     public void compareMethodsJPAAndHibernate() throws Exception {
 
         List<Method[]> methodMethods = new ArrayList<Method[]>();
-        methodMethods.add(ProcessInstanceDbLog.class.getMethods());
+        // methodMethods.add(ProcessInstanceLog.class.getMethods());
         methodMethods.add(JPAProcessInstanceDbLog.class.getDeclaredMethods());
 
         String[] type = { "hibernate", "jpa" };

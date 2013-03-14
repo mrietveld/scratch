@@ -1,0 +1,5 @@
+
+<choice dialect = "default" >SELECT DATALENGTH(employeeNumber) FROM Employees</choice>
+<choice dialect = "db2,oracle" >SELECT LENGTH(employeeNumber) FROM Employees</choice>
+// db2 may do some weird stuff -- compress files, etc. users should make sure that they aren't doing that.. 
+<choice dialect = "h2,mysql,postgresql">SELECT OCTET_LENGTH(employeeNumber) FROM Employees</choice>

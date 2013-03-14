@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="oryx" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+  <display-name>Process Designer</display-name>
+
+  <servlet>
+    <servlet-name>Asset</servlet-name>
+    <servlet-class>org.jbpm.designer.assets.servlet.AssetResourceServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Asset</servlet-name>
+    <url-pattern>/asset</url-pattern>
+  </servlet-mapping>
+
+</web-app>

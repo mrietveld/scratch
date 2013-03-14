@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="1.0"
+  xmlns="http://java.sun.com/xml/ns/persistence" xmlns:orm="http://java.sun.com/xml/ns/persistence/orm"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+
+  <persistence-unit name="org.jbpm.designer" transaction-type="RESOURCE_LOCAL">
+    <non-jta-data-source>jdbc/designer</non-jta-data-source>
+
+    <class>org.jbpm.designer.assets.persistence.AssetTagEntity</class>
+    <class>org.jbpm.designer.assets.persistence.AssetEntity</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+
+    <properties>
+      <property name="hibernate.hbm2ddl.auto" value="create"/>
+       <property name="hibernate.show_sql" value="true"/>
+      
+      <!-- envers configuration  not necessary when using hibernate/envers 4.1
+      <property name="hibernate.ejb.event.post-insert"
+        value="org.hibernate.ejb.event.EJB3PostInsertEventListener,org.hibernate.envers.event.AuditEventListener" />
+      <property name="hibernate.ejb.event.post-update"
+        value="org.hibernate.ejb.event.EJB3PostUpdateEventListener,org.hibernate.envers.event.AuditEventListener" />
+      <property name="hibernate.ejb.event.post-delete"
+        value="org.hibernate.ejb.event.EJB3PostDeleteEventListener,org.hibernate.envers.event.AuditEventListener" />
+      -->
+    </properties>
+    
+  </persistence-unit>
+
+</persistence>

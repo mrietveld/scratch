@@ -55,6 +55,13 @@ public class StringTest extends ScratchBaseTest {
         System.out.println(encodedAuthorization);
 
     }
+    
+    @Test
+    public void emptyStringMatchesTest() { 
+       assertTrue( " \n".matches("\\s+"));
+       assertTrue( " ".matches("\\s+"));
+       assertFalse( " S ".matches("\\s+"));
+    }
 
     
 }

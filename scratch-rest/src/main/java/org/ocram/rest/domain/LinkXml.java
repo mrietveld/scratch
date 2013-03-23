@@ -1,4 +1,4 @@
-package org.jbpm.designer.assets.domain;
+package org.ocram.rest.domain;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;

@@ -2,13 +2,11 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.ocram</groupId>
-    <artifactId>scratch</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
-  </parent>
+  <!-- Add parent? -->
 
+  <groupId>org.ocram</groupId>
   <artifactId>rest-scratch</artifactId>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
   <licenses>
@@ -19,76 +17,56 @@
     </license>
   </licenses>
 
+  <properties>
+    <version.arquillian>1.0.3.Final</version.arquillian>
+    <version.resteasy>2.3.4.Final</version.resteasy>
+    <version.slf4j>1.5.8</version.slf4j>
+    <version.slf4j>1.7.3</version.slf4j>
+  </properties>
+
   <dependencies>
-
-    <!-- jax-rs deps -->
-    <dependency>
-      <groupId>xerces</groupId>
-      <artifactId>xercesImpl</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb-impl</artifactId>
-      <exclusions>
-        <exclusion>
-          <groupId>javax.xml.bind</groupId>
-          <artifactId>jaxb-api</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>com.sun.xml.bind</groupId>
-      <artifactId>jaxb1-impl</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>log4j-over-slf4j</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-jdk14</artifactId>
-    </dependency>
-
-    <!-- persistence -->
-    <dependency>
-      <groupId>org.hibernate.javax.persistence</groupId>
-      <artifactId>hibernate-jpa-2.0-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.envers</groupId>
-      <artifactId>jboss-envers</artifactId>
-    </dependency>
 
     <!-- rest stuff -->
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxrs</artifactId>
+      <version>${version.resteasy}</version>
     </dependency>
     <dependency>
       <groupId>org.jboss.resteasy</groupId>
       <artifactId>resteasy-jaxb-provider</artifactId>
+      <version>${version.resteasy}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jackson-provider</artifactId>
+      <version>${version.resteasy}</version>
     </dependency>
 
-    <!-- ejb stuff -->
+    <!-- general -->
     <dependency>
-      <groupId>javax.ejb</groupId>
-      <artifactId>ejb-api</artifactId>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
     </dependency>
+    <dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+      <version>1.0-SP4</version>
+    </dependency>
+
+    <!-- 
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>log4j-over-slf4j</artifactId>
+      <version>${version.slf4j}</version>
+    </dependency> -->
 
     <!-- TEST -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
+      <version>4.11</version>
       <scope>test</scope>
     </dependency>
 
@@ -98,7 +76,32 @@
       <artifactId>arquillian-junit-container</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <!-- test (web) archive creation -->
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.descriptors</groupId>
+      <artifactId>shrinkwrap-descriptors-impl-javaee</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- arquillian: contains all versions for specific arquillian artifacts -->
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>${version.arquillian}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <resources>
@@ -114,6 +117,7 @@
         <directory>src/test/client</directory>
       </testResource>
     </testResources>
+
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
@@ -124,9 +128,116 @@
           <target>1.6</target>
         </configuration>
       </plugin>
+
+      <!-- testing -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.10</version>
+        <configuration>
+          <systemProperties>
+            <property>
+              <name>arquillian.launch</name>
+              <value>${arquillian.launch}</value>
+            </property>
+          </systemProperties>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>2.1.1</version>
+        <configuration>
+          <archive>
+            <manifestEntries>
+              <Bundle-Name>jBPM Console REST Service</Bundle-Name>
+              <Bundle-Version>${project.version}</Bundle-Version>
+              <Bundle-SymbolicName>org.jbpm.jbpm-console-ng-services-rest</Bundle-SymbolicName>
+            </manifestEntries>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>jboss7</id>
+            <goals>
+              <goal>war</goal>
+            </goals>
+            <phase>package</phase>
+            <configuration>
+              <classifier>jboss7</classifier>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
+  <profiles>
+
+    <!-- testing with glassfish -->
+    <profile>
+      <id>arquillian-glassfish-embedded</id>
+      <properties>
+        <arquillian.launch>glassfish-embedded</arquillian.launch>
+      </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>true</filtering>
+          </testResource>
+          <testResource>
+            <directory>src/test/resources-glassfish</directory>
+            <filtering>false</filtering>
+          </testResource>
+        </testResources>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.arquillian.container</groupId>
+          <artifactId>arquillian-glassfish-embedded-3.1</artifactId>
+          <version>1.0.0.CR3</version>
+          <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.glassfish.main.extras</groupId>
+          <artifactId>glassfish-embedded-all</artifactId>
+          <version>3.1.2</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+
+    <!-- testing with jboss AS 7 -->
+    <profile>
+      <id>arquillian-jboss7-embedded</id>
+      <properties>
+        <arquillian.launch>jbossas-7-embedded</arquillian.launch>
+      </properties>
+      <build>
+        <testResources>
+          <testResource>
+            <directory>src/test/resources</directory>
+            <filtering>false</filtering>
+          </testResource>
+          <testResource>
+            <directory>src/test/resources-jbossas-7</directory>
+            <filtering>false</filtering>
+          </testResource>
+        </testResources>
+      </build>
+      <dependencies>
+        <dependency>
+          <groupId>org.jboss.as</groupId>
+          <artifactId>jboss-as-arquillian-container-embedded</artifactId>
+          <version>7.2.0.Final</version>
+          <scope>test</scope>
+        </dependency>
+      </dependencies>
+    </profile>
+  </profiles>
 
 </project>
 

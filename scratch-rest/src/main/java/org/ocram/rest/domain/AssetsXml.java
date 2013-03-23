@@ -1,8 +1,10 @@
-package org.jbpm.designer.assets.domain;
+package org.ocram.rest.domain;
 
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,15 +12,15 @@ import java.util.List;
 @XmlRootElement(name = "assets")
 public class AssetsXml
 {
-   protected Collection<AssetXml> assets = new ArrayList<AssetXml>();
+   protected Collection<InfoXml> assets = new ArrayList<InfoXml>();
    protected List<LinkXml> links;
 
    @XmlElementRef
-   public Collection<AssetXml> getAssets() {
+   public Collection<InfoXml> getAssets() {
       return assets;
    }
 
-   public void setAssets(Collection<AssetXml> assets) {
+   public void setAssets(Collection<InfoXml> assets) {
       this.assets = assets;
    }
 

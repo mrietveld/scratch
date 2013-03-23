@@ -4,10 +4,10 @@
   xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
   <display-name>Process Designer</display-name>
 
-  <!-- REST assets service -->
+  <!-- REST info service -->
   <context-param>
     <param-name>resteasy.resources</param-name>
-    <param-value>org.jbpm.designer.assets.rest.AssetResourceBean</param-value>
+    <param-value>org.ocram.rest.resource.BaseResource</param-value>
   </context-param>
 
   <listener>

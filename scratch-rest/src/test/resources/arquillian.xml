@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<arquillian 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
-    
-    <container qualifier="glassfish-embedded">
-        <configuration>
-            <property name="bindHttpPort">8181</property>
-            <!-- 
-            <property name="resourcesXml">src/test/resources-glassfish-embedded/glassfish-resources.xml</property>
-             -->
-        </configuration>
-    </container>
+<arquillian xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jboss.org/schema/arquillian http://jboss.org/schema/arquillian/arquillian_1_0.xsd">
 
-    <container qualifier="jbossas-7-embedded">
-        <configuration>
-            <property name="jbossHome">target/jbossas</property>
-        </configuration>
-    </container>
-        
+  <container qualifier="glassfish-embedded">
+    <configuration>
+      <property name="bindHttpPort">8181</property>
+      <!-- <property name="resourcesXml">src/test/resources-glassfish-embedded/glassfish-resources.xml</property> -->
+    </configuration>
+  </container>
+
+  <container qualifier="jboss" default="true">
+    <configuration>
+      <property name="jbossHome">target/jboss-as-${jboss.version:7.1.1.Final}</property>
+      <property name="allowConnectingToRunningServer">false</property>
+    </configuration>
+  </container>
+
 </arquillian>

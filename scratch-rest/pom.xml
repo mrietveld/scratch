@@ -20,8 +20,6 @@
   <properties>
     <version.arquillian>1.0.3.Final</version.arquillian>
     <version.resteasy>2.3.4.Final</version.resteasy>
-    <version.slf4j>1.5.8</version.slf4j>
-    <version.slf4j>1.7.3</version.slf4j>
   </properties>
 
   <dependencies>
@@ -55,12 +53,6 @@
       <version>1.0-SP4</version>
     </dependency>
 
-    <!-- 
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>log4j-over-slf4j</artifactId>
-      <version>${version.slf4j}</version>
-    </dependency> -->
 
     <!-- TEST -->
     <dependency>
@@ -179,9 +171,6 @@
       <properties>
         <arquillian.launch>glassfish-embedded</arquillian.launch>
       </properties>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
       <build>
         <testResources>
           <testResource>
@@ -212,10 +201,14 @@
 
     <!-- testing with jboss AS 7 -->
     <profile>
-      <id>arquillian-jboss7-embedded</id>
+      <id>arquillian-jboss7-managed</id>
       <properties>
-        <arquillian.launch>jbossas-7-embedded</arquillian.launch>
+        <arquillian.launch>jboss</arquillian.launch>
+        <version.jboss>7.1.1.Final</version.jboss>
       </properties>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
       <build>
         <testResources>
           <testResource>
@@ -227,13 +220,45 @@
             <filtering>false</filtering>
           </testResource>
         </testResources>
+        <plugins>
+          <plugin>
+            <artifactId>maven-dependency-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>unpack</id>
+                <phase>process-test-classes</phase>
+                <goals>
+                  <goal>unpack</goal>
+                </goals>
+                <configuration>
+                  <artifactItems>
+                    <artifactItem>
+                      <groupId>org.jboss.as</groupId>
+                      <artifactId>jboss-as-dist</artifactId>
+                      <version>${version.jboss}</version>
+                      <type>zip</type>
+                      <overWrite>false</overWrite>
+                      <outputDirectory>${project.build.directory}</outputDirectory>
+                    </artifactItem>
+                  </artifactItems>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
       </build>
+
       <dependencies>
         <dependency>
           <groupId>org.jboss.as</groupId>
-          <artifactId>jboss-as-arquillian-container-embedded</artifactId>
-          <version>7.2.0.Final</version>
+          <artifactId>jboss-as-arquillian-container-managed</artifactId>
+          <version>${version.jboss}</version>
           <scope>test</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.slf4j</groupId>
+          <artifactId>slf4j-api</artifactId>
+          <version>1.7.3</version>
         </dependency>
       </dependencies>
     </profile>

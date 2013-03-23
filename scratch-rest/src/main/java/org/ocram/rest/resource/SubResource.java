@@ -1,6 +1,8 @@
 package org.ocram.rest.resource;
 
+import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 
@@ -12,22 +14,31 @@ public class SubResource {
 
     private Logger logger = LoggerFactory.getLogger(BaseResource.class);
     
-    private String base;
+    @Inject
+    private InfoResource info;
     
-    public SubResource(String base) { 
-        this.base = base;
+    private String string;
+    
+    public void setString(String str) { 
+        this.string = str;
+    }
+    
+    @PreDestroy
+    public void dispose() { 
+        logger.info( "PREDESTROY [sub]" );
     }
     
     @Path("next/id/{id: [a-zA-Z0-9-]*}")
-    public InfoResource getAssetResource(@PathParam("id") String id) { 
+    public InfoResource getInfoResource(@PathParam("id") String id) { 
         logger.info( "SUB: " + id);
-        return new InfoResource( this.base + ":" + id );
+        info.setString(string + ":" + id);
+        return info;
     }
     
     @Path("next")
-    public InfoResource getAssetResource() { 
+    public InfoResource getInfoResource() { 
         logger.info( "SUB: empty");
-        return new InfoResource();
+        return info;
     }
     
     

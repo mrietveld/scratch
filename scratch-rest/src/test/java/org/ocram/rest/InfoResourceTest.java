@@ -2,6 +2,7 @@ package org.ocram.rest;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
 import java.net.URL;
 
 import org.jboss.arquillian.container.test.api.Deployment;
@@ -13,6 +14,7 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ocram.rest.domain.InfoXml;
@@ -29,11 +31,18 @@ public class InfoResourceTest {
 
     @Deployment(testable = false)
     public static Archive<?> createDeployment() {
-
+        
+        File[] libs = Maven.resolver()
+                .loadPomFromFile("pom.xml")
+                .resolve("org.jboss.resteasy:resteasy-cdi")
+                .withTransitivity()
+                .asFile(); 
+        
         return ShrinkWrap.create(WebArchive.class)
                 .addClasses(InfoXml.class, InfoResource.class, SubResource.class, BaseResource.class)
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml")
-                .setWebXML("WEB-INF/web.xml");
+                .setWebXML("WEB-INF/web.xml")
+                .addAsLibraries(libs);
     }
 
     

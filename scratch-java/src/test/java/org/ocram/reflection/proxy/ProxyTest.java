@@ -1,4 +1,4 @@
-package org.ocram.reflection;
+package org.ocram.reflection.proxy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import org.hibernate.ejb.EntityManagerImpl;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
-import org.ocram.objects.ClassInterface;
-import org.ocram.objects.ClassToBeProxied;
-import org.ocram.objects.TestInvocationHandler;
+import org.ocram.reflection.proxy.objects.ClassInterface;
+import org.ocram.reflection.proxy.objects.ClassToBeProxied;
+import org.ocram.reflection.proxy.objects.TestInvocationHandler;
 
 @SuppressWarnings("rawtypes")
 public class ProxyTest extends ScratchBaseTest {

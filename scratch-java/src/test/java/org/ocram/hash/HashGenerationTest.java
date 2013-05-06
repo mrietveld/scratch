@@ -9,7 +9,8 @@ import java.security.MessageDigest;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
-import org.ocram.objects.ClassToBeProxied;
+import org.ocram.objects.TestObject;
+import org.ocram.reflection.proxy.objects.ClassToBeProxied;
 
 public class HashGenerationTest extends ScratchBaseTest {
 
@@ -26,7 +27,7 @@ public class HashGenerationTest extends ScratchBaseTest {
     @Ignore //OCRAM only if not run by maven
     public void objectBytesHashIdGenerationTest() throws Exception {
 
-        ClassToBeProxied object = new ClassToBeProxied();
+        TestObject object = new TestObject();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ObjectOutputStream oos = new ObjectOutputStream(baos);
@@ -50,26 +51,26 @@ public class HashGenerationTest extends ScratchBaseTest {
     @Test
     @Ignore  //OCRAM only if not run by maven
     public void identityHashCodeTest() {
-        ClassToBeProxied object = new ClassToBeProxied();
+        TestObject object = new TestObject();
 
         out.println("System identity hash code is: " + System.identityHashCode(object));
-        out.println("System identity hash code is: " + System.identityHashCode(new ClassToBeProxied()));
-        out.println("System identity hash code is: " + System.identityHashCode(new ClassToBeProxied()));
+        out.println("System identity hash code is: " + System.identityHashCode(new TestObject()));
+        out.println("System identity hash code is: " + System.identityHashCode(new TestObject()));
     }
 
     @Test
     @Ignore  //OCRAM only if not run by maven
     public void modifiationIdentityHashCodeTest() throws Exception {
-        ClassToBeProxied object;
+        TestObject object;
 
         for( long l = 0; l < 2247483645l; ++l ) {
-            object = new ClassToBeProxied();
+            object = new TestObject();
             int hashCode = System.identityHashCode(object);
             assertTrue( "Hash code <= 0", hashCode > 0 );
             object.stringField = "changed";
             assertTrue( "Hash code has changed", hashCode == System.identityHashCode(object));
             object.stringField = null;
-            ClassToBeProxied.class.getField("stringField").setAccessible(false);
+            TestObject.class.getField("stringField").setAccessible(false);
             assertTrue( "Hash code has changed", hashCode == System.identityHashCode(object));
         }
     }

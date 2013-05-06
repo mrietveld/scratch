@@ -8,17 +8,6 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import org.drools.command.CommandService;
-import org.drools.persistence.jpa.JDKCallableJobCommand;
-import org.drools.time.AcceptsTimerJobFactoryManager;
-import org.drools.time.InternalSchedulerService;
-import org.drools.time.Job;
-import org.drools.time.JobContext;
-import org.drools.time.JobHandle;
-import org.drools.time.Trigger;
-import org.drools.time.impl.DefaultTimerJobInstance;
-import org.drools.time.impl.TimerJobInstance;
-import org.drools.time.impl.JDKTimerService.JDKJobHandle;
 import org.junit.Before;
 import org.junit.Test;
 

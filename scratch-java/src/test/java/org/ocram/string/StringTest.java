@@ -3,6 +3,7 @@ package org.ocram.string;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeUtility;
@@ -61,6 +62,22 @@ public class StringTest extends ScratchBaseTest {
        assertTrue( " \n".matches("\\s+"));
        assertTrue( " ".matches("\\s+"));
        assertFalse( " S ".matches("\\s+"));
+    }
+    
+    @Test 
+    public void sortStringArraysTest() { 
+        String [] ooga = { "cc", "ad", "ba" };
+
+        for( String og : ooga ) { 
+            System.out.println( og );
+        }
+        
+        System.out.println( "---" );
+        Arrays.sort(ooga);
+        
+        for( String og : ooga ) { 
+            System.out.println( og );
+        }
     }
 
     

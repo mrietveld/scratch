@@ -1,4 +1,4 @@
-package org.ocram.objects;
+package org.ocram.reflection.proxy.objects;
 
 import static java.lang.System.out;
 
@@ -33,6 +33,11 @@ public class ClassToBeProxied implements ClassInterface, Serializable {
 
     public void oh(int d) { 
         out.println( "oh: " + d);
+    }
+
+    public int ok(int d) { 
+        out.println( "ok: " + d);
+        return -1 * d;
     }
 
 }

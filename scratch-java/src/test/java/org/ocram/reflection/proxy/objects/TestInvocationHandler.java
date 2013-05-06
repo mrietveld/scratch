@@ -1,4 +1,4 @@
-package org.ocram.objects;
+package org.ocram.reflection.proxy.objects;
 
 import static java.lang.System.out;
 

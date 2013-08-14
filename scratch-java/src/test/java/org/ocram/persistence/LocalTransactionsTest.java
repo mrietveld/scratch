@@ -37,10 +37,7 @@ public class LocalTransactionsTest extends ScratchBaseTest {
         et.begin();
         printStatus(et, "begin");
         
-        Stuff stuff = new Stuff();
-        stuff.name = "gold";
-        stuff.type = "virtual";
-        stuff.size = 100100;
+        Stuff stuff = new Stuff("gold", "virtual", 100100);
         
         em.persist(stuff);
         printStatus(et, "after persist");
@@ -89,10 +86,9 @@ public class LocalTransactionsTest extends ScratchBaseTest {
         }
         boolean active = et.isActive();
         
-        out.println( "|- A[" + 
-                        (active?1:0) + "] R[" + 
-                        (rollback==null?2:(rollback?1:0)) + "] RE[" + 
-                        (exceptionOnGRO?1:0) + "] (" + 
-                        state + ")" );
+        out.println( "|- A[" + (active?1:0) + "]"
+                + " R[" + (rollback==null?"_":(rollback?1:0)) + "]"
+                + " RE[" + (exceptionOnGRO?1:0) + "]"
+                + " (" + state + ")" );
     }
 }

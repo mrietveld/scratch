@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 
 @Entity
 public class Stuff {
@@ -18,6 +19,9 @@ public class Stuff {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    
+    @Version
+    public Integer ver;
     
     @Basic
     public String name;
@@ -35,6 +39,16 @@ public class Stuff {
         return id;
     }
     
+    public Stuff() { 
+       // default 
+    }
+    public Stuff(String name, String type, int size) { 
+        this.name = name;
+        this.type = type;
+        this.size = size;
+        this.quality = quality;
+    }
+   
     public Stuff clone() { 
         Stuff clone = new Stuff();
         clone.name = this.name;
@@ -43,4 +57,6 @@ public class Stuff {
         clone.quality = this.quality;
         return clone;
     }
+    
+    
 }

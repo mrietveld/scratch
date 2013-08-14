@@ -2,6 +2,7 @@ package org.ocram.reflection;
 
 import static junit.framework.Assert.*;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 
 import org.junit.Test;
@@ -45,4 +46,22 @@ public class ClassCastTest extends ScratchBaseTest {
         
     }
     
+    @Test
+    public void arrayClassNametest() throws Exception { 
+        String className = (new String[0]).getClass().getName();
+        Class<?> clazz = Class.forName(className);
+    }
+ 
+    @Test
+    public void arrayClassNameSerializationTest() throws Exception { 
+        String [] cereal = { "cheerios", "raisin flakes" };
+        String className = cereal.getClass().getName();
+        assertNotNull(className);
+        System.out.println(className);
+        System.out.println(cereal.getClass().getCanonicalName());
+        assertNotNull( Class.forName(className) );
+        Constructor<?> [] cons = Class.forName(className).getConstructors();
+        Object og = cons[0].newInstance(new Object[0]);
+        String [] newCereal = (String []) og;
+    }
 }

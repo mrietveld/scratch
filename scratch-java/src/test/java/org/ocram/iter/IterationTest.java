@@ -19,7 +19,7 @@ public class IterationTest extends ScratchBaseTest {
             lis.add(i);
         }
         
-        ListIterator<Integer> iter = lis.listIterator(lis.size());
+        ListIterator<Integer> iter = lis.listIterator();
         int i = 0;
         int t = 0;
         while( iter.hasPrevious() ) { 

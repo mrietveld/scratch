@@ -79,6 +79,12 @@ public class StringTest extends ScratchBaseTest {
             System.out.println( og );
         }
     }
+    
+    @Test
+    public void subStringTest() { 
+        String og = "aabcde";
+       out.println( og.substring(2, og.length()) );
+    }
 
     
 }

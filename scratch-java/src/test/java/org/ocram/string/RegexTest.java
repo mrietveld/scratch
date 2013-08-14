@@ -9,7 +9,6 @@ public class RegexTest extends ScratchBaseTest {
 
     @Test
     public void testRegex() {
-        String alleenEenEmailAdres = "marco@log.com; marco@log.com";
         String nietAlleenEenEmailAdres = "marco@log.com;marco@log.com";
         String regex = "^[\\w]([\\w\\.-]*[\\w])?@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$'";
 
@@ -27,7 +26,6 @@ public class RegexTest extends ScratchBaseTest {
         methodStrs[2] = "SelectBlahBLAH";
 
         for (int i = 0; i < methodStrs.length; ++i) {
-            System.out.println( methodStrs[0] + " : " + methodStrs[i] );
             assertTrue(methodStrs[0] + " should be equal to [" + methodStrs[i] + "]", methodStrs[0].matches("(?i)" + methodStrs[i]));
         }
     }
@@ -92,5 +90,20 @@ public class RegexTest extends ScratchBaseTest {
         }
         assertEquals(0,count);
         
+    }
+    
+    @Test
+    public void numParamRegexTest() { 
+       String regex = "^\\d+[li]?$";
+       
+       assertTrue( "23l".matches(regex));
+       assertFalse( "2b3l".matches(regex));
+       assertTrue( "3".matches(regex));
+       assertTrue( "34949".matches(regex));
+       assertTrue( "34949i".matches(regex));
+       assertFalse( "l23l".matches(regex));
+       assertTrue( "l23l", "l23l".matches(".*l$"));
+       assertTrue( "23.3", "23.3".matches("[0-9\\.]*$"));
+       assertFalse( "23.3a", "23.3a".matches("[0-9\\.]*$"));
     }
 }

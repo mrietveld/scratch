@@ -4,8 +4,12 @@ import static java.lang.System.out;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 
+import org.hibernate.mapping.Array;
 import org.junit.Test;
 import org.ocram.collections.objects.Bom;
 import org.ocram.collections.objects.BomComparator;
@@ -40,5 +44,20 @@ public class CollectionsTest {
 		for( Bom ba : bomList ) { 
 			out.println(ba.getId());
 		}
+	}
+	
+	@Test
+	public void deQueueStackTest() { 
+	  int [] data = { 4, 3, 2, 1 };
+	  
+	  Stack<Integer> nested = new Stack<Integer>();
+	  for( int i : data ) { 
+	     nested.add(i);
+	  }
+	  
+	  while( ! nested.isEmpty() ) { 
+	      out.println( nested.pop() );
+	  }
+	    
 	}
 }

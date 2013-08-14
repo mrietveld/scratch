@@ -3,7 +3,6 @@ package org.ocram.thread;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.antlr.tool.RecursionOverflowMessage;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 import org.slf4j.Logger;

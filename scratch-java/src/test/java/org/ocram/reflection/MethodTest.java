@@ -149,7 +149,6 @@ public class MethodTest extends ScratchBaseTest {
 
     @Test
     public void delMe() throws Exception {
-        Class [] types = { String.class, Map.class };
-        out.println( KieSession.class.getMethod("startProcess", types).getName() );
+        out.println( Thread.currentThread().getStackTrace()[1].getMethodName());
     }
 }

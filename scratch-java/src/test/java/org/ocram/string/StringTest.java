@@ -82,8 +82,8 @@ public class StringTest extends ScratchBaseTest {
     
     @Test
     public void subStringTest() { 
-        String og = "aabcde";
-       out.println( og.substring(2, og.length()) );
+        String og = "0abcde";
+       out.println( og.substring(1) );
     }
 
     

@@ -32,7 +32,8 @@
       <property name="hibernate.hbm2ddl.auto" value="create-drop" />
       <property name="hibernate.show_sql" value="false" />
 
-      <property name="hibernate.transaction.manager_lookup_class" value="org.hibernate.transaction.BTMTransactionManagerLookup" />
+      <!-- The following line is what's used in Hibernate 4 instead of a TransactionManagerLookup class -->
+      <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.BitronixJtaPlatform" />
 
       <property name="hibernate.dialect" value="org.hibernate.dialect.H2Dialect" />
 

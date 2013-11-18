@@ -1,10 +1,7 @@
 package org.ocram.locks;
 
-import static junit.framework.Assert.*;
-import java.lang.management.ManagementFactory;
-import java.lang.management.RuntimeMXBean;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.junit.Test;
@@ -33,5 +30,27 @@ public class ReadWriteLockTest extends ScratchBaseTest {
             noException = false;
         }
         assertTrue(noException);
+    }
+    
+    @Test
+    public void reentrantLockTest() { 
+        ReentrantLock lock = new ReentrantLock();
+        
+        int l = 0;
+        while( lock.isLocked() ) { 
+            ++l;
+            lock.unlock();
+        }
+        assertEquals(l, 0);
+        
+        lock.lock();
+        
+        lock.lock();
+       
+        while( lock.isLocked() ) { 
+            ++l;
+            lock.unlock();
+        }
+        assertEquals(l, 2);
     }
 }

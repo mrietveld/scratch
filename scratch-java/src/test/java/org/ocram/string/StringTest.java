@@ -29,10 +29,10 @@ public class StringTest extends ScratchBaseTest {
     @Test
     public void java5StringMethod() {
         String javaVersion = System.getProperty("java.version");
-        if( ! javaVersion.matches("1.5.*") ) { 
+        if (!javaVersion.matches("1.5.*")) {
             return;
         }
-        
+
         String test = "Does this work?";
         boolean og = test.contains("work");
         out.println(test + " : " + og);
@@ -56,35 +56,42 @@ public class StringTest extends ScratchBaseTest {
         System.out.println(encodedAuthorization);
 
     }
-    
-    @Test
-    public void emptyStringMatchesTest() { 
-       assertTrue( " \n".matches("\\s+"));
-       assertTrue( " ".matches("\\s+"));
-       assertFalse( " S ".matches("\\s+"));
-    }
-    
-    @Test 
-    public void sortStringArraysTest() { 
-        String [] ooga = { "cc", "ad", "ba" };
 
-        for( String og : ooga ) { 
-            System.out.println( og );
+    @Test
+    public void emptyStringMatchesTest() {
+        assertTrue(" \n".matches("\\s+"));
+        assertTrue(" ".matches("\\s+"));
+        assertFalse(" S ".matches("\\s+"));
+    }
+
+    @Test
+    public void sortStringArraysTest() {
+        String[] ooga = { "cc", "ad", "ba" };
+
+        for (String og : ooga) {
+            System.out.println(og);
         }
-        
-        System.out.println( "---" );
+
+        System.out.println("---");
         Arrays.sort(ooga);
-        
-        for( String og : ooga ) { 
-            System.out.println( og );
+
+        for (String og : ooga) {
+            System.out.println(og);
         }
     }
-    
+
     @Test
-    public void subStringTest() { 
+    public void subStringTest() {
         String og = "0abcde";
-       out.println( og.substring(1) );
+        out.println(og.substring(1));
     }
 
-    
+    @Test
+    public void capitalCaseTest() {
+        String statusStr = "aRmeD";
+        String goodStatusStr = statusStr.toLowerCase();
+        goodStatusStr = goodStatusStr.substring(0, 1).toUpperCase() + goodStatusStr.substring(1);
+        System.out.println( goodStatusStr );
+    }
+
 }

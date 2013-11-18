@@ -149,6 +149,10 @@ public class MethodTest extends ScratchBaseTest {
 
     @Test
     public void delMe() throws Exception {
-        out.println( Thread.currentThread().getStackTrace()[1].getMethodName());
+        unsupported();
+    }
+    
+    public void unsupported() { 
+        out.println( Thread.currentThread().getStackTrace()[2].getMethodName());
     }
 }

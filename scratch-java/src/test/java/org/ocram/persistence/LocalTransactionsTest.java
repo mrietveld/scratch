@@ -23,9 +23,6 @@ public class LocalTransactionsTest extends ScratchBaseTest {
     @Before
     public void before() {
         emf = Persistence.createEntityManagerFactory("org.ocram.test");
-        context = PersistenceUtil.setupWithPoolingDataSource("org.ocram.test.jta", "jdbc/testDs",
-                "jdbc:h2:file:target/testDb;MVCC=true");
-        emf = (EntityManagerFactory) context.get(PersistenceUtil.ENTITY_MANAGER_FACTORY);
     }
 
     @After
@@ -102,11 +99,11 @@ public class LocalTransactionsTest extends ScratchBaseTest {
     }
 
     @Test
-    public void localOrJtaTest() {
-        boolean transactionOwner = false;
+    public void delegateTest() {
         EntityManager em = emf.createEntityManager();
 
         Object delegate = em.getDelegate();
-        delegate.getClass().getName();
+        out.println( delegate.getClass().getName() );
+        em.close();
     }
 }

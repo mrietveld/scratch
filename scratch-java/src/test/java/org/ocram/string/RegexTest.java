@@ -106,4 +106,16 @@ public class RegexTest extends ScratchBaseTest {
        assertTrue( "23.3", "23.3".matches("[0-9\\.]*$"));
        assertFalse( "23.3a", "23.3a".matches("[0-9\\.]*$"));
     }
+    
+    @Test
+    public void replaceTest() { 
+        String og = "maro ooga q=1 q=.2 q=.3"; 
+        System.out.println( og );
+        if( og.matches(".*q=\\..*") ) { 
+            og = og.replaceAll("q=\\.", "q=0.");
+        } else { 
+            fail( "nononos..");
+        }
+        System.out.println( og );
+    }
 }

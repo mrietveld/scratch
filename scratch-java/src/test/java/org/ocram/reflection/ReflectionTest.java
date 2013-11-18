@@ -1,9 +1,10 @@
 package org.ocram.reflection;
 
-import static junit.framework.Assert.assertEquals;
-
-import java.lang.reflect.*;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
@@ -19,22 +20,24 @@ public class ReflectionTest extends ScratchBaseTest {
 
     @Test
     public void genericTypesTest() {
-        ArrayList<String> arrayString = new ArrayList<String>();
+        List<String> arrayString = new ArrayList<String>();
         arrayString.add("asdf");
 
         out.println("- " + arrayString.getClass().getName());
-        for (Type type : arrayString.getClass().getGenericInterfaces()) {
-            if (type instanceof ParameterizedType) {
-                ParameterizedType paramType = (ParameterizedType) type;
-                System.out.println("o : " + paramType.getOwnerType());
-                System.out.println("r : " + paramType.getRawType());
-                for (Type ptype : paramType.getActualTypeArguments()) {
-                    if (ptype instanceof TypeVariable) {
-                        TypeVariable typeVar = (TypeVariable) ptype;
-                        System.out.println("tv: " + typeVar.getName());
+        Type type = arrayString.getClass().getGenericSuperclass();
+        if (type instanceof ParameterizedType) {
+            ParameterizedType paramType = (ParameterizedType) type;
+            System.out.println("o : " + paramType.getOwnerType());
+            System.out.println("r : " + paramType.getRawType());
+            for (Type ptype : paramType.getActualTypeArguments()) {
+                if (ptype instanceof TypeVariable) {
+                    TypeVariable typeVar = (TypeVariable) ptype;
+                    System.out.println("tv: " + typeVar.getName());
+                    for( Type bound : typeVar.getBounds() ) { 
+                       System.out.println( bound.getClass() );
                     }
-
                 }
+
             }
         }
     }

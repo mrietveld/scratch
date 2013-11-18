@@ -1,7 +1,7 @@
 package org.ocram.persistence.objects;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -9,19 +9,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 import javax.persistence.Version;
 
 @Entity
 public class Stuff {
 
+    @Version
+    public Timestamp versionDate;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-    
-    @Version
-    public Integer ver;
+    public Integer id;
     
     @Basic
     public String name;

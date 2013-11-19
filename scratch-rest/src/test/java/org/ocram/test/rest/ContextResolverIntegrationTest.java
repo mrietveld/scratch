@@ -2,12 +2,15 @@ package org.ocram.test.rest;
 
 import static junit.framework.Assert.assertEquals;
 
+import java.io.ByteArrayInputStream;
 import java.io.StringWriter;
 import java.net.URL;
+import java.nio.charset.Charset;
 
 import javax.ws.rs.core.MediaType;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -32,7 +35,7 @@ public class ContextResolverIntegrationTest {
     public static Archive<?> createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(JaxbTestInput.class, TestResource.class)
-                .addClass(JaxbContextResolver.class)
+                .addClasses(JaxbContextResolver.class, MyType.class, DeploymentClassGatherer.class)
                 .setWebXML("WEB-INF/web.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
@@ -57,7 +60,7 @@ public class ContextResolverIntegrationTest {
         inputObject.setName("test");
         inputObject.getObjects().add(new MyType("wakka", 49));
         
-        String urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/test/context").toExternalForm();
+        String urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/test/context?id=wakka").toExternalForm();
         ClientRequest request = new ClientRequest(urlString);
         System.out.println( ">>> " + request.getUri());
         
@@ -66,11 +69,12 @@ public class ContextResolverIntegrationTest {
         request.body(MediaType.APPLICATION_XML, output);
 
         // we're expecting a String back
-        ClientResponse<JaxbTestInput> responseObj = request.post(JaxbTestInput.class);
+        ClientResponse<String> responseObj = request.post(String.class);
         System.out.println( "<<< " + responseObj.getStatus() );
 
+        JaxbTestInput outputObject = deserialize(responseObj.getEntity());
         assertEquals(200, responseObj.getStatus());
-        System.out.println("OUT: " + responseObj.getEntity(JaxbTestInput.class).getObjects().get(0).getClass().getName());
+        System.out.println("OUT: " + outputObject.getObjects().get(0).getClass().getName());
     }
     
     private String serialize(JaxbTestInput input) throws Exception {  
@@ -85,6 +89,20 @@ public class ContextResolverIntegrationTest {
         String output = stringWriter.toString();
 
         return output;
+    }
+    
+    private JaxbTestInput deserialize(String input) throws Exception {  
+        JAXBContext jaxbContext = JAXBContext.newInstance(
+                JaxbTestInput.class, 
+                MyType.class
+                );
+        
+        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
+        ByteArrayInputStream xmlStrInputStream = new ByteArrayInputStream(input.getBytes(Charset.forName("UTF-8")));
+
+        JaxbTestInput jaxbObj = (JaxbTestInput) unmarshaller.unmarshal(xmlStrInputStream);
+
+        return jaxbObj;
     }
     
 }

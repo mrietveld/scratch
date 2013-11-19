@@ -30,7 +30,6 @@ public class IterationTest extends ScratchBaseTest {
             }
             out.print( e + ", ");
         }
-        out.println();
         assertTrue( "While loop did not run.", i == 10);
         assertTrue( "While loop did not run correctly: " + t, t == 1);
     }
@@ -53,7 +52,6 @@ public class IterationTest extends ScratchBaseTest {
             }
             ++i;
         }
-        out.println();
         assertTrue( "While loop did not run as expected: " + t, t == 0);
     }
 
@@ -74,7 +72,6 @@ public class IterationTest extends ScratchBaseTest {
                 t = i;
             }
         }
-        out.println();
         assertTrue( "While loop did not run as expected: " + t, t == 0);
     }
 }

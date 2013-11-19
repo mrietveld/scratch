@@ -14,7 +14,7 @@ public class ControlFlowTest extends ScratchBaseTest {
         } catch (Exception e) {
             failure = true;
         } finally {
-            System.out.println( "FINALLY!" );
+            logger.debug( "FINALLY!" );
             if (!failure) {
                 fail("This was not supposed to happen.. or was it?");
             }

@@ -8,8 +8,8 @@ public class StackTraceTest extends ScratchBaseTest {
 
     @Test
     public void og() {
-        out.println(new Throwable().getStackTrace()[0].getClassName());
-        out.println(new Throwable().getStackTrace()[0].getMethodName());
+        logger.debug(new Throwable().getStackTrace()[0].getClassName());
+        logger.debug(new Throwable().getStackTrace()[0].getMethodName());
     }
 
 }

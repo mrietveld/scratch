@@ -7,8 +7,9 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 import org.junit.Test;
+import org.ocram.ScratchBaseTest;
 
-public class DateTest {
+public class DateTest extends ScratchBaseTest {
 
     @Test
 	public void testFormat() { 
@@ -20,14 +21,14 @@ public class DateTest {
 		String newPeildatum = dateFormat.format(gregorianCalendar.getTime());
 		String peildatum = getOldPeildatum(gregorianCalendar);
 		
-		out.println( "old: " + peildatum );
-		out.println( "new: " + newPeildatum );
+		logger.debug( "old: " + peildatum );
+		logger.debug( "new: " + newPeildatum );
 		
 		newPeildatum = dateFormatTwee.format(gregorianCalendar.getTime());
 		peildatum = getOldPeildatum(gregorianCalendar);
 		
-		out.println( "old: " + peildatum );
-		out.println( "new: " + newPeildatum );
+		logger.debug( "old: " + peildatum );
+		logger.debug( "new: " + newPeildatum );
 		
 	}
 	
@@ -46,10 +47,10 @@ public class DateTest {
 		SimpleDateFormat dateFormatter = new SimpleDateFormat( "yyyyMMdd" );
 		SimpleDateFormat logFormatter = new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss" );
 	
-		out.println( logFormatter.format( date.getTime() ) );
+		logger.debug( logFormatter.format( date.getTime() ) );
 		GregorianCalendar gc = new GregorianCalendar();
-		out.println( logFormatter.format( gc.getTime()) );
-		out.println( dateFormatter.format( date.getTime() ) );
+		logger.debug( logFormatter.format( gc.getTime()) );
+		logger.debug( dateFormatter.format( date.getTime() ) );
 		
 	}
 
@@ -61,7 +62,7 @@ public class DateTest {
 		date.setTimeZone(EST);
 		
 		SimpleDateFormat calFormatter = new SimpleDateFormat( "dd-MM-yyyy HH:mm:ss z Z");
-		out.println( calFormatter.format( date.getTime() ) );
+		logger.debug( calFormatter.format( date.getTime() ) );
 	}
 	
 }

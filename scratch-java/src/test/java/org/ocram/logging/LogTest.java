@@ -10,8 +10,6 @@ import org.slf4j.LoggerFactory;
 
 public class LogTest extends ScratchBaseTest {
 
-    private static final Logger logger = LoggerFactory.getLogger(LogTest.class);
-    
     @Test
     public void logThis() { 
         Exception blah = new UnsupportedEncodingException();

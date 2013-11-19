@@ -54,7 +54,7 @@ public class VersionTest extends ScratchBaseTest {
         
         Date secDate = stuff.versionDate;
         assertNotEquals(origDate, secDate);
-        System.out.println( "1: " + origDate + ", 2: " + stuff.versionDate );
+        logger.debug( "1: " + origDate + ", 2: " + stuff.versionDate );
        
         ut.begin();
         em.joinTransaction();

@@ -45,7 +45,7 @@ public class HashGenerationTest extends ScratchBaseTest {
         for (int i = 0; i < messageDigest.length; i++) {
             hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
         }
-        out.println("MD5 Hash for object is: " + hexString);
+        logger.debug("MD5 Hash for object is: " + hexString);
     }
 
     @Test
@@ -53,9 +53,9 @@ public class HashGenerationTest extends ScratchBaseTest {
     public void identityHashCodeTest() {
         TestObject object = new TestObject();
 
-        out.println("System identity hash code is: " + System.identityHashCode(object));
-        out.println("System identity hash code is: " + System.identityHashCode(new TestObject()));
-        out.println("System identity hash code is: " + System.identityHashCode(new TestObject()));
+        logger.debug("System identity hash code is: " + System.identityHashCode(object));
+        logger.debug("System identity hash code is: " + System.identityHashCode(new TestObject()));
+        logger.debug("System identity hash code is: " + System.identityHashCode(new TestObject()));
     }
 
     @Test
@@ -82,15 +82,15 @@ public class HashGenerationTest extends ScratchBaseTest {
         final int target = obj.hashCode();
         Object clash;
         long ct = 0;
-        out.println( "Start.." );
+        logger.debug( "Start.." );
         do {
             clash = new Object();
             ++ct;
         } while (clash.hashCode() != target && ct < 10L * 1000 * 1000 * 1000L);
         if (clash.hashCode() == target) {
-            out.println(ct + ": " + obj + " - " + clash);
+            logger.debug(ct + ": " + obj + " - " + clash);
         } else {
-            out.println("No clashes found");
+            logger.debug("No clashes found");
         }
     }
 

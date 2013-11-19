@@ -26,18 +26,18 @@ public class ProxyTest extends ScratchBaseTest {
     }
    
     private void addThese(Class bob, List<Class> interfaces ) { 
-        out.println( bob.getSimpleName() + ":" );
+        logger.debug( bob.getSimpleName() + ":" );
         if( bob != null ) { 
             Class [] addThese = bob.getInterfaces();
             for( int i = 0; i < addThese.length; ++i ) { 
                 interfaces.add(addThese[i]);
             }
             for( Class clazz: interfaces ) { 
-                out.println(clazz.getSimpleName());
+                logger.debug(clazz.getSimpleName());
             }
         }
         else { 
-            out.println( "bob is NULL!");
+            logger.debug( "bob is NULL!");
         }
     }
     
@@ -47,7 +47,7 @@ public class ProxyTest extends ScratchBaseTest {
         runTest(obj);
         Object proxy = TestInvocationHandler.createProxy(obj);
         obj = (ClassInterface) proxy;
-        out.println( "--------------------" ) ;
+        logger.debug( "--------------------" ) ;
         runTest(obj);
     }
     

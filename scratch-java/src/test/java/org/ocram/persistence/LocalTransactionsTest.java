@@ -97,7 +97,7 @@ public class LocalTransactionsTest extends ScratchBaseTest {
         }
         boolean active = et.isActive();
 
-        out.println("|- A[" + (active ? 1 : 0) + "]" + " R[" + (rollback == null ? "_" : (rollback ? 1 : 0)) + "]" + " RE["
+        logger.debug("|- A[" + (active ? 1 : 0) + "]" + " R[" + (rollback == null ? "_" : (rollback ? 1 : 0)) + "]" + " RE["
                 + (exceptionOnGRO ? 1 : 0) + "]" + " (" + state + ")");
     }
 
@@ -106,7 +106,7 @@ public class LocalTransactionsTest extends ScratchBaseTest {
         EntityManager em = emf.createEntityManager();
 
         Object delegate = em.getDelegate();
-        out.println( delegate.getClass().getName() );
+        logger.debug( delegate.getClass().getName() );
         em.close();
     }
     

@@ -57,8 +57,8 @@ public class ClassCastTest extends ScratchBaseTest {
         String [] cereal = { "cheerios", "raisin flakes" };
         String className = cereal.getClass().getName();
         assertNotNull(className);
-        System.out.println(className);
-        System.out.println(cereal.getClass().getCanonicalName());
+        logger.debug(className);
+        logger.debug(cereal.getClass().getCanonicalName());
         assertNotNull( Class.forName(className) );
         Constructor<?> [] cons = Class.forName(className).getConstructors();
         Object og = cons[0].newInstance(new Object[0]);

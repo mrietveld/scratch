@@ -26,7 +26,7 @@ public class ParserTest extends ScratchBaseTest {
 
         String uuid = elem.getElements().get(0).getText();
         assertTrue("Empty uuid returned.", uuid != null && ! uuid.isEmpty());
-        System.out.println("UUID: " + uuid);
+        logger.debug("UUID: " + uuid);
     }
 
     private Element findElem(String name, Element elem) {

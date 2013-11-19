@@ -14,6 +14,6 @@ public class CalendarTest extends ScratchBaseTest {
 	public void timeZoneTest() { 
 		GregorianCalendar gc = new GregorianCalendar();
 		TimeZone tz = gc.getTimeZone();
-		out.println("Offset in hours: " + tz.getRawOffset()/(60*60*1000));
+		logger.debug("Offset in hours: " + tz.getRawOffset()/(60*60*1000));
 	}
 }

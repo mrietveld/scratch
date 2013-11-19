@@ -1,12 +1,13 @@
 package org.ocram.primitives;
 
 import org.junit.Test;
+import org.ocram.ScratchBaseTest;
 
-public class BooleanTest {
+public class BooleanTest extends ScratchBaseTest {
 
     @Test
     public void stringTest() { 
-       System.out.println(Boolean.TRUE.toString()); 
-       System.out.println(Boolean.FALSE.toString()); 
+       logger.debug(Boolean.TRUE.toString()); 
+       logger.debug(Boolean.FALSE.toString()); 
     }
 }

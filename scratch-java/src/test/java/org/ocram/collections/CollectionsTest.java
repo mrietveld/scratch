@@ -1,6 +1,5 @@
 package org.ocram.collections;
 
-import static java.lang.System.out;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,11 +10,12 @@ import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.junit.Test;
+import org.ocram.ScratchBaseTest;
 import org.ocram.collections.objects.Bam;
 import org.ocram.collections.objects.Bom;
 import org.ocram.collections.objects.BomComparator;
 
-public class CollectionsTest {
+public class CollectionsTest extends ScratchBaseTest {
 
 	@Test
 	public void arrayTest() { 
@@ -23,10 +23,10 @@ public class CollectionsTest {
 		String [] strarr = new String [5];
 		
 		if( 5 == strarr.length ) { 
-			out.println( "5!" );
+			logger.debug( "5!" );
 		}
 		else if( 4 == strarr.length ) { 
-			out.println( "4." );
+			logger.debug( "4." );
 		}
 	}
 	
@@ -43,7 +43,7 @@ public class CollectionsTest {
 		Collections.sort(bomList, new BomComparator());
 		
 		for( Bom ba : bomList ) { 
-			out.println(ba.getId());
+			logger.debug("{}", ba.getId());
 		}
 	}
 	
@@ -57,7 +57,7 @@ public class CollectionsTest {
 	  }
 	  
 	  while( ! nested.isEmpty() ) { 
-	      out.println( nested.pop() );
+	      logger.debug("{}", nested.pop() );
 	  }
 	    
 	}

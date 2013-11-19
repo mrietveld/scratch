@@ -9,6 +9,6 @@ public class InetClassesTest extends ScratchBaseTest {
 
     @Test
     public void localhostString() throws Exception { 
-        out.println( InetAddress.getLocalHost().toString() );
+        logger.debug( InetAddress.getLocalHost().toString() );
     }
 }

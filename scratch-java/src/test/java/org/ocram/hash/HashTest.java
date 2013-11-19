@@ -6,9 +6,9 @@ import java.security.MessageDigest;
 import java.util.UUID;
 
 import org.junit.Test;
+import org.ocram.ScratchBaseTest;
 
-public class HashTest {
-	public HashTest() {}
+public class HashTest extends ScratchBaseTest {
 
 	/**
 	 * Testen van de SHA-256 hash met random UUID. 
@@ -20,8 +20,8 @@ public class HashTest {
 		byte[] hashBytes = getHash(uuid);
 		String hash = bytesToString(hashBytes);
 
-		out.println( "UUID: " + uuid);
-		out.println( "Hash [" + hash.length() + "]: " + hash );
+		logger.debug( "UUID: " + uuid);
+		logger.debug( "Hash [" + hash.length() + "]: " + hash );
 	}
 
 	/**

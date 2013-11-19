@@ -6,8 +6,13 @@ import java.lang.reflect.Proxy;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MessageInvocationHandler implements InvocationHandler {
 
+    private static Logger logger = LoggerFactory.getLogger(ClassToBeProxied.class);
+    
     private boolean methodSet = false;
     private MethodRequest message;
 
@@ -16,7 +21,7 @@ public class MessageInvocationHandler implements InvocationHandler {
         Method[] objectMethods = Object.class.getMethods();
         for (Method objMethod : objectMethods) {
             unsupportedMethods.add(objMethod.getName());
-            System.out.println("OBJ: " + objMethod.getName());
+            logger.debug("OBJ: " + objMethod.getName());
         }
     }
 

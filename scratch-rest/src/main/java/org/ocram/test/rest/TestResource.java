@@ -24,7 +24,8 @@ public class TestResource {
     @Consumes(MediaType.APPLICATION_XML)
     @Path("/context")
     public Response processInput(JaxbTestInput input) {
-        System.out.println(input.getId() + " : " + input.getName());
+        System.out.print("IN: " + input.getObjects().get(0).getClass().getName());
+        
         return Response.ok(input).build();
     }
 

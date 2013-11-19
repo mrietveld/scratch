@@ -1,5 +1,6 @@
 package org.ocram.reflection;
 
+import java.io.File;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -23,23 +24,31 @@ public class ReflectionTest extends ScratchBaseTest {
         List<String> arrayString = new ArrayList<String>();
         arrayString.add("asdf");
 
-        out.println("- " + arrayString.getClass().getName());
+        logger.debug("- " + arrayString.getClass().getName());
         Type type = arrayString.getClass().getGenericSuperclass();
         if (type instanceof ParameterizedType) {
             ParameterizedType paramType = (ParameterizedType) type;
-            System.out.println("o : " + paramType.getOwnerType());
-            System.out.println("r : " + paramType.getRawType());
+            logger.debug("o : " + paramType.getOwnerType());
+            logger.debug("r : " + paramType.getRawType());
             for (Type ptype : paramType.getActualTypeArguments()) {
                 if (ptype instanceof TypeVariable) {
                     TypeVariable typeVar = (TypeVariable) ptype;
-                    System.out.println("tv: " + typeVar.getName());
+                    logger.debug("tv: " + typeVar.getName());
                     for( Type bound : typeVar.getBounds() ) { 
-                       System.out.println( bound.getClass() );
+                       logger.debug( bound.getClass().getName() );
                     }
                 }
 
             }
         }
+    }
+    
+    @Test
+    public void packageFolderTest() { 
+        String pkgFolder = this.getClass().getPackage().toString();
+        pkgFolder = pkgFolder.replace("package ", "");
+        pkgFolder = pkgFolder.replaceAll("\\.", File.separator);
+        logger.info( pkgFolder );
     }
 
 }

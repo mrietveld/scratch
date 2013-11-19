@@ -31,26 +31,26 @@ public class InitializationTimeTest extends ScratchBaseTest {
     public void upTimeTest() {
         long now = new Date().getTime();
         assertTrue(now > initializationTime);
-        out.println( sdf.format(new Date(now)));
+        logger.debug( sdf.format(new Date(now)));
         
         assertTrue(now > initializationTime);
-        out.println( sdf.format(new Date(initializationTime)));
+        logger.debug( sdf.format(new Date(initializationTime)));
         
         assertTrue(initializationTime > jvmStartTime);
-        out.println( sdf.format(new Date(jvmStartTime)));
+        logger.debug( sdf.format(new Date(jvmStartTime)));
     }
     
     @Test
     public void lazyClassInitializationTest() throws Exception { 
         long now = new Date().getTime();
         assertTrue("Initialization happened after now?", now > initializationTime);
-        out.println( "This init time: " + sdf.format(new Date(initializationTime)));
+        logger.debug( "This init time: " + sdf.format(new Date(initializationTime)));
        
         Thread.sleep(500);
         
         assertTrue("Initialization happened after cache holder initialization?", 
                 getCacheInitTime() > initializationTime);
-        out.println( "cache init time: " + sdf.format(new Date(getCacheInitTime())));
+        logger.debug( "cache init time: " + sdf.format(new Date(getCacheInitTime())));
     }
     
     private long getCacheInitTime() { 

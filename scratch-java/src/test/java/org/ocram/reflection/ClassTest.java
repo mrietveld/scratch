@@ -11,12 +11,12 @@ public class ClassTest extends ScratchBaseTest {
         JpaTimerJobInstance og = new JpaTimerJobInstance(null, null, null, null, null);
         
         Class<?> clazz = og.getClass();
-        out.println( clazz.getSimpleName() );
-        out.println( "d: " + clazz.getDeclaringClass() );
-        out.println( "e: " + clazz.getEnclosingClass() );
+        logger.debug( clazz.getSimpleName() );
+        logger.debug( "d: " + clazz.getDeclaringClass() );
+        logger.debug( "e: " + clazz.getEnclosingClass() );
         int i = 0;
         do { 
-            out.println( i++ + ": " + clazz.getSimpleName() );
+            logger.debug( i++ + ": " + clazz.getSimpleName() );
             clazz = clazz.getSuperclass();
         }
         while( clazz!= null );

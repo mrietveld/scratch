@@ -126,7 +126,7 @@ public class GeneralJavaTest extends ScratchBaseTest {
         }
         
         for( int i = 0; i < 10; ++i ) { 
-            out.println( "" + i + ": " + arguments[i] );
+            logger.debug( "" + i + ": " + arguments[i] );
         }
     }
 }

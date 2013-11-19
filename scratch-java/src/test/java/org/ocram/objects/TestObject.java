@@ -4,8 +4,14 @@ import static java.lang.System.out;
 
 import java.io.Serializable;
 
+import org.ocram.reflection.proxy.objects.ClassToBeProxied;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TestObject implements Serializable {
 
+    private static Logger logger = LoggerFactory.getLogger(TestObject.class);
+    
     /* Generated serial version UID */
     private static final long serialVersionUID = -2307010830688962213L;
     
@@ -22,17 +28,17 @@ public class TestObject implements Serializable {
     
     public int of() { 
         ++i;
-        out.println( "of: " + i );
+        logger.debug( "of: " + i );
         return i;
     }
 
     public void og() { 
         ++i;
-        out.println( "og" );
+        logger.debug( "og" );
     }
 
     public void oh(int d) { 
-        out.println( "oh: " + d);
+        logger.debug( "oh: " + d);
     }
 
 }

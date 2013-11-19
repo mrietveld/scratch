@@ -13,9 +13,9 @@ public class UrlTest extends ScratchBaseTest {
         URL otherUrl = new URL("http://www.blam.org/kabooie/");
         
         
-        out.println( url.toExternalForm() ); 
-        out.println( url.toString() );
-        out.println( otherUrl.toExternalForm() ); 
-        out.println( otherUrl.toString() ); 
+        logger.debug( url.toExternalForm() ); 
+        logger.debug( url.toString() );
+        logger.debug( otherUrl.toExternalForm() ); 
+        logger.debug( otherUrl.toString() ); 
     }
 }

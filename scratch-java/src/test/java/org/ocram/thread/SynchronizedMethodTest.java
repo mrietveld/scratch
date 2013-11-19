@@ -28,7 +28,7 @@ public class SynchronizedMethodTest extends ScratchBaseTest {
                 }
             }
         }
-        System.out.println();
+        logger.debug(".");
 
         this.value = newValue;
     }

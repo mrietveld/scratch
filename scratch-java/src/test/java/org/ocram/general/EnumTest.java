@@ -37,11 +37,4 @@ public class EnumTest {
         assertTrue( one.value() == 3);
     }
     
-    @Test
-    public void testString() { 
-        System.out.println(AssetType.BPMN);
-    }
-    
-    
-    
 }

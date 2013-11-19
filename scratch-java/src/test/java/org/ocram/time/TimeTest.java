@@ -6,9 +6,14 @@ import java.util.concurrent.*;
 
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
+import org.ocram.thread.ThreadGroupDemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TimeTest extends ScratchBaseTest { 
 
+    private final static Logger logger = LoggerFactory.getLogger(TimeTest.class);
+    
     private static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
     
     @Test
@@ -23,11 +28,11 @@ public class TimeTest extends ScratchBaseTest {
         cal.set(Calendar.HOUR_OF_DAY, 6);
         long tooLate = cal.getTimeInMillis();
         
-        out.println( now );
-        out.println( tooEarly );
-        out.println( tooLate );
-        out.println( now < tooLate );
-        out.println( now > tooEarly );
+       logger.debug( "{}", now );
+       logger.debug( "{}", tooEarly );
+       logger.debug( "{}", tooLate );
+       logger.debug( "{}", now < tooLate );
+       logger.debug( "{}", now > tooEarly );
     }
 
     @Test
@@ -36,10 +41,10 @@ public class TimeTest extends ScratchBaseTest {
         long now = System.currentTimeMillis();
         Date future = new Date((new Date().getTime() + 5 * 1000));
         
-        out.println( "now   : " + sdf.format(new Date()));
-        out.println( "future: " + sdf.format(future));
+       logger.debug( "now   : " + sdf.format(new Date()));
+       logger.debug( "future: " + sdf.format(future));
         long diff = (future.getTime() - now)/1000;
-        out.println( "diff  : " + diff );
+       logger.debug( "diff  : " + diff );
        
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.schedule(new PrintMe(), diff, TimeUnit.SECONDS);
@@ -47,14 +52,14 @@ public class TimeTest extends ScratchBaseTest {
         
         Thread.sleep((diff + 1)*1000);
         
-        out.println( "done  : " + sdf.format(new Date()) );
+       logger.debug( "done  : " + sdf.format(new Date()) );
     }
     
     public static class PrintMe implements Runnable {
 
         @Override
         public void run() {
-            System.out.println( sdf.format(new Date()) + " Hello!" );
+            logger.debug( sdf.format(new Date()) + " Hello!" );
         } 
     }
     

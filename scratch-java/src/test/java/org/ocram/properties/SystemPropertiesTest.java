@@ -46,15 +46,15 @@ public class SystemPropertiesTest extends ScratchBaseTest {
     @Ignore //OCRAM only if not run by maven
     public void testRootClassPathForFindingPropertiesFiles() {
         Class clazz = getClass();
-        out.println("c: " + clazz.getSimpleName());
+        logger.debug("c: " + clazz.getSimpleName());
         ProtectionDomain pd = clazz.getProtectionDomain();
-        out.println("p: " + pd.toString());
+        logger.debug("p: " + pd.toString());
         CodeSource cs = pd.getCodeSource();
-        out.println("c: " + cs.toString());
+        logger.debug("c: " + cs.toString());
         String path = cs.getLocation().toString();
-        out.println("l: " + path);
+        logger.debug("l: " + path);
         path = path.substring(5);
-        out.println("p: " + path);
+        logger.debug("p: " + path);
     }
 
     @Test

@@ -110,12 +110,12 @@ public class RegexTest extends ScratchBaseTest {
     @Test
     public void replaceTest() { 
         String og = "maro ooga q=1 q=.2 q=.3"; 
-        System.out.println( og );
+        logger.debug( og );
         if( og.matches(".*q=\\..*") ) { 
             og = og.replaceAll("q=\\.", "q=0.");
         } else { 
             fail( "nononos..");
         }
-        System.out.println( og );
+        logger.debug( og );
     }
 }

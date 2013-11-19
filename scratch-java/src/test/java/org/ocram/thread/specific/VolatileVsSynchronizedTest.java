@@ -1,8 +1,9 @@
 package org.ocram.thread.specific;
 
 import org.junit.Test;
+import org.ocram.ScratchBaseTest;
 
-public class VolatileVsSynchronizedTest {
+public class VolatileVsSynchronizedTest extends ScratchBaseTest {
 
     @Test
     public void synchronizedDoesntMeanVolatile() throws Exception { 
@@ -25,7 +26,7 @@ public class VolatileVsSynchronizedTest {
            threads[i].setName("" + i);
            threads[i].start();
         }
-        System.out.println( "Threads started" );
+        logger.debug( "Threads started" );
      
         int dead = 0;
         for( int i = 0; i < size; ++i ) { 
@@ -34,7 +35,7 @@ public class VolatileVsSynchronizedTest {
             }
             ++dead;
         }
-        System.out.println( dead ); 
+        logger.debug( "{}", dead ); 
     }
     
     

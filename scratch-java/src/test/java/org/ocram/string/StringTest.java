@@ -17,7 +17,7 @@ public class StringTest extends ScratchBaseTest {
     public void indexOfTest() {
         String shortenMe = "org.jbpm.persistence.session.PersistentStatefulSessionTest.testMeNOW";
         String shortTestMethod = shortenMe.substring(0, shortenMe.lastIndexOf('.'));
-        out.println(shortTestMethod);
+        logger.debug(shortTestMethod);
 
         shortTestMethod = shortenMe.substring(shortTestMethod.lastIndexOf('.') + 1);
         assertEquals(shortTestMethod, "PersistentStatefulSessionTest.testMeNOW");
@@ -35,7 +35,7 @@ public class StringTest extends ScratchBaseTest {
 
         String test = "Does this work?";
         boolean og = test.contains("work");
-        out.println(test + " : " + og);
+        logger.debug(test + " : " + og);
     }
 
     @Test
@@ -53,7 +53,7 @@ public class StringTest extends ScratchBaseTest {
         }
 
         String encodedAuthorization = new String(baos.toByteArray());
-        System.out.println(encodedAuthorization);
+        logger.debug(encodedAuthorization);
 
     }
 
@@ -69,21 +69,21 @@ public class StringTest extends ScratchBaseTest {
         String[] ooga = { "cc", "ad", "ba" };
 
         for (String og : ooga) {
-            System.out.println(og);
+            logger.debug(og);
         }
 
-        System.out.println("---");
+        logger.debug("---");
         Arrays.sort(ooga);
 
         for (String og : ooga) {
-            System.out.println(og);
+            logger.debug(og);
         }
     }
 
     @Test
     public void subStringTest() {
         String og = "0abcde";
-        out.println(og.substring(1));
+        logger.debug(og.substring(1));
     }
 
     @Test
@@ -91,7 +91,7 @@ public class StringTest extends ScratchBaseTest {
         String statusStr = "aRmeD";
         String goodStatusStr = statusStr.toLowerCase();
         goodStatusStr = goodStatusStr.substring(0, 1).toUpperCase() + goodStatusStr.substring(1);
-        System.out.println( goodStatusStr );
+        logger.debug( goodStatusStr );
     }
 
 }

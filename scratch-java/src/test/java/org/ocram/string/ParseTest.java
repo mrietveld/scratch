@@ -36,7 +36,7 @@ public class ParseTest extends ScratchBaseTest {
         String [] parts = url.split("[/?&]");
         
         for( String og : parts ) { 
-            System.out.println(og);
+            logger.debug(og);
         }
     }
     

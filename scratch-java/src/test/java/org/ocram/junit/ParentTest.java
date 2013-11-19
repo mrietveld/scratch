@@ -6,9 +6,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ParentTest extends ScratchBaseTest {
 
+    private static Logger logger = LoggerFactory.getLogger(ParentTest.class);
+    
     @BeforeClass
     public static void beforeClass() { 
         printMethodName();
@@ -35,7 +39,7 @@ public class ParentTest extends ScratchBaseTest {
                 = className.substring(className.lastIndexOf(".") + 1)
                 + ": " 
                 + Thread.currentThread().getStackTrace()[2].getMethodName();
-        System.out.println(out);
+        logger.debug(out);
     }
     
     @Test

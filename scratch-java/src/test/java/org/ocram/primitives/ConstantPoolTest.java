@@ -41,7 +41,7 @@ public class ConstantPoolTest extends ScratchBaseTest {
             i = Math.min(j, 2147483519);
         }
 
-        out.println("integer high cache: " + i);
+        logger.debug("integer high cache: " + i);
 
         HashSet<Integer> integerPool = new HashSet<Integer>();
         int poolTestInt = 0;
@@ -53,7 +53,7 @@ public class ConstantPoolTest extends ScratchBaseTest {
 
         integerPool.add(poolTestInt);
         assertFalse(poolTestInt + " too large for constant pool", integerPool.add(poolTestInt));
-        out.println("Added " + poolTestInt);
+        logger.debug("Added " + poolTestInt);
 
     }
 

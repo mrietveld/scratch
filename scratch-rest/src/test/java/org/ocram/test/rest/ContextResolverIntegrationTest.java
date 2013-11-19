@@ -2,10 +2,12 @@ package org.ocram.test.rest;
 
 import static junit.framework.Assert.assertEquals;
 
+import java.io.StringWriter;
 import java.net.URL;
 
-import javax.ws.rs.HttpMethod;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -20,6 +22,7 @@ import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ocram.test.domain.JaxbTestInput;
+import org.ocram.test.domain.MyType;
 
 @RunAsClient
 @RunWith(Arquillian.class)
@@ -29,6 +32,7 @@ public class ContextResolverIntegrationTest {
     public static Archive<?> createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
                 .addClasses(JaxbTestInput.class, TestResource.class)
+                .addClass(JaxbContextResolver.class)
                 .setWebXML("WEB-INF/web.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
@@ -37,31 +41,50 @@ public class ContextResolverIntegrationTest {
     URL deploymentUrl;
     
     @Test
-    public void testCreateAndRetrieveAsset() throws Exception {
+    public void testSimpleTest() throws Exception {
         String urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/test/ping").toExternalForm();
         ClientRequest request = new ClientRequest(urlString);
-        System.out.println( ">>> " + request.getUri());
         // we're expecting a String back
         ClientResponse responseObj = request.get();
-        System.out.println( "<<< " + responseObj.getStatus() );
+        assertEquals("REST call status is incorrect.", 204, responseObj.getStatus());
+    }
+    
+    @Test
+    public void testCreateAndRetrieveAsset() throws Exception {
         
         JaxbTestInput inputObject = new JaxbTestInput();
         inputObject.setId(23l);
         inputObject.setName("test");
+        inputObject.getObjects().add(new MyType("wakka", 49));
         
-        urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/test/context").toExternalForm();
-        request = new ClientRequest(urlString);
+        String urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/test/context").toExternalForm();
+        ClientRequest request = new ClientRequest(urlString);
         System.out.println( ">>> " + request.getUri());
         
         request.header("Accept", MediaType.APPLICATION_XML);
-        request.body(MediaType.APPLICATION_XML, inputObject);
+        String output = serialize(inputObject);
+        request.body(MediaType.APPLICATION_XML, output);
 
         // we're expecting a String back
-        responseObj = request.post(String.class);
+        ClientResponse<JaxbTestInput> responseObj = request.post(JaxbTestInput.class);
         System.out.println( "<<< " + responseObj.getStatus() );
 
         assertEquals(200, responseObj.getStatus());
-        System.out.println("OUT: " + responseObj.getEntity(String.class));
+        System.out.println("OUT: " + responseObj.getEntity(JaxbTestInput.class).getObjects().get(0).getClass().getName());
+    }
+    
+    private String serialize(JaxbTestInput input) throws Exception {  
+        JAXBContext jaxbContext = JAXBContext.newInstance(
+                JaxbTestInput.class, 
+                MyType.class
+                );
+        Marshaller marshaller = jaxbContext.createMarshaller();
+        StringWriter stringWriter = new StringWriter();
+
+        marshaller.marshal(input, stringWriter);
+        String output = stringWriter.toString();
+
+        return output;
     }
     
 }

@@ -6,8 +6,13 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class TestInvocationHandler implements InvocationHandler {
 
+    private static Logger logger = LoggerFactory.getLogger(ClassToBeProxied.class);
+    
     private Object target;
     
     public TestInvocationHandler(Object target) { 
@@ -25,8 +30,8 @@ public class TestInvocationHandler implements InvocationHandler {
         if( "getClass".equals(method.getName()) ) { 
            return ClassToBeProxied.class; 
         }
-        out.println( "'proxy' parameter is class [" + proxy.getClass() + "] :" + (proxy instanceof ClassToBeProxied) );
-        out.println( ((Proxy) proxy).isProxyClass(ClassToBeProxied.class) );
+        logger.debug( "'proxy' parameter is class [" + proxy.getClass() + "] :" + (proxy instanceof ClassToBeProxied) );
+        logger.debug( "{}", ((Proxy) proxy).isProxyClass(ClassToBeProxied.class) );
         Object result = null;
         if( "of".equals(method.getName()) ) { 
             out.print("Proxied: " );

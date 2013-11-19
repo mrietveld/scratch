@@ -7,15 +7,15 @@ public class NumberTest extends ScratchBaseTest {
 
     @Test
     public void maxNumsTest() { 
-        out.println("Short: ");
-        out.println(" " + Short.MAX_VALUE);
-        out.println(" " + Short.MIN_VALUE);
-        out.println("Integer: ");
-        out.println(" " + Integer.MAX_VALUE);
-        out.println(" " + Integer.MIN_VALUE);
-        out.println("Long: ");
-        out.println(" " + Long.MAX_VALUE);
-        out.println(" " + Long.MIN_VALUE);
+        logger.debug("Short: ");
+        logger.debug(" " + Short.MAX_VALUE);
+        logger.debug(" " + Short.MIN_VALUE);
+        logger.debug("Integer: ");
+        logger.debug(" " + Integer.MAX_VALUE);
+        logger.debug(" " + Integer.MIN_VALUE);
+        logger.debug("Long: ");
+        logger.debug(" " + Long.MAX_VALUE);
+        logger.debug(" " + Long.MIN_VALUE);
     }
     
 }

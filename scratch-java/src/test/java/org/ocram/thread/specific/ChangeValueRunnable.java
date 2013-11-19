@@ -1,7 +1,13 @@
 package org.ocram.thread.specific;
 
+import org.ocram.reflection.proxy.objects.ClassToBeProxied;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class ChangeValueRunnable implements Runnable {
 
+    private static Logger logger = LoggerFactory.getLogger(ChangeValueRunnable.class);
+    
     private ValueHolder value;
 
     public ChangeValueRunnable(ValueHolder value) {
@@ -10,7 +16,7 @@ public class ChangeValueRunnable implements Runnable {
 
     @Override
     public void run() {
-        System.out.println(Thread.currentThread().getName() + " started");
+        logger.debug(Thread.currentThread().getName() + " started");
         try {
             while (true) {
                 value.changeValue();

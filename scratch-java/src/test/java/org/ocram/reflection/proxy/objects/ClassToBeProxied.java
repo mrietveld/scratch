@@ -1,11 +1,14 @@
 package org.ocram.reflection.proxy.objects;
 
-import static java.lang.System.out;
-
 import java.io.Serializable;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClassToBeProxied implements ClassInterface, Serializable {
 
+    private static Logger logger = LoggerFactory.getLogger(ClassToBeProxied.class);
+    
     /* Generated serial version UID */
     private static final long serialVersionUID = -2307010830688962213L;
     
@@ -22,21 +25,21 @@ public class ClassToBeProxied implements ClassInterface, Serializable {
     
     public int of() { 
         ++i;
-        out.println( "of: " + i );
+        logger.debug( "of: " + i );
         return i;
     }
 
     public void og() { 
         ++i;
-        out.println( "og" );
+        logger.debug( "og" );
     }
 
     public void oh(int d) { 
-        out.println( "oh: " + d);
+        logger.debug( "oh: " + d);
     }
 
     public int ok(int d) { 
-        out.println( "ok: " + d);
+        logger.debug( "ok: " + d);
         return -1 * d;
     }
 

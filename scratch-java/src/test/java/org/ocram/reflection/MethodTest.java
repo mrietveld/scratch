@@ -79,11 +79,11 @@ public class MethodTest extends ScratchBaseTest {
                     }
                     assertTrue("" + i + "(" + val + ":" + arr[i] + ")", val == arr[i]);
                 } catch (IllegalArgumentException iae) {
-                    out.println(iae.getClass().getSimpleName() + ": " + iae.getMessage());
+                    logger.debug(iae.getClass().getSimpleName() + ": " + iae.getMessage());
                 } catch (IllegalAccessException iae) {
-                    out.println(iae.getClass().getSimpleName() + ": " + iae.getMessage());
+                    logger.debug(iae.getClass().getSimpleName() + ": " + iae.getMessage());
                 } catch (InvocationTargetException ite) {
-                    out.println(ite.getClass().getSimpleName() + ": " + ite.getMessage());
+                    logger.debug(ite.getClass().getSimpleName() + ": " + ite.getMessage());
                 }
             }
         }
@@ -153,6 +153,6 @@ public class MethodTest extends ScratchBaseTest {
     }
     
     public void unsupported() { 
-        out.println( Thread.currentThread().getStackTrace()[2].getMethodName());
+        logger.debug( Thread.currentThread().getStackTrace()[2].getMethodName());
     }
 }

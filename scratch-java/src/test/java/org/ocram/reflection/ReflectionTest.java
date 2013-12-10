@@ -49,6 +49,7 @@ public class ReflectionTest extends ScratchBaseTest {
         pkgFolder = pkgFolder.replace("package ", "");
         pkgFolder = pkgFolder.replaceAll("\\.", File.separator);
         logger.info( pkgFolder );
+        assertTrue( pkgFolder, pkgFolder.endsWith("reflection"));
     }
 
 }

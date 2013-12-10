@@ -1,4 +1,4 @@
-package org.ocram.test.rest;
+package org.ocram.test.rest.context;
 
 import java.util.HashSet;
 import java.util.Set;

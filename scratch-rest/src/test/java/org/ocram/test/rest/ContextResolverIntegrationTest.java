@@ -23,6 +23,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ocram.test.domain.JaxbTestInput;
 import org.ocram.test.domain.MyType;
+import org.ocram.test.rest.context.ContextResource;
+import org.ocram.test.rest.context.DeploymentClassGatherer;
+import org.ocram.test.rest.context.JaxbContextResolver;
 
 @RunAsClient
 @RunWith(Arquillian.class)

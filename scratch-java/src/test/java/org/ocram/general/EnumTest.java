@@ -9,7 +9,6 @@ public class EnumTest {
     @Test
     public void testValues() { 
         AssetType one = AssetType.BPMN;
-        
         assertTrue( one.value() == 3);
     }
     

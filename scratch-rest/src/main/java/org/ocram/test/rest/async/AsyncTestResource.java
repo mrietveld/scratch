@@ -1,4 +1,4 @@
-package org.ocram.test.rest;
+package org.ocram.test.rest.async;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -8,25 +8,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.event.Event;
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.UriInfo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Path("/async")
-@RequestScoped
 public class AsyncTestResource {
 
     private static final Logger logger = LoggerFactory.getLogger(AsyncTestResource.class);
-    private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+    private final static SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
     
+    @Context
+    private HttpServletRequest request;
+    
+    @Context
+    private Request restRequest;
+    
+    @Context 
+    private UriInfo uriInfo;
+    
+    @Inject
+    private Event<AsyncJobRequest> asyncJobEvent;
+
     @GET
     @Path("/ping")
     public void testHelp() {
@@ -35,18 +49,17 @@ public class AsyncTestResource {
 
     @POST
     @Path("/test")
-    public Response async(@Context HttpServletRequest request) {
+    public Response async() {
         logger.info("BEF: " + sdf.format(new Date(System.currentTimeMillis())));
         try { 
-        Map<String, List<String>> params = getRequestParams(request);
-        String input = "DEFAULT";
-        if( params.size() > 0 ) { 
-            input = params.entrySet().iterator().next().getKey();
-        }
-        
-        logger.info("DEP: " + input );
-        
-        return Response.status(Status.ACCEPTED).build();
+            Map<String, List<String>> params = getRequestParams(request);
+            String input = "DEFAULT";
+            if( params.size() > 0 ) { 
+                input = params.entrySet().iterator().next().getKey();
+            }
+
+            asyncJobEvent.fire(new AsyncJobRequest(input));
+            return Response.status(Status.ACCEPTED).build();
         } finally { 
             logger.info("AFT: " + sdf.format(new Date(System.currentTimeMillis())));
         }
@@ -62,4 +75,5 @@ public class AsyncTestResource {
 
         return parameters;
     }
+
 }

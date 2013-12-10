@@ -1,6 +1,8 @@
 package org.ocram.string;
 
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
@@ -118,4 +120,6 @@ public class RegexTest extends ScratchBaseTest {
         }
         logger.debug( og );
     }
+    
+
 }

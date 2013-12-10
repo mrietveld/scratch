@@ -1,4 +1,4 @@
-package org.ocram.test.rest;
+package org.ocram.test.rest.context;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;

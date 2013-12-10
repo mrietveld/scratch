@@ -63,4 +63,15 @@ public class TimeTest extends ScratchBaseTest {
         } 
     }
     
+    @Test
+    public void millisTest() { 
+        long one = 1385504092114l;
+        long two = 1385504096173l;
+        Date bef = new Date(one);
+        Date aft = new Date(two);
+        
+        logger.info(sdf.format(bef));
+        logger.info(sdf.format(aft));
+    }
+    
 }

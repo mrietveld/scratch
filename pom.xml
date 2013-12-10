@@ -4,7 +4,7 @@
 
   <groupId>org.ocram</groupId>
   <artifactId>scratch</artifactId>
-  <version>0.0.2-SNAPSHOT</version>
+  <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <description>Scratch Project</description>

@@ -20,8 +20,8 @@
     <spring.version>3.0.7.RELEASE</spring.version>
     <hibernate.version>4.2.4.Final</hibernate.version>
 
-    <jbpm.version>6.0.0-SNAPSHOT</jbpm.version>
-    <drools.version>6.0.0-SNAPSHOT</drools.version>
+    <jbpm.version>6.0.0.Final</jbpm.version>
+    <drools.version>6.0.0.Final</drools.version>
   </properties>
 
   <dependencies>
@@ -103,12 +103,6 @@
       <groupId>org.jbpm</groupId>
       <artifactId>jbpm-audit</artifactId>
       <version>${jbpm.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.kie.tests</groupId>
-      <artifactId>kie-wb-tests-base</artifactId>
-      <version>${jbpm.version}</version>
-      <scope>test</scope>
     </dependency>
 
     <!-- persistence -->

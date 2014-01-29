@@ -26,7 +26,7 @@
   <logger name="org.hibernate.cfg.SettingsFactory" level="warn"/>
   <logger name="org.hibernate.tool.hbm2ddl" level="warn"/>
 
-  <root level="info"><!-- TODO We probably want to set default level to warn instead -->
+  <root level="INFO">
     <appender-ref ref="consoleAppender" />
   </root>
 

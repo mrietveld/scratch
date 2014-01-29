@@ -138,7 +138,7 @@ public class ParseTest extends ScratchBaseTest {
     @Test
     public void quickie() throws Exception {
         String fileName = "org/kie/tests/wb/base/test/MyType.class";
-        String className = fileName.replaceAll(File.separator, ".");
+        String className = fileName.replaceAll("/", ".");
         className = className.substring(0, fileName.length() - ".class".length());
         System.out.println( "FILE : " + fileName );
         System.out.println( "CLASS: " + className );

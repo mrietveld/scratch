@@ -1,6 +1,7 @@
 package org.ocram.persistence;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.EntityManager;
@@ -36,24 +37,53 @@ public class JtaTransactionsTest extends ScratchBaseTest {
     }
 
     @Test
-    public void idDeterminationTest() throws Exception { 
+    public void idDeterminationTest() throws Exception {
         Stuff stuff = new Stuff();
-        
+
         UserTransaction ut = PersistenceUtil.findUserTransaction();
-        
+
         ut.begin();
         EntityManager em = emf.createEntityManager();
         em.persist(stuff);
-        assertTrue( "" + stuff.getId(), stuff.getId() >= 0 );
+        assertTrue("" + stuff.getId(), stuff.getId() >= 0);
         ut.commit();
-        assertTrue( "" + stuff.getId(), stuff.getId() >= 0 );
+        assertTrue("" + stuff.getId(), stuff.getId() >= 0);
         em.close();
-        
+
         stuff = new Stuff();
         stuff.name = "illusionary-id";
         em = emf.createEntityManager();
         em.persist(stuff);
         assertNull("Persisting outside of a tx does not trigger id generation!", stuff.id);
-        
+    }
+
+    @Test
+    public void entityManagerBehaviourTest() throws Exception {
+        Stuff stuff = new Stuff();
+
+        EntityManager em = emf.createEntityManager();
+
+        UserTransaction ut = PersistenceUtil.findUserTransaction();
+        ut.begin();
+
+        em.persist(stuff);
+        em.close();
+
+        ut.commit();
+
+        ut = PersistenceUtil.findUserTransaction();
+        ut.begin();
+        try {
+            em = emf.createEntityManager();
+
+            List<Stuff> stuffList = em.createQuery("Select s from Stuff s").getResultList();
+
+            assertTrue("No persisted entities found! (" + stuffList.size() + ")", stuffList.size() > 0);
+            assertNotNull("Could not find persistence entity!", stuffList);
+            Stuff persistedStuff = stuffList.get(0);
+            assertEquals(persistedStuff.name, stuff.name);
+        } finally {
+            ut.commit();
+        }
     }
 }

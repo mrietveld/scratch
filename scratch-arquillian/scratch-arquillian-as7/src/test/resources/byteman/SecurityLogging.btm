@@ -1,0 +1,118 @@
+#
+# A byteman script which prints a stacktrace whenever UserTransaction.begin is called
+#
+########################################################################
+#
+# Rule to trace class load
+#
+# To see the stack trace
+# DO traceStack(">>> BEGIN:\n", 25 );
+#
+# To just print the text
+# DO traceln(">>> BEGIN:" );
+#
+
+RULE JBossSecurityContext constructor stack
+CLASS org.jboss.security.plugins.JBossSecurityContext
+METHOD <init>
+AT ENTRY
+IF TRUE
+DO traceStack(">>> jsc INIT: " + System.identityHashCode($this));
+ENDRULE
+
+RULE setPrincipalVsRolesMap stack
+CLASS org.jboss.as.ejb3.security.SecurityContextInterceptorHolder
+METHOD setPrincipalVsRolesMap
+AT ENTRY
+IF TRUE
+DO traceStack(">>> setPrincipalVsRolesMap: ");
+ENDRULE
+
+RULE SecurityRolesMetaData.processSecurityRoleMetaData stack
+CLASS org.jboss.as.ejb3.security.EJBSecurityMetaData
+METHOD getSecurityRoles
+AT ENTRY
+IF TRUE
+DO traceStack(">>> getSecurityRoles: ");
+ENDRULE
+
+RULE EJBComponentCreateService init stack
+CLASS org.jboss.as.ejb3.component.EJBComponentCreateService
+METHOD <init>
+AT ENTRY
+IF TRUE
+DO traceStack(">>> EJBComponentCreateService: ");
+ENDRULE
+
+RULE EJBComponent init stack
+CLASS org.jboss.as.ejb3.component.EJBComponent
+METHOD <init>
+AT ENTRY
+IF TRUE
+DO traceStack(">>> EJBComponent: ");
+ENDRULE
+
+RULE EarMetaData.getSecurityRoles() stack
+CLASS org.jboss.metadata.ear.spec.EarMetaData
+METHOD getSecurityRoles
+AT ENTRY
+IF TRUE
+DO traceStack(">>> EarMetaData.getSecurityRoles: ");
+ENDRULE
+
+RULE SecurityRolesMetaData init stack
+CLASS org.jboss.metadata.javaee.spec.SecurityRolesMetaData
+METHOD <init>
+AT ENTRY
+IF TRUE
+DO traceStack(">>> SecurityRolesMetaData: ");
+ENDRULE
+
+RULE SubjectInfo init stack
+CLASS org.jboss.security.SubjectInfo
+METHOD <init>
+AT ENTRY
+IF TRUE
+DO traceStack(">>> SubjectInfo: ");
+ENDRULE
+
+# RULE UserTransaction.begin trace 
+# CLASS 
+# METHOD begin
+# AT EXIT
+# IF TRUE
+# DO traceln(">>> BEGIN");
+# ENDRULE
+# 
+# RULE EntityManager.close trace 
+# CLASS org.hibernate.ejb.EntityManagerImpl
+# METHOD close
+# AT ENTRY
+# IF TRUE
+# DO traceln("{{{ CLOSE: " + System.identityHashCode($this) );
+# ENDRULE
+# 
+# RULE EntityManager joinTransaction trace 
+# CLASS org.hibernate.ejb.AbstractEntityManagerImpl
+# METHOD joinTransaction()
+# AT ENTRY
+# IF TRUE
+# DO traceln("}}} JOIN TX: " + System.identityHashCode($this) );
+# ENDRULE
+# 
+# RULE JPAWorkingMemoryDbLogger constructor
+# CLASS org.jbpm.process.audit.JPAWorkingMemoryDbLogger
+# METHOD <init>(javax.persistence.EntityManagerFactory)
+# AT EXIT
+# IF TRUE
+# DO traceln("-=- JPAWorkingMemoryDbLogger");
+# ENDRULE
+# 
+# RULE EntityManagerFactory.close trace 
+# CLASS org.hibernate.ejb.EntityManagerFactoryImpl
+# METHOD close()
+# AT ENTRY
+# IF TRUE
+# DO traceln("000 EMF CLOSE: " + System.identityHashCode($this) );
+# ENDRULE
+# 

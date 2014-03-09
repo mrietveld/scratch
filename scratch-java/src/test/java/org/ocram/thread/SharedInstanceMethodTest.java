@@ -19,11 +19,11 @@ public class SharedInstanceMethodTest extends ScratchBaseTest {
         int b = ++a;
         ++s;
         ++u;
-        logger.info( "[" + Thread.currentThread().getName() + "] "
+        logger.debug( "[" + Thread.currentThread().getName() + "] "
                 + " a: " + a
                 + " b: " + b );
         if( "t1".equals(Thread.currentThread().getName()) ) { 
-            logger.info( "[" + Thread.currentThread().getName() + "] sleep" );
+            logger.debug( "[" + Thread.currentThread().getName() + "] sleep" );
             Thread.sleep(1000);
         }
         // t1 at int b, but t2 at int x?
@@ -34,10 +34,10 @@ public class SharedInstanceMethodTest extends ScratchBaseTest {
         int y = ++x; 
         ++s;
         ++u;
-        logger.info( "[" + Thread.currentThread().getName() + "] "
+        logger.debug( "[" + Thread.currentThread().getName() + "] "
                 + " x: " + x
                 + " y: " + y );
-        logger.info( "[" + Thread.currentThread().getName() + "] "
+        logger.debug( "[" + Thread.currentThread().getName() + "] "
                 + " s: " + s
                 + " u: " + u );
     }
@@ -56,7 +56,7 @@ public class SharedInstanceMethodTest extends ScratchBaseTest {
         t2.start();
         
         while( t1.isAlive() || t2.isAlive() ) { 
-//            logger.info("t1: " + t1.isAlive() + " t2: " + t2.isAlive() );
+//            logger.debug("t1: " + t1.isAlive() + " t2: " + t2.isAlive() );
             Thread.sleep(1000);
         }
     }
@@ -70,7 +70,7 @@ public class SharedInstanceMethodTest extends ScratchBaseTest {
         }
 
         public void run() {
-            logger.info("First: " + Thread.currentThread().getName());
+            logger.debug("First: " + Thread.currentThread().getName());
 
             try {
                 sharedInstance.sharedMethod();
@@ -90,7 +90,7 @@ public class SharedInstanceMethodTest extends ScratchBaseTest {
         }
 
         public void run() {
-            logger.info("Second: " + Thread.currentThread().getName());
+            logger.debug("Second: " + Thread.currentThread().getName());
             
             try {
                 sharedInstance.sharedMethod();

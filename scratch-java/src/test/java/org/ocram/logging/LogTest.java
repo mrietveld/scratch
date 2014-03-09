@@ -15,6 +15,6 @@ public class LogTest extends ScratchBaseTest {
         Exception blah = new UnsupportedEncodingException();
         blah.fillInStackTrace();
         AtomicInteger og = new AtomicInteger(1);
-        logger.info("yes: {} no: {} ", og, blah);
+        logger.debug("yes: {} no: {} ", og, blah);
     }
 }

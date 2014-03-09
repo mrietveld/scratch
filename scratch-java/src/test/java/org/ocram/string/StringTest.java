@@ -3,7 +3,9 @@ package org.ocram.string;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeUtility;
@@ -84,6 +86,9 @@ public class StringTest extends ScratchBaseTest {
     public void subStringTest() {
         String og = "0abcde";
         logger.debug(og.substring(1));
+        
+        List<String> of = new ArrayList<String>();
+        
     }
 
     @Test

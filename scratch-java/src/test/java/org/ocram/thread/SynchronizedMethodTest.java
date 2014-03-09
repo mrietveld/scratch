@@ -27,8 +27,8 @@ public class SynchronizedMethodTest extends ScratchBaseTest {
                     e.printStackTrace();
                 }
             }
+            System.out.println();
         }
-        logger.debug(".");
 
         this.value = newValue;
     }
@@ -45,9 +45,9 @@ public class SynchronizedMethodTest extends ScratchBaseTest {
 
             @Override
             public void run() {
-                logger.info("P> " + sdf.format(new Date()));
+                logger.debug("First starts: " + sdf.format(new Date()));
                 put("yes");
-                logger.info(sdf.format(new Date()) + "<P");
+                logger.debug("First ends   : " + sdf.format(new Date()));
             }
         };
 
@@ -57,14 +57,13 @@ public class SynchronizedMethodTest extends ScratchBaseTest {
 
             @Override
             public void run() {
-                logger.info("G> " + sdf.format(new Date()));
+                logger.debug("Second starts: " + sdf.format(new Date()));
                 String og = null;
                 while (og == null) {
-                    logger.info("og: " + og);
+                    logger.debug("Second get: " + og);
                     og = get();
                 }
-                logger.info("og: " + og);
-                logger.info(sdf.format(new Date()) + "<G");
+                logger.debug("Second ends [" + og + "]: " + sdf.format(new Date()));
             }
         };
 
@@ -107,8 +106,7 @@ public class SynchronizedMethodTest extends ScratchBaseTest {
         }
 
         public void run() {
-            logger.info(name + ": " + Thread.currentThread().getName());
-
+            logger.debug(name + ": " + Thread.currentThread().getName());
             function.run();
         }
     }

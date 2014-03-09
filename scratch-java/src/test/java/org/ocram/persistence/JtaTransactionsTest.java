@@ -66,6 +66,7 @@ public class JtaTransactionsTest extends ScratchBaseTest {
         UserTransaction ut = PersistenceUtil.findUserTransaction();
         ut.begin();
 
+        em.joinTransaction();
         em.persist(stuff);
         em.close();
 

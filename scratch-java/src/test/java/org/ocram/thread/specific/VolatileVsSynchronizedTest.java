@@ -1,8 +1,10 @@
 package org.ocram.thread.specific;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 
+@Ignore
 public class VolatileVsSynchronizedTest extends ScratchBaseTest {
 
     @Test
@@ -18,7 +20,7 @@ public class VolatileVsSynchronizedTest extends ScratchBaseTest {
             chain = (ValueHolder) chain.value;
         }
         
-        int size = 750;
+        int size = 10;
         Thread [] threads = new Thread[size];
         for( int i = 0; i < size; ++i ) { 
            Runnable target = new ChangeValueRunnable(singleHolder); 

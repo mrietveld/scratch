@@ -27,7 +27,7 @@ public class ByteCodeTest extends ScratchBaseTest {
             throw new IllegalStateException("Main class is not stored in a file.");
         File classFile = new File(classFileUrl.getPath());
         assertTrue(classFile != null);
-        logger.info(classFile.getAbsolutePath());
+        logger.debug(classFile.getAbsolutePath());
         
         byte [] fileBytes = readFile(classFile);
         assertTrue( "no bytes retrieved", fileBytes.length > 0 );

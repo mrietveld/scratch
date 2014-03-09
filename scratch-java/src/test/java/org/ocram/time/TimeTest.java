@@ -70,8 +70,8 @@ public class TimeTest extends ScratchBaseTest {
         Date bef = new Date(one);
         Date aft = new Date(two);
         
-        logger.info(sdf.format(bef));
-        logger.info(sdf.format(aft));
+        logger.debug(sdf.format(bef));
+        logger.debug(sdf.format(aft));
     }
     
 }

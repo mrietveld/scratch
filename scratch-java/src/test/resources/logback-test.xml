@@ -27,7 +27,7 @@
   <logger name="org.hibernate.tool.hbm2ddl" level="warn"/>
   
   
-  <logger name="org.ocram.thread" level="debug"/>
+  <logger name="org.ocram" level="debug"/>
 
   <root level="INFO">
     <appender-ref ref="consoleAppender" />

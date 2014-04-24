@@ -14,12 +14,14 @@ public class ProxyMessageTest extends ScratchBaseTest {
        ClassInterface operClass = MessageInvocationHandler.createRequest(); 
        int ohArg = 3;
        operClass.oh(ohArg);
-       MethodRequest request = ((MethodRequestFactory) operClass).getRequest();
        
-       assertTrue(request != null); 
+       MethodRequest request = ((MethodRequestFactory) operClass).getRequest();
+       assertNotNull(request); 
        
        Object [] args = request.getArgs();
-       assertTrue(args != null && args.length == 1 );
+       assertNotNull(args); 
+       
+       assertEquals(1, args.length);
        assertTrue((Integer) args[0] == ohArg);
        assertTrue("oh".equals(request.getMethod().getName()));
     }

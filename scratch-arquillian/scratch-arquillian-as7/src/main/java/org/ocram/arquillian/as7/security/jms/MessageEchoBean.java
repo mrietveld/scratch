@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ocram.arquillian.as7.security;
+package org.ocram.arquillian.as7.security.jms;
 
 import java.security.AccessControlContext;
 import java.security.AccessController;
 import java.security.Principal;
+import java.security.acl.Group;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -39,9 +40,11 @@ import javax.security.auth.Subject;
 import javax.security.auth.callback.CallbackHandler;
 import javax.security.auth.login.LoginContext;
 import javax.security.auth.login.LoginException;
+import javax.security.auth.message.callback.GroupPrincipalCallback;
 
 import org.jboss.security.SecurityContext;
 import org.jboss.security.SecurityContextAssociation;
+import org.ocram.arquillian.as7.security.UserPassCallbackHandler;
 
 /**
  * MessageEchoBean
@@ -81,8 +84,11 @@ public class MessageEchoBean implements MessageListener {
                 for( Entry<String, Object> entry : data.entrySet()) { 
                     System.out.println( "?? "  + entry.getKey() + ": " + (entry.getValue() == null ? "null" : entry.getValue().getClass().getName()));
                 }
+                data.put("org.jbpm.task.roles", "hahah!");
             }
         }
+        
+        System.out.println( "? " + SecurityContextAssociation.getSecurityContext().getData().get("org.jbpm.task.roles") );
 
         Connection connection = null;
         try {

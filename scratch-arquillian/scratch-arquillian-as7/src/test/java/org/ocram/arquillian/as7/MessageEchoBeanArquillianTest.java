@@ -39,11 +39,10 @@ import org.jboss.shrinkwrap.api.spec.JavaArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.ocram.arquillian.as7.jms.JmsQueueServerSetupTask;
-import org.ocram.arquillian.as7.security.MessageEchoBean;
 import org.ocram.arquillian.as7.security.UserPassCallbackHandler;
+import org.ocram.arquillian.as7.security.jms.MessageEchoBean;
 
 @RunWith(Arquillian.class)
-//@ServerSetup(JmsQueueServerSetupTask.class)
 public class MessageEchoBeanArquillianTest {
     
     @Deployment(name="mdb-echo-security-test")

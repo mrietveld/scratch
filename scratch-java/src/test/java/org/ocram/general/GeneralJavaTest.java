@@ -7,6 +7,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.annotation.Nullable;
+
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 import org.ocram.collections.objects.Bam;
@@ -105,12 +107,15 @@ public class GeneralJavaTest extends ScratchBaseTest {
                 case 1:
                     arguments[i++] = een + twe + dri + vie + fij;
                 case 2:
+                    assertNotNull( "vie", vie);
                     arguments[i++] = vie.concat(een);
                 case 3:
+                    assertNotNull( "thr", thr);
                     arguments[i++] = Integer.toString(thr);
                 case 4:
                     arguments[i++] = Integer.toString(ich.geta_1());
                 case 5:
+                    assertNotNull( "ni", ni);
                     arguments[i++] = Integer.toString(ni.geta_4());
                 case 6:
                     arguments[i++] = dri + one + two;

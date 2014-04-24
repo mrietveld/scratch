@@ -12,7 +12,7 @@ import org.jboss.as.arquillian.container.ManagementClient;
 import org.jboss.as.controller.client.ModelControllerClient;
 import org.jboss.as.controller.client.helpers.ClientConstants;
 import org.jboss.dmr.ModelNode;
-import org.ocram.arquillian.as7.security.MessageEchoBean;
+import org.ocram.arquillian.as7.security.jms.MessageEchoBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

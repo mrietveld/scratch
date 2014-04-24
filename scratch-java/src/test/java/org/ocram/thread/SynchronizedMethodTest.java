@@ -3,11 +3,13 @@ package org.ocram.thread;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@Ignore
 public class SynchronizedMethodTest extends ScratchBaseTest {
 
     private static Logger logger = LoggerFactory.getLogger(SynchronizedMethodTest.class);
@@ -20,14 +22,13 @@ public class SynchronizedMethodTest extends ScratchBaseTest {
         while (next < now + 10000) {
             next = System.currentTimeMillis();
             if (next % 200 == 0) {
-                System.out.print(".");
+                logger.debug(".");
                 try {
                     Thread.sleep(1);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-            System.out.println();
         }
 
         this.value = newValue;

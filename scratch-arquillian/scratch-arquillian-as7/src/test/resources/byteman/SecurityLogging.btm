@@ -12,107 +12,99 @@
 # DO traceln(">>> BEGIN:" );
 #
 
-RULE JBossSecurityContext constructor stack
-CLASS org.jboss.security.plugins.JBossSecurityContext
-METHOD <init>
-AT ENTRY
-IF TRUE
-DO traceStack(">>> jsc INIT: " + System.identityHashCode($this));
-ENDRULE
-
-RULE setPrincipalVsRolesMap stack
-CLASS org.jboss.as.ejb3.security.SecurityContextInterceptorHolder
-METHOD setPrincipalVsRolesMap
-AT ENTRY
-IF TRUE
-DO traceStack(">>> setPrincipalVsRolesMap: ");
-ENDRULE
-
-RULE SecurityRolesMetaData.processSecurityRoleMetaData stack
-CLASS org.jboss.as.ejb3.security.EJBSecurityMetaData
-METHOD getSecurityRoles
-AT ENTRY
-IF TRUE
-DO traceStack(">>> getSecurityRoles: ");
-ENDRULE
-
-RULE EJBComponentCreateService init stack
-CLASS org.jboss.as.ejb3.component.EJBComponentCreateService
-METHOD <init>
-AT ENTRY
-IF TRUE
-DO traceStack(">>> EJBComponentCreateService: ");
-ENDRULE
-
-RULE EJBComponent init stack
-CLASS org.jboss.as.ejb3.component.EJBComponent
-METHOD <init>
-AT ENTRY
-IF TRUE
-DO traceStack(">>> EJBComponent: ");
-ENDRULE
-
-RULE EarMetaData.getSecurityRoles() stack
-CLASS org.jboss.metadata.ear.spec.EarMetaData
-METHOD getSecurityRoles
-AT ENTRY
-IF TRUE
-DO traceStack(">>> EarMetaData.getSecurityRoles: ");
-ENDRULE
-
-RULE SecurityRolesMetaData init stack
-CLASS org.jboss.metadata.javaee.spec.SecurityRolesMetaData
-METHOD <init>
-AT ENTRY
-IF TRUE
-DO traceStack(">>> SecurityRolesMetaData: ");
-ENDRULE
-
-RULE SubjectInfo init stack
-CLASS org.jboss.security.SubjectInfo
-METHOD <init>
-AT ENTRY
-IF TRUE
-DO traceStack(">>> SubjectInfo: ");
-ENDRULE
-
-# RULE UserTransaction.begin trace 
-# CLASS 
-# METHOD begin
+# RULE JBossSecurityContext constructor stack
+# CLASS org.jboss.security.plugins.JBossSecurityContext
+# METHOD <init>
+# AT ENTRY
+# IF TRUE
+# DO traceStack(">>> JBossSecurityContext: \n");
+# ENDRULE
+# 
+# RULE SecurityRolesMetaData.processSecurityRoleMetaData stack
+# CLASS org.jboss.as.ejb3.security.EJBSecurityMetaData
+# METHOD getSecurityRoles
+# AT ENTRY
+# IF TRUE
+# DO traceStack(">>> getSecurityRoles: \n");
+# ENDRULE
+# 
+# RULE EJBComponentCreateService init stack
+# CLASS org.jboss.as.ejb3.component.EJBComponentCreateService
+# METHOD <init>
+# AT ENTRY
+# IF TRUE
+# DO traceStack(">>> EJBComponentCreateService: \n");
+# ENDRULE
+# 
+# RULE EJBComponent init stack
+# CLASS org.jboss.as.ejb3.component.EJBComponent
+# METHOD <init>
+# AT ENTRY
+# IF TRUE
+# DO traceStack(">>> EJBComponent: \n");
+# ENDRULE
+# 
+# RULE EarMetaData.getSecurityRoles() stack
+# CLASS org.jboss.metadata.ear.spec.EarMetaData
+# METHOD getSecurityRoles
+# AT ENTRY
+# IF TRUE
+# DO traceStack(">>> EarMetaData.getSecurityRoles: \n");
+# ENDRULE
+# 
+# RULE SecurityRolesMetaData init stack
+# CLASS org.jboss.metadata.javaee.spec.SecurityRolesMetaData
+# METHOD <init>
+# AT ENTRY
+# IF TRUE
+# DO traceStack(">>> SecurityRolesMetaData: \n");
+# ENDRULE
+# 
+# RULE SubjectInfo init stack
+# CLASS org.jboss.security.SubjectInfo
+# METHOD <init>
+# AT ENTRY
+# IF TRUE
+# DO traceStack(">>> SubjectInfo: \n");
+# ENDRULE
+# 
+# RULE SecurityContextInterceptorHolder setSecurityDomain stack
+# CLASS org.jboss.as.ejb3.security.SecurityContextInterceptorHolder
+# METHOD setSecurityDomain
 # AT EXIT
 # IF TRUE
-# DO traceln(">>> BEGIN");
+# DO traceStack(">>> setSecurityDomain: " + $this.securityDomain + "\n");
 # ENDRULE
-# 
-# RULE EntityManager.close trace 
-# CLASS org.hibernate.ejb.EntityManagerImpl
-# METHOD close
-# AT ENTRY
-# IF TRUE
-# DO traceln("{{{ CLOSE: " + System.identityHashCode($this) );
-# ENDRULE
-# 
-# RULE EntityManager joinTransaction trace 
-# CLASS org.hibernate.ejb.AbstractEntityManagerImpl
-# METHOD joinTransaction()
-# AT ENTRY
-# IF TRUE
-# DO traceln("}}} JOIN TX: " + System.identityHashCode($this) );
-# ENDRULE
-# 
+
+RULE StandardContext findSecurityRoles stack
+CLASS org.apache.catalina.core.StandardContext
+METHOD findSecurityRoles()
+AT ENTRY
+IF TRUE
+DO traceStack(">>> findSecurityRoles: \n");
+ENDRULE
+
+RULE JaccService getValue stack
+CLASS org.jboss.as.security.service.JaccService
+METHOD getValue
+AT ENTRY
+IF TRUE
+DO traceStack(">>> get PolicyConfiguration: \n");
+ENDRULE
+
+RULE WarJaccService createPermissions stack
+CLASS org.jboss.as.web.security.WarJaccService
+METHOD createPermissions
+AT EXIT
+IF TRUE
+DO traceStack(">>> createPermissions: " + $this.contextId + "\n");
+ENDRULE
+
 # RULE JPAWorkingMemoryDbLogger constructor
 # CLASS org.jbpm.process.audit.JPAWorkingMemoryDbLogger
 # METHOD <init>(javax.persistence.EntityManagerFactory)
 # AT EXIT
 # IF TRUE
 # DO traceln("-=- JPAWorkingMemoryDbLogger");
-# ENDRULE
-# 
-# RULE EntityManagerFactory.close trace 
-# CLASS org.hibernate.ejb.EntityManagerFactoryImpl
-# METHOD close()
-# AT ENTRY
-# IF TRUE
-# DO traceln("000 EMF CLOSE: " + System.identityHashCode($this) );
 # ENDRULE
 # 

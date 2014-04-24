@@ -152,6 +152,42 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>2.3.1</version>
       </plugin>
+      
+        <!-- 3. modify server configuration -->
+         <plugin>
+           <groupId>org.codehaus.mojo</groupId>
+           <artifactId>xml-maven-plugin</artifactId>
+           <version>1.0</version>                      
+           <executions>                        
+             <execution>
+               <phase>process-test-resources</phase>
+               <goals>
+                 <goal>transform</goal>
+               </goals>
+               <configuration>                                 
+                 <transformationSets>
+                   <transformationSet> 
+                     <dir>${project.build.directory}/test-classes/</dir>
+                     <outputDir>${project.build.directory}/test-classes/</outputDir> 
+                     <includes> 
+                       <include>standalone-full.xml</include> 
+                     </includes>
+                     <stylesheet>src/test/resources/xslt/changeJmsMessagingConfig.xslt</stylesheet>
+                   </transformationSet> 
+                   <transformationSet> 
+                     <dir>${project.build.directory}/test-classes/</dir>
+                     <outputDir>${project.build.directory}/test-classes/</outputDir> 
+                     <includes> 
+                       <include>standalone-full.xml</include> 
+                     </includes>
+                     <stylesheet>src/test/resources/xslt/addDebugLogging.xslt</stylesheet>
+                   </transformationSet> 
+                 </transformationSets>
+               </configuration>
+             </execution>
+           </executions>
+         </plugin> 
+         
     </plugins>
   </build>
 

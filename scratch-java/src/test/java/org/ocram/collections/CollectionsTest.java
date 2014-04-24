@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Stack;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.naming.InitialContext;
+
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 import org.ocram.collections.objects.Bam;
@@ -17,6 +19,12 @@ import org.ocram.collections.objects.BomComparator;
 
 public class CollectionsTest extends ScratchBaseTest {
 
+    @Test
+    public void og() throws Exception { 
+        InitialContext ctx = new InitialContext();
+        logger.warn( ctx.getClass().getName());
+    }
+    
     @Test
     public void arrayTest() {
 

@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -17,9 +16,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 
+import org.jboss.resteasy.annotations.Suspend;
+import org.jboss.resteasy.spi.AsynchronousResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,29 +39,29 @@ public class AsyncTestResource {
     private UriInfo uriInfo;
     
     @Inject
-    private Event<AsyncJobRequest> asyncJobEvent;
+    private JobRequestProcessor jobRequestProcessor;
 
     @GET
     @Path("/ping")
-    public void testHelp() {
+    public Response ping() {
         System.out.println("PING!");
+        return Response.ok().build();
     }
 
     @POST
     @Path("/test")
-    public Response async() {
-        logger.info("BEF: " + sdf.format(new Date(System.currentTimeMillis())));
+    public void async(final @Suspend(100) AsynchronousResponse response) throws Exception {
+        logger.info("BEFO: " + sdf.format(new Date(System.currentTimeMillis())));
+        sendResponse(response);
         try { 
             Map<String, List<String>> params = getRequestParams(request);
             String input = "DEFAULT";
             if( params.size() > 0 ) { 
                 input = params.entrySet().iterator().next().getKey();
             }
-
-            asyncJobEvent.fire(new AsyncJobRequest(input));
-            return Response.status(Status.ACCEPTED).build();
+            jobRequestProcessor.processJob(input);
         } finally { 
-            logger.info("AFT: " + sdf.format(new Date(System.currentTimeMillis())));
+            logger.info("AFTR: " + sdf.format(new Date(System.currentTimeMillis())));
         }
     }
     
@@ -76,4 +76,20 @@ public class AsyncTestResource {
         return parameters;
     }
 
+    public void sendResponse(final AsynchronousResponse response) { 
+        Thread t = new Thread() {
+           @Override
+           public void run() {
+              try {
+                 Response jaxrs = Response.status(202).build();
+                 response.setResponse(jaxrs);
+                 logger.info("SENT: " + sdf.format(new Date(System.currentTimeMillis())));
+              } catch (Exception e) {
+                 e.printStackTrace();
+              }
+           }
+        };
+        t.start();
+        Thread.currentThread().yield();
+    }
 }

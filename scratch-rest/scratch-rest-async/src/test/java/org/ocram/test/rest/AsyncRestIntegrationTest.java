@@ -1,18 +1,10 @@
 package org.ocram.test.rest;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-import java.io.ByteArrayInputStream;
-import java.io.StringWriter;
 import java.net.URL;
-import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import javax.ws.rs.core.MediaType;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
@@ -26,12 +18,8 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.ocram.test.domain.JaxbTestInput;
-import org.ocram.test.domain.MyType;
-import org.ocram.test.rest.async.AsyncJobObserverExecutor;
-import org.ocram.test.rest.async.AsyncJobRequest;
 import org.ocram.test.rest.async.AsyncTestResource;
-import org.ocram.test.rest.context.ContextResource;
+import org.ocram.test.rest.async.JobRequestProcessor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,14 +27,14 @@ import org.slf4j.LoggerFactory;
 @RunWith(Arquillian.class)
 public class AsyncRestIntegrationTest {
     
-    private static final Logger logger = LoggerFactory.getLogger(ContextResource.class);
+    private static final Logger logger = LoggerFactory.getLogger(AsyncRestIntegrationTest.class);
+    
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
     
     @Deployment(testable = false, name="async-rest")
     public static Archive<?> createDeployment() {
         return ShrinkWrap.create(WebArchive.class, "test.war")
-                .addClasses(AsyncTestResource.class)
-                .addClasses(AsyncJobRequest.class, AsyncJobObserverExecutor.class)
+                .addClasses(AsyncTestResource.class, JobRequestProcessor.class)
                 .setWebXML("WEB-INF/web.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
@@ -57,16 +45,19 @@ public class AsyncRestIntegrationTest {
     
     @Test
     public void testAsynchronousRestFramework() throws Exception {
-        // normal
-        String urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/async/test").toExternalForm();
+        String urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/async/ping").toExternalForm();
         ClientRequest request = new ClientRequest(urlString);
-        System.out.println( ">>> " + request.getUri());
-        logger.info("BEF: " + sdf.format(new Date(System.currentTimeMillis())));
         ClientResponse<String> responseObj = request.post();
-        logger.info("AFT: " + sdf.format(new Date(System.currentTimeMillis())));
-        System.out.println( "<<< " + responseObj.getStatus() );
+        assertEquals("Ping failed!", 200, responseObj.getStatus());
+
+        // normal
+        urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/async/test?comet").toExternalForm();
+        request = new ClientRequest(urlString);
+        System.out.println( sdf.format(new Date(System.currentTimeMillis())) + " TEST >>> " + request.getUri());
+        responseObj = request.post();
+        System.out.println( sdf.format(new Date(System.currentTimeMillis())) + " TEST <<< " + responseObj.getStatus());
         assertEquals(202, responseObj.getStatus());
-        
-        Thread.sleep(3000);
+
+        Thread.sleep(10*000);
     }
 }

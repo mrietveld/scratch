@@ -1,8 +1,12 @@
 package org.ocram.reflection;
 
+import java.net.URL;
+import java.util.Set;
+
 import org.drools.persistence.jpa.JpaTimerJobInstance;
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
+import org.reflections.util.ClasspathHelper;
 
 public class ClassTest extends ScratchBaseTest { 
 
@@ -20,5 +24,11 @@ public class ClassTest extends ScratchBaseTest {
             clazz = clazz.getSuperclass();
         }
         while( clazz!= null );
+    }
+    
+    @Test
+    public void nonExistentPkgsTest() { 
+        Set<URL> urls = ClasspathHelper.forPackage("does.not.exist", this.getClass().getClassLoader());
+        assertTrue( "URLs found for non-existent package?!?", urls.isEmpty() );
     }
 }

@@ -122,4 +122,31 @@ public class CollectionsTest extends ScratchBaseTest {
         map.values().remove(val);
         assertNotEquals(null, map.get("one"));
     }
+    
+    @Test
+    public void emptyListIteration() {
+        List<String> emptyList = Collections.emptyList(); 
+        for( String og : emptyList ) { 
+            System.out.println( "WTF?" );
+        }
+    }
+    
+    @Test(expected=NullPointerException.class)
+    public void concurrentHashMapNullKey() {
+        ConcurrentHashMap<String, Object> chm = new ConcurrentHashMap<String, Object>();
+        chm.put("adsf", "asdf");
+        chm.get(null);
+    }
+    
+    @Test
+    public void arrayListSizeGet() { 
+        String [] content = { null, null };
+        List<String> strList = Arrays.asList(content);
+        assertNull(strList.get(0));
+        assertNull(strList.get(1));
+        strList.set(0, "one");
+        strList.set(1, "two");
+        assertEquals("one", strList.get(0));
+        assertEquals("two", strList.get(1));
+    }
 }

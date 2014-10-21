@@ -109,7 +109,7 @@ public class ParseTest extends ScratchBaseTest {
 
     }
 
-    String[] split(String in) {
+    private String[] split(String in) {
         String[] splitIn = in.split(",");
         List<String> outList = new ArrayList<String>();
         for (int i = 0; i < splitIn.length; ++i) {
@@ -121,7 +121,7 @@ public class ParseTest extends ScratchBaseTest {
         return outList.toArray(new String[outList.size()]);
     }
 
-    String join(String[] inArr) {
+    private String join(String[] inArr) {
         StringBuilder out = new StringBuilder();
         for (int i = 0; i < inArr.length; ++i) {
             String temp = inArr[i].trim();
@@ -136,12 +136,26 @@ public class ParseTest extends ScratchBaseTest {
     }
 
     @Test
-    public void quickie() throws Exception {
+    public void splitPartsTest() throws Exception {
         String fileName = "org/kie/tests/wb/base/test/MyType.class";
-        String className = fileName.replaceAll("/", ".");
-        className = className.substring(0, fileName.length() - ".class".length());
-        System.out.println( "FILE : " + fileName );
-        System.out.println( "CLASS: " + className );
+        String [] fileNameParts = fileName.split("/");
+        assertEquals( 7, fileNameParts.length);
+        String otherFileName = "TheirType.java";
+        fileNameParts = otherFileName.split("/");
+        assertEquals( 1, fileNameParts.length);
+      
+        String sep = ":";
+        String varId = sep + "4" + sep + "asd" + sep;
+        String val = "my" + sep + "23" + sep + "value" + sep;
+        String varVal =  varId.length() + sep + varId + sep + val;
+        System.out.println( "VV: [" + varVal + "]");
+        String [] parts = varVal.split(sep, 2); 
+        for( int i = 0; i < parts.length; ++i ) { 
+            System.out.println( i + ": [" + parts[i] + "]");
+        }
+        String extVarId = parts[1].substring(0,Integer.parseInt(parts[0]));
+        String extVal = parts[1].substring(Integer.parseInt(parts[0])+1);
+        assertEquals( varId, extVarId );
+        assertEquals( val, extVal );
     }
-    
 }

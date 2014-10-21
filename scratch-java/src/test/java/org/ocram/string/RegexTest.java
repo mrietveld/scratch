@@ -121,5 +121,11 @@ public class RegexTest extends ScratchBaseTest {
         logger.debug( og );
     }
     
-
+    @Test
+    public void endMatchesTest() { 
+        String og = "statuses";
+        assertTrue( "nononos..", og.matches(".*[aieou]s$") );
+        assertFalse( "huh?", og.matches("[xzwfg]s$") );
+    }
+    
 }

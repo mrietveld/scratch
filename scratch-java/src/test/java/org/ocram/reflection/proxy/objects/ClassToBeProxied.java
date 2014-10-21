@@ -12,7 +12,7 @@ public class ClassToBeProxied implements ClassInterface, Serializable {
     /* Generated serial version UID */
     private static final long serialVersionUID = -2307010830688962213L;
     
-    int i = 2;
+    public int i = 2;
     public String stringField;
 
     public ClassToBeProxied( int i ) { 

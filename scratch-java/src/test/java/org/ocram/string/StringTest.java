@@ -99,4 +99,17 @@ public class StringTest extends ScratchBaseTest {
         logger.debug( goodStatusStr );
     }
 
+
+    @Test
+    public void letterLoopingTest() {
+        for( int i = 0; i < 90; ++i ) { 
+            int id = i % 26;
+            char first = (char) ('A' + id); 
+            
+            System.out.print( new String( first + String.valueOf((i+1)/26)) + " ");
+            if( i % 26 == 25 ) { 
+               System.out.println(); 
+            }
+        }
+    }
 }

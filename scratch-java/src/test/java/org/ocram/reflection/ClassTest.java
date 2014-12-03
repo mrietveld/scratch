@@ -1,6 +1,10 @@
 package org.ocram.reflection;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import org.drools.persistence.jpa.JpaTimerJobInstance;
@@ -30,5 +34,15 @@ public class ClassTest extends ScratchBaseTest {
     public void nonExistentPkgsTest() { 
         Set<URL> urls = ClasspathHelper.forPackage("does.not.exist", this.getClass().getClassLoader());
         assertTrue( "URLs found for non-existent package?!?", urls.isEmpty() );
+    }
+    
+    @Test
+    public void paramTypesTest() { 
+        List<String> list = new ArrayList<String>(0);
+        Type paramType = list.getClass().getGenericInterfaces()[0];
+        assertTrue( paramType instanceof ParameterizedType );
+        assertTrue( ((ParameterizedType) paramType).getRawType().equals(List.class) );
+        Type genType = ((ParameterizedType) paramType).getActualTypeArguments()[0];
+        assertTrue( genType.equals(String.class));
     }
 }

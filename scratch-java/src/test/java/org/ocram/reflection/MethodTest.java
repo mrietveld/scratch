@@ -5,8 +5,9 @@ import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 
@@ -154,5 +155,36 @@ public class MethodTest extends ScratchBaseTest {
     
     public void unsupported() { 
         logger.debug( Thread.currentThread().getStackTrace()[2].getMethodName());
+    }
+    
+    @Test
+    public void returnTypeGenericTest() { 
+        boolean found = false;
+        boolean foundArr = false;
+        try { 
+            Method method = this.getClass().getMethod("getRoles", new Class[0]);
+            Type retType = method.getGenericReturnType();
+            if( retType instanceof ParameterizedType ) { 
+                Type rawType = ((ParameterizedType) retType).getRawType();
+                if( Collection.class.isAssignableFrom((Class) rawType) ) { 
+                   Type [] genTypes = ((ParameterizedType) retType).getActualTypeArguments();
+                   if( genTypes.length == 1 ) { 
+                      if( genTypes[0].equals(String.class) ) { 
+                         found = true; 
+                      }
+                   }
+                }
+            } else if( retType.equals(String[].class) ) { 
+                foundArr = true;
+            }
+        } catch( Exception e ) { 
+           found = false; 
+        }
+        
+        assertTrue( "Incorrect return type.", found || foundArr);
+    }
+    
+    public String[] getRoles() { 
+        return new String[0];
     }
 }

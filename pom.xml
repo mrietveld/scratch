@@ -23,7 +23,7 @@
     <version.arquillian>1.1.1.Final</version.arquillian>
 
     <version.slf4j>1.7.2</version.slf4j>
-    <version.resteasy>2.3.6.Final</version.resteasy>
+    <version.resteasy>2.3.7.Final</version.resteasy>
   </properties>
 
   <modules>

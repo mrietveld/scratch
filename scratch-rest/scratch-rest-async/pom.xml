@@ -3,12 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ocram</groupId>
-    <artifactId>scratch</artifactId>
+    <groupId>org.ocram.rest</groupId>
+    <artifactId>scratch-rest</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>rest-scratch</artifactId>
+  <artifactId>scratch-rest-async</artifactId>
 
   <licenses>
     <license>

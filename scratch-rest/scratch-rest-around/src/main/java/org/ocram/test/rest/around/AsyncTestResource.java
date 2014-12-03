@@ -47,6 +47,7 @@ public class AsyncTestResource {
     @POST
     @Path("/test")
     public Response async() {
+        System.out.println("SUCCES!");
         logger.info("BEF: " + sdf.format(new Date(System.currentTimeMillis())));
         try { 
             Map<String, List<String>> params = getRequestParams(request);

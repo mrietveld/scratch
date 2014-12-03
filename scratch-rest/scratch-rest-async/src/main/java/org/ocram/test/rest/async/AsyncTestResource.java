@@ -9,17 +9,27 @@ import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
+import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.GET;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 
 import org.jboss.resteasy.annotations.Suspend;
 import org.jboss.resteasy.spi.AsynchronousResponse;
+import org.jboss.resteasy.annotations.Suspend;
+import org.jboss.resteasy.spi.AsynchronousResponse;
+import org.ocram.test.domain.request.ChildRequest;
+import org.ocram.test.domain.request.ChildResponse;
+import org.ocram.test.domain.request.ParentRequest;
+import org.ocram.test.domain.request.ParentResponse;
+>>>>>>> Stashed changes
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,16 +51,41 @@ public class AsyncTestResource {
     @Inject
     private JobRequestProcessor jobRequestProcessor;
 
-    @GET
+    @POST
     @Path("/ping")
     public Response ping() {
         System.out.println("PING!");
+      
+        Map<String, String[]> params = request.getParameterMap();
+        for( String key : params.keySet() ) { 
+            System.out.println( "param: " + key + "[" + params.get(key)[0] + "]" );
+        }
+        int i = 0;
+        Enumeration<String> headers = request.getHeaderNames();
+        while( headers.hasMoreElements() && i < 20 ) { 
+            System.out.println( "header: " + headers.nextElement() );
+            ++i;
+        }
+        
         return Response.ok().build();
     }
 
+
+    @POST
+    @Path("/inherit")
+    @Consumes(MediaType.APPLICATION_XML)
+    @Produces(MediaType.APPLICATION_XML)
+    public Response inheritance(ParentRequest request) {
+        return Response.ok(new ChildResponse((ChildRequest) request)).build();
+    }
+    
     @POST
     @Path("/test")
     public void async(final @Suspend(100) AsynchronousResponse response) throws Exception {
+    public void async(final @Suspend(100) AsynchronousResponse response) throws Exception {
+        logger.info("BEFO: " + sdf.format(new Date(System.currentTimeMillis())));
+        AsyncContext ctx = request.startAsync();
+        
         logger.info("BEFO: " + sdf.format(new Date(System.currentTimeMillis())));
         sendResponse(response);
         try { 

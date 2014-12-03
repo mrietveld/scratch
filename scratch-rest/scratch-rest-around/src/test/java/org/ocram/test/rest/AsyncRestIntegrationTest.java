@@ -1,6 +1,6 @@
 package org.ocram.test.rest;
 
-import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertEquals;
 
 import java.io.File;
 import java.net.URL;
@@ -57,11 +57,11 @@ public class AsyncRestIntegrationTest {
     @Test
     public void testAsynchronousRestFramework() throws Exception {
         // normal
-        String urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/async/test").toExternalForm();
+        String urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/async/ping").toExternalForm();
         ClientRequest request = new ClientRequest(urlString);
         System.out.println( ">>> " + request.getUri());
         logger.info("BEF: " + sdf.format(new Date(System.currentTimeMillis())));
-        ClientResponse<String> responseObj = request.post();
+        ClientResponse<String> responseObj = request.get();
         logger.info("AFT: " + sdf.format(new Date(System.currentTimeMillis())));
         System.out.println( "<<< " + responseObj.getStatus() );
         assertEquals(202, responseObj.getStatus());

@@ -28,6 +28,9 @@
 
   <modules>
     <module>scratch-java</module>
+    <module>scratch-rest</module>
+    <module>scratch-servlet</module>
+    <module>scratch-arquillian</module>
   </modules>
 
   <dependencyManagement>
@@ -55,7 +58,7 @@
       <dependency>
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>jaxrs-api</artifactId>
-        <version>2.3.6.Final</version>
+        <version>${version.resteasy}</version>
       </dependency>
       <dependency>
         <groupId>org.jboss.resteasy</groupId>

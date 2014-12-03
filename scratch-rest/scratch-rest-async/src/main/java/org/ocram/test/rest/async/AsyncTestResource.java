@@ -29,7 +29,6 @@ import org.ocram.test.domain.request.ChildRequest;
 import org.ocram.test.domain.request.ChildResponse;
 import org.ocram.test.domain.request.ParentRequest;
 import org.ocram.test.domain.request.ParentResponse;
->>>>>>> Stashed changes
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,11 +81,9 @@ public class AsyncTestResource {
     @POST
     @Path("/test")
     public void async(final @Suspend(100) AsynchronousResponse response) throws Exception {
-    public void async(final @Suspend(100) AsynchronousResponse response) throws Exception {
         logger.info("BEFO: " + sdf.format(new Date(System.currentTimeMillis())));
         AsyncContext ctx = request.startAsync();
         
-        logger.info("BEFO: " + sdf.format(new Date(System.currentTimeMillis())));
         sendResponse(response);
         try { 
             Map<String, List<String>> params = getRequestParams(request);

@@ -80,17 +80,19 @@ public class AsyncRestIntegrationTest {
         ClientRequest request = new ClientRequest(urlString);
         System.out.println( ">>> " + request.getUri());
         logger.info("BEF: " + sdf.format(new Date(System.currentTimeMillis())));
+        request.formParameter("test", "ocram");
+        request.queryParameter("other-test", "evil marco");
         ClientResponse<String> responseObj = request.post();
         assertEquals("Ping failed!", 200, responseObj.getStatus());
 
         // normal
+        /**
         urlString = new URL(deploymentUrl,  deploymentUrl.getPath() + "rest/async/test?comet").toExternalForm();
         request = new ClientRequest(urlString);
         System.out.println( sdf.format(new Date(System.currentTimeMillis())) + " TEST >>> " + request.getUri());
         responseObj = request.post();
         System.out.println( sdf.format(new Date(System.currentTimeMillis())) + " TEST <<< " + responseObj.getStatus());
         assertEquals(202, responseObj.getStatus());
-
         Thread.sleep(10*000);
         
         Thread.sleep(3000);

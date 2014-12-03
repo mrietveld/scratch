@@ -10,6 +10,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.enterprise.context.ApplicationScoped;
 
+import org.jboss.resteasy.annotations.GZIP;
 import org.jboss.resteasy.logging.Logger;
 import org.jboss.resteasy.annotations.GZIP;
 import org.jboss.resteasy.logging.Logger;

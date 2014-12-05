@@ -3,12 +3,12 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.scratch.ws.remote</groupId>
-    <artifactId>kie-wb-tests</artifactId>
-    <version>6.2.0-SNAPSHOT</version>
+    <groupId>org.scratch.ws</groupId>
+    <artifactId>scratch-ws-arquillian</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>kie-wb-tests-tomcat</artifactId>
+  <artifactId>scratch-ws-arquillian-tomcat</artifactId>
   <packaging>jar</packaging>
 
   <name>KIE Workbench Integration Tests :: Tomcat 7</name>

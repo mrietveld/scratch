@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ocram.ws</groupId>
+    <groupId>org.scratch.ws</groupId>
     <artifactId>scratch-ws</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
@@ -224,7 +224,7 @@
             <configuration>
               <executable>${tool.wsimport}</executable>
               <sourceDestDir>${basedir}//src/main/generated</sourceDestDir>
-              <packageName>org.ocram.ws.generated</packageName>
+              <packageName>org.scratch.ws.generated</packageName>
               <target>2.1</target>
               <!-- Following configuration will invoke wsimport once for each wsdl. -->
               <wsdlLocation>file:///wsdl/*</wsdlLocation>

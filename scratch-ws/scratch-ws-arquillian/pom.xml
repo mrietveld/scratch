@@ -3,19 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>org.ocram</groupId>
-    <artifactId>scratch</artifactId>
+    <groupId>org.ocram.ws</groupId>
+    <artifactId>scratch-ws</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
 
-  <groupId>org.ocram.ws</groupId>
-  <artifactId>scratch-ws</artifactId>
-  <packaging>pom</packaging>
+  <artifactId>scratch-ws-arquillian</artifactId>
 
-  <properties>
-    <version.org.apache.cxf>2.7.11</version.org.apache.cxf>
-  </properties>
-  
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -25,8 +19,10 @@
   </licenses>
 
   <modules>
-    <module>scratch-ws-impl</module>
-    <module>scratch-ws-wsdl</module>
+    <module>scratch-ws-arquillian-base</module>
+    <module>scratch-ws-arquillian-tomcat</module>
+    <module>scratch-ws-arquillian-wildfly</module>
   </modules>
+  
 </project>
 

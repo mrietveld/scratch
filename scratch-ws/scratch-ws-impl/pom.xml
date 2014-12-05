@@ -10,12 +10,7 @@
 
   <groupId>org.ocram.ws</groupId>
   <artifactId>scratch-ws</artifactId>
-  <packaging>pom</packaging>
 
-  <properties>
-    <version.org.apache.cxf>2.7.11</version.org.apache.cxf>
-  </properties>
-  
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
@@ -24,9 +19,5 @@
     </license>
   </licenses>
 
-  <modules>
-    <module>scratch-ws-impl</module>
-    <module>scratch-ws-wsdl</module>
-  </modules>
 </project>
 

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.ws.ocram.org/VERSION/test"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="TestService"
+  targetNamespace="http://services.ws.ocram.org/VERSION/test">
+  <!-- JAX-WS Customizations: Wrapper styles, async. -->
+  <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+    <jaxws:enableWrapperStyle>true</jaxws:enableWrapperStyle>
+    <jaxws:enableAsyncMapping>false</jaxws:enableAsyncMapping>
+  </jaxws:bindings>
+  <types xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+      jxb:extensionBindingPrefixes="xjc" jxb:version="1.0" targetNamespace="http://services.ws.ocram.org/VERSION/test" version="1.0">
+      <xs:annotation>
+        <xs:appinfo>
+          <jxb:globalBindings collectionType="java.util.LinkedList" fixedAttributeAsConstantProperty="true"
+            generateIsSetMethod="false">
+            <xjc:serializable uid="1" />
+          </jxb:globalBindings>
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:element name="TestServiceException" type="tns:WebServiceFaultInfo" />
+
+      <xs:complexType name="WebServiceFaultInfo">
+        <xs:annotation>
+          <xs:appinfo>
+            <jxb:class ref="org.kie.remote.services.ws.common.WebServiceFaultInfo" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:complexType>
+
+      <!-- OPERATIONS -->
+
+      <xs:complexType name="TestRequest">
+        <xs:sequence>
+          <xs:element name="id" type="xs:long" minOccurs="1" />
+          <xs:element name="requestName" type="xs:string" minOccurs="0" />
+          <xs:element name="requestSize" type="xs:int" minOccurs="0" />
+        </xs:sequence>
+      </xs:complexType>
+
+      <!-- OP: find process instance logs -->
+
+      <xs:element name="pingRequest" type="tns:pingRequest" />
+
+      <xs:complexType name="pingRequest">
+        <xs:sequence>
+          <xs:element name="request" type="tns:TestRequest" minOccurs="0" />
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:element name="pingResponse" type="tns:pingResponse" />
+
+      <xs:complexType name="pingResponse">
+        <xs:sequence>
+          <xs:element name="return" type="tns:TestResponse" minOccurs="0" />
+        </xs:sequence>
+      </xs:complexType>
+
+      <xs:complexType name="TestResponse">
+        <xs:sequence>
+          <xs:element name="id" type="xs:long" minOccurs="1" />
+          <xs:element name="requestId" type="xs:long" minOccurs="0" />
+          <xs:element name="requestName" type="xs:string" minOccurs="0" />
+          <xs:element name="requestSize" type="xs:int" minOccurs="0" />
+          <xs:element name="requestDate" type="xs:dateTime" minOccurs="0" />
+        </xs:sequence>
+      </xs:complexType>
+
+    </xs:schema>
+  </types>
+  <message name="pingRequest">
+    <part name="parameters" element="tns:pingRequest" />
+  </message>
+  <message name="pingResponse">
+    <part name="parameters" element="tns:pingResponse" />
+  </message>
+  <message name="TestServiceException">
+    <part name="fault" element="tns:TestServiceException" />
+  </message>
+  <portType name="TestServicePortType">
+    <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+      <jaxws:class name="TestWebService" />
+    </jaxws:bindings>
+    <operation name="ping">
+      <input wsam:Action="http://services.ws.ocram.org/VERSION/test/TestService/pingRequest" message="tns:pingRequest" />
+      <output wsam:Action="http://services.ws.ocram.org/VERSION/test/TestService/pingResponse" message="tns:pingResponse" />
+      <fault message="tns:TestServiceException" name="TestServiceException"
+        wsam:Action="http://services.ws.ocram.org/VERSION/test/TestService/ping/Fault/TestServiceException">
+        <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+          <jaxws:class name="TestWebServiceException" />
+        </jaxws:bindings>
+      </fault>
+    </operation>
+  </portType>
+  <binding name="TestServiceBinding" type="tns:TestServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+    <operation name="ping">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="TestServiceException">
+        <soap:fault name="TestServiceException" use="literal" />
+      </fault>
+    </operation>
+  </binding>
+  <service name="TestService">
+    <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+      <jaxws:class name="TestServiceClient" />
+    </jaxws:bindings>
+    <port name="TestServicePort" binding="tns:TestServiceBinding">
+      <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy" URI="#UP_policy"/>
+      <soap:address location="REPLACE_WITH_ACTUAL_URL" />
+    </port>
+  </service>
+
+  <wsp:Policy wsu:Id="UP_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+      <wsp:Policy>
+        <sp:IncludeTimestamp />
+        <sp:TransportToken>
+          <wsp:Policy>
+            <sp:HttpsToken />
+          </wsp:Policy>
+        </sp:TransportToken>
+        <sp:Layout>
+          <wsp:Policy>
+            <sp:Strict />
+          </wsp:Policy>
+        </sp:Layout>
+        <sp:AlgorithmSuite>
+          <wsp:Policy>
+            <sp:Basic128 />
+          </wsp:Policy>
+        </sp:AlgorithmSuite>
+      </wsp:Policy>
+    </sp:TransportBinding>
+    <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+
+      <wsp:Policy>
+        <sp:UsernameToken xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Always">
+          <wsp:Policy>
+            <sp:WssUsernameToken11 />
+          </wsp:Policy>
+        </sp:UsernameToken>
+      </wsp:Policy>
+    </sp:SupportingTokens>
+  </wsp:Policy>
+
+</definitions>

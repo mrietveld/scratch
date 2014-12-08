@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.ws.ocram.org/VERSION/test"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="TestService"
-  targetNamespace="http://services.ws.ocram.org/VERSION/test">
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.ws.scratch.org/VERSION/test"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="PingService"
+  targetNamespace="http://services.ws.scratch.org/VERSION/test">
   <!-- JAX-WS Customizations: Wrapper styles, async. -->
   <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
     <jaxws:enableWrapperStyle>true</jaxws:enableWrapperStyle>
@@ -9,7 +9,7 @@
   </jaxws:bindings>
   <types xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-      jxb:extensionBindingPrefixes="xjc" jxb:version="1.0" targetNamespace="http://services.ws.ocram.org/VERSION/test" version="1.0">
+      jxb:extensionBindingPrefixes="xjc" jxb:version="1.0" targetNamespace="http://services.ws.scratch.org/VERSION/test" version="1.0">
       <xs:annotation>
         <xs:appinfo>
           <jxb:globalBindings collectionType="java.util.LinkedList" fixedAttributeAsConstantProperty="true"
@@ -19,7 +19,7 @@
         </xs:appinfo>
       </xs:annotation>
 
-      <xs:element name="TestServiceException" type="tns:WebServiceFaultInfo" />
+      <xs:element name="PingServiceException" type="tns:WebServiceFaultInfo" />
 
       <xs:complexType name="WebServiceFaultInfo">
         <xs:annotation>
@@ -31,7 +31,7 @@
 
       <!-- OPERATIONS -->
 
-      <xs:complexType name="TestRequest">
+      <xs:complexType name="PingRequest">
         <xs:sequence>
           <xs:element name="id" type="xs:long" minOccurs="1" />
           <xs:element name="requestName" type="xs:string" minOccurs="0" />
@@ -39,25 +39,9 @@
         </xs:sequence>
       </xs:complexType>
 
-      <!-- OP: find process instance logs -->
+      <xs:element name="pingRequest" type="tns:PingRequest" />
 
-      <xs:element name="pingRequest" type="tns:pingRequest" />
-
-      <xs:complexType name="pingRequest">
-        <xs:sequence>
-          <xs:element name="request" type="tns:TestRequest" minOccurs="0" />
-        </xs:sequence>
-      </xs:complexType>
-
-      <xs:element name="pingResponse" type="tns:pingResponse" />
-
-      <xs:complexType name="pingResponse">
-        <xs:sequence>
-          <xs:element name="return" type="tns:TestResponse" minOccurs="0" />
-        </xs:sequence>
-      </xs:complexType>
-
-      <xs:complexType name="TestResponse">
+      <xs:complexType name="PingResponse">
         <xs:sequence>
           <xs:element name="id" type="xs:long" minOccurs="1" />
           <xs:element name="requestId" type="xs:long" minOccurs="0" />
@@ -67,6 +51,8 @@
         </xs:sequence>
       </xs:complexType>
 
+      <xs:element name="pingResponse" type="tns:PingResponse" />
+
     </xs:schema>
   </types>
   <message name="pingRequest">
@@ -75,25 +61,25 @@
   <message name="pingResponse">
     <part name="parameters" element="tns:pingResponse" />
   </message>
-  <message name="TestServiceException">
-    <part name="fault" element="tns:TestServiceException" />
+  <message name="PingServiceException">
+    <part name="fault" element="tns:PingServiceException" />
   </message>
-  <portType name="TestServicePortType">
+  <portType name="PingServicePortType">
     <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
-      <jaxws:class name="TestWebService" />
+      <jaxws:class name="PingWebService" />
     </jaxws:bindings>
     <operation name="ping">
-      <input wsam:Action="http://services.ws.ocram.org/VERSION/test/TestService/pingRequest" message="tns:pingRequest" />
-      <output wsam:Action="http://services.ws.ocram.org/VERSION/test/TestService/pingResponse" message="tns:pingResponse" />
-      <fault message="tns:TestServiceException" name="TestServiceException"
-        wsam:Action="http://services.ws.ocram.org/VERSION/test/TestService/ping/Fault/TestServiceException">
+      <input wsam:Action="http://services.ws.scratch.org/VERSION/test/PingService/pingRequest" message="tns:pingRequest" />
+      <output wsam:Action="http://services.ws.scratch.org/VERSION/test/PingService/pingResponse" message="tns:pingResponse" />
+      <fault message="tns:PingServiceException" name="PingServiceException"
+        wsam:Action="http://services.ws.scratch.org/VERSION/test/PingService/ping/Fault/PingServiceException">
         <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
-          <jaxws:class name="TestWebServiceException" />
+          <jaxws:class name="PingWebServiceException" />
         </jaxws:bindings>
       </fault>
     </operation>
   </portType>
-  <binding name="TestServiceBinding" type="tns:TestServicePortType">
+  <binding name="PingServiceBinding" type="tns:PingServicePortType">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
     <operation name="ping">
       <soap:operation soapAction="" />
@@ -103,17 +89,19 @@
       <output>
         <soap:body use="literal" />
       </output>
-      <fault name="TestServiceException">
-        <soap:fault name="TestServiceException" use="literal" />
+      <fault name="PingServiceException">
+        <soap:fault name="PingServiceException" use="literal" />
       </fault>
     </operation>
   </binding>
-  <service name="TestService">
+  <service name="PingService">
     <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
-      <jaxws:class name="TestServiceClient" />
+      <jaxws:class name="PingServiceClient" />
     </jaxws:bindings>
-    <port name="TestServicePort" binding="tns:TestServiceBinding">
-      <wsp:PolicyReference xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy" URI="#UP_policy"/>
+    <port name="PingServicePort" binding="tns:PingServiceBinding">
+      <wsp:PolicyReference 
+        xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy"
+        URI="#UP_policy" />
       <soap:address location="REPLACE_WITH_ACTUAL_URL" />
     </port>
   </service>

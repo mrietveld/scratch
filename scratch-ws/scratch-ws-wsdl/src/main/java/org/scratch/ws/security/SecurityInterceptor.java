@@ -1,4 +1,4 @@
-package org.ocram.ws.security;
+package org.scratch.ws.security;
 
 import org.apache.cxf.interceptor.Fault;
 import org.apache.cxf.message.Message;

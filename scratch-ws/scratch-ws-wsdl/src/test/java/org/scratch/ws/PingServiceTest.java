@@ -1,4 +1,4 @@
-package org.ocram.ws;
+package org.scratch.ws;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -14,12 +14,10 @@ import javax.xml.ws.Endpoint;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.ocram.ws.generated.PingRequest;
-import org.ocram.ws.generated.PingResponse;
-import org.ocram.ws.generated.TestRequest;
-import org.ocram.ws.generated.TestResponse;
-import org.ocram.ws.generated.TestServiceClient;
-import org.ocram.ws.generated.TestWebService;
+import org.scratch.ws.generated.PingRequest;
+import org.scratch.ws.generated.PingResponse;
+import org.scratch.ws.generated.PingServiceClient;
+import org.scratch.ws.generated.PingWebService;
 
 public class PingServiceTest {
 
@@ -31,8 +29,8 @@ public class PingServiceTest {
         private final static AtomicLong idGen = new AtomicLong(random.nextInt(10000));
         
         static {
-           serviceName = new QName("http://services.ws.ocram.org/0.1.0/test", "TestService");
-           portName = new QName("http://services.ws.ocram.org/0.1.0/test", "TestServicePort");
+           serviceName = new QName(PingWebServiceImpl.NAMESPACE, "PingService");
+           portName = new QName(PingWebServiceImpl.NAMESPACE, "PingServicePort");
         }
 
         protected static Endpoint ep;
@@ -40,9 +38,9 @@ public class PingServiceTest {
 
         @BeforeClass
         public static void setUp() throws Exception {
-           address = "http://localhost:9000/services/TestService";
+           address = "http://localhost:9000/services/PingService";
            wsdlURL = new URL(address + "?wsdl");
-           ep = Endpoint.publish(address, new TestWebServiceImpl());
+           ep = Endpoint.publish(address, new PingWebServiceImpl());
         }
 
         @AfterClass
@@ -59,24 +57,20 @@ public class PingServiceTest {
          * SEI
          */
         @Test
-        public void testTestWebServiceImpl() throws Exception {
-           TestServiceClient tsc = new TestServiceClient(wsdlURL, serviceName);
-           TestWebService tws = tsc.getTestServicePort();
+        public void testPingWebServiceImpl() throws Exception {
+           PingServiceClient tsc = new PingServiceClient(wsdlURL, serviceName);
+           PingWebService tws = tsc.getPingServicePort();
            
            String name = UUID.randomUUID().toString();
            long id = idGen.getAndIncrement();
-           TestRequest req = new TestRequest();
+           PingRequest req = new PingRequest();
            req.setId(id);
            req.setRequestName(name);
            req.setRequestSize(name.getBytes().length);
            
-           PingRequest pingReq = new PingRequest();
-           pingReq.setRequest(req);
+           PingResponse resp = tws.ping(req);
            
-           PingResponse pingResp = tws.ping(pingReq);
-           TestResponse resp = pingResp.getReturn();
-           
-           assertNotNull( "Null test response", resp );
+           assertNotNull( "Null ping response", resp );
            assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
            assertNotNull("Ping request id", resp.getRequestId());
            assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());

@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>scratch-ws-wsdl</artifactId>
+  <packaging>war</packaging>
 
   <licenses>
     <license>
@@ -25,10 +26,41 @@
       <version>6.1.0.Final</version>
     </dependency>
     <dependency>
+      <groupId>org.drools</groupId>
+      <artifactId>drools-core</artifactId>
+      <version>6.2.0-SNAPSHOT</version>
+    </dependency>
+
+    <!-- CXF -->
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-api</artifactId>
+      <version>${version.org.apache.cxf}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-core</artifactId>
+      <version>${version.org.apache.cxf}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-transports-http</artifactId>
+      <version>${version.org.apache.cxf}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-frontend-jaxws</artifactId>
+      <version>${version.org.apache.cxf}</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-ws-security</artifactId>
       <version>${version.org.apache.cxf}</version>
-      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.ws.security</groupId>
+      <artifactId>wss4j</artifactId>
+      <version>1.6.15</version>
     </dependency>
 
     <!-- logging -->
@@ -60,6 +92,12 @@
       <version>1.0-MR1</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.jboss.spec.javax.servlet</groupId>
+      <artifactId>jboss-servlet-api_3.0_spec</artifactId>
+      <version>1.0.2.Final</version>
+      <scope>provided</scope>
+    </dependency>
 
     <!-- test -->
     <dependency>
@@ -73,52 +111,9 @@
       <version>${version.org.apache.cxf}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-frontend-jaxws</artifactId>
-      <version>${version.org.apache.cxf}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.cxf</groupId>
-      <artifactId>cxf-rt-transports-http</artifactId>
-      <version>${version.org.apache.cxf}</version>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>2.4.1</version>
-        </plugin>
-        <plugin>
-          <groupId>org.codehaus.mojo</groupId>
-          <artifactId>build-helper-maven-plugin</artifactId>
-          <version>1.7</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>2.6</version>
-        </plugin>
-        <plugin>
-          <groupId>com.google.code.maven-replacer-plugin</groupId>
-          <artifactId>replacer</artifactId>
-          <version>1.5.2</version>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <configuration>
-            <source>1.6</source>
-            <target>1.6</target>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-
     <plugins>
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
@@ -167,7 +162,6 @@
           <!-- 2. copy wsdl file to target/classes so that "VERSION" in wsdl file can be replaced with appropriate value, before compile -->
           <execution>
             <id>copy-wsdl-to-target</id>
-            <!-- here the phase you need -->
             <phase>process-sources</phase>
             <goals>
               <goal>copy-resources</goal>
@@ -183,31 +177,54 @@
           </execution>
         </executions>
       </plugin>
+
       <plugin>
         <groupId>com.google.code.maven-replacer-plugin</groupId>
         <artifactId>replacer</artifactId>
         <executions>
           <!-- 3. replace "VERSION" in WSDL file with project version + bugfix version -->
           <execution>
+            <id>replace-wsdl-version</id>
             <phase>process-resources</phase>
             <goals>
               <goal>replace</goal>
             </goals>
+            <configuration>
+              <basedir>${project.build.directory}/classes/META-INF/wsdl</basedir>
+              <includes>
+                <include>TestService.wsdl</include>
+              </includes>
+              <regex>true</regex>
+              <replacements>
+                <replacement>
+                  <token>VERSION</token>
+                  <value>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}</value>
+                </replacement>
+              </replacements>
+            </configuration>
+          </execution>
+          <execution>
+            <id>replace-services-version</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>replace</goal>
+            </goals>
+            <configuration>
+              <basedir>${basedir}/src/main/java/org/scratch/ws</basedir>
+              <includes>
+                <include>ServicesVersion.java</include>
+              </includes>
+              <regex>true</regex>
+              <replacements>
+                <replacement>
+                  <token>VERSION = ".*</token>
+                  <value>VERSION =
+                    "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";</value>
+                </replacement>
+              </replacements>
+            </configuration>
           </execution>
         </executions>
-        <configuration>
-          <basedir>${project.build.directory}/classes/META-INF/wsdl</basedir>
-          <includes>
-            <include>TestService.wsdl</include>
-          </includes>
-          <regex>true</regex>
-          <replacements>
-            <replacement>
-              <token>VERSION</token>
-              <value>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}</value>
-            </replacement>
-          </replacements>
-        </configuration>
       </plugin>
       <plugin>
         <groupId>org.jvnet.jax-ws-commons</groupId>

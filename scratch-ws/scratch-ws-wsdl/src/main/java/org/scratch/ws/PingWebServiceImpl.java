@@ -1,4 +1,4 @@
-package org.ocram.ws;
+package org.scratch.ws;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -9,51 +9,50 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
-import org.apache.cxf.interceptor.InInterceptors;
 import org.kie.remote.services.ws.common.ExceptionType;
 import org.kie.remote.services.ws.common.WebServiceFaultInfo;
-import org.ocram.ws.generated.PingRequest;
-import org.ocram.ws.generated.PingResponse;
-import org.ocram.ws.generated.TestRequest;
-import org.ocram.ws.generated.TestResponse;
-import org.ocram.ws.generated.TestWebService;
-import org.ocram.ws.generated.TestWebServiceException;
+import org.scratch.ws.generated.PingRequest;
+import org.scratch.ws.generated.PingResponse;
+import org.scratch.ws.generated.PingWebService;
+import org.scratch.ws.generated.PingWebServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebService(
-        serviceName = "TestService", 
-        portName = "TestServiceClient", 
-        name = "TestService", 
-        targetNamespace = TestWebServiceImpl.NAMESPACE)
-@InInterceptors()
-public class TestWebServiceImpl implements TestWebService {
+@WebService(targetNamespace = PingWebServiceImpl.NAMESPACE,
+        serviceName = "PingService", 
+        endpointInterface = "org.scratch.ws.generated.PingWebService",
+        portName = "PingServicePort", 
+        name = "PingServicePortType")
+public class PingWebServiceImpl implements PingWebService {
 
-    private static final Logger logger = LoggerFactory.getLogger(TestWebServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(PingWebServiceImpl.class);
     
-    static final String NAMESPACE = "http://services.remote.kie.org/" + "0.1.0" + "/command";
+    public static final String NAMESPACE = "http://services.ws.scratch.org/" + "0.1.0" + "/test";
    
     private final static AtomicInteger idGen = new AtomicInteger(0);
     
-    public PingResponse ping( PingRequest pingReq ) throws TestWebServiceException {
-        TestRequest req = pingReq.getRequest();
+    public PingResponse ping( PingRequest req ) throws PingWebServiceException {
         if( req == null ) { 
            WebServiceFaultInfo faultInfo = new WebServiceFaultInfo();
            faultInfo.setCorrelationId(null);
            faultInfo.setType(ExceptionType.VALIDATION);
-           throw new TestWebServiceException("null test request", faultInfo);
+           throw new PingWebServiceException("null ping request", faultInfo);
+        }
+        if( req.getId() < 0 ) { 
+           WebServiceFaultInfo faultInfo = new WebServiceFaultInfo();
+           faultInfo.setCorrelationId(null);
+           faultInfo.setType(ExceptionType.VALIDATION);
+           throw new PingWebServiceException("null ping request", faultInfo);
         }
        
-        TestResponse resp = new TestResponse();
+        PingResponse resp = new PingResponse();
         resp.setId(idGen.incrementAndGet());
 
         resp.setRequestName(req.getRequestName());
         resp.setRequestDate(toXMLGregorianCalendar(new Date()));
         resp.setRequestId(req.getId());
        
-        PingResponse pingResp = new PingResponse();
-        pingResp.setReturn(resp);
-        return pingResp;
+        return resp;
     }
 
     /*

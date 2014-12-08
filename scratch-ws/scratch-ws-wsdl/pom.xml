@@ -9,7 +9,7 @@
   </parent>
 
   <artifactId>scratch-ws-wsdl</artifactId>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
 
   <licenses>
     <license>
@@ -58,10 +58,39 @@
       <version>${version.org.apache.cxf}</version>
     </dependency>
     <dependency>
+      <groupId>org.apache.cxf</groupId>
+      <artifactId>cxf-rt-ws-policy</artifactId>
+      <version>${version.org.apache.cxf}</version>
+    </dependency>
+    <dependency>
       <groupId>org.apache.ws.security</groupId>
       <artifactId>wss4j</artifactId>
       <version>1.6.15</version>
     </dependency>
+
+    <!-- Jboss WS -->
+    <dependency>
+      <groupId>org.jboss.ws</groupId>
+      <artifactId>jbossws-api</artifactId>
+      <version>1.0.2.Final</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.ws</groupId>
+      <artifactId>jbossws-spi</artifactId>
+      <version>2.3.0.Final</version>
+    </dependency>
+   
+   <!-- CDI --> 
+   <dependency>
+     <groupId>javax.enterprise</groupId>
+     <artifactId>cdi-api</artifactId>
+     <version>1.0-SP4</version>
+   </dependency>
+   <dependency>
+     <groupId>org.apache.deltaspike.core</groupId>
+     <artifactId>deltaspike-core-api</artifactId>
+     <version>1.0.0</version>
+   </dependency>
 
     <!-- logging -->
     <dependency>
@@ -159,7 +188,7 @@
       <plugin>
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
-          <!-- 2. copy wsdl file to target/classes so that "VERSION" in wsdl file can be replaced with appropriate value, before compile -->
+          <!-- copy wsdl file to target/classes so that "VERSION" in wsdl file can be replaced with appropriate value, before compile -->
           <execution>
             <id>copy-wsdl-to-target</id>
             <phase>process-sources</phase>
@@ -182,7 +211,6 @@
         <groupId>com.google.code.maven-replacer-plugin</groupId>
         <artifactId>replacer</artifactId>
         <executions>
-          <!-- 3. replace "VERSION" in WSDL file with project version + bugfix version -->
           <execution>
             <id>replace-wsdl-version</id>
             <phase>process-resources</phase>
@@ -192,7 +220,7 @@
             <configuration>
               <basedir>${project.build.directory}/classes/META-INF/wsdl</basedir>
               <includes>
-                <include>TestService.wsdl</include>
+                <include>PingService.wsdl</include>
               </includes>
               <regex>true</regex>
               <replacements>
@@ -218,8 +246,7 @@
               <replacements>
                 <replacement>
                   <token>VERSION = ".*</token>
-                  <value>VERSION =
-                    "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";</value>
+                  <value>VERSION = "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";</value>
                 </replacement>
               </replacements>
             </configuration>
@@ -247,7 +274,7 @@
               <wsdlLocation>file:///wsdl/*</wsdlLocation>
               <wsdlDirectory>${project.build.directory}/classes/META-INF/wsdl</wsdlDirectory>
               <wsdlFiles>
-                <wsdlFile>TestService.wsdl</wsdlFile>
+                <wsdlFile>PingService.wsdl</wsdlFile>
               </wsdlFiles>
             </configuration>
           </execution>

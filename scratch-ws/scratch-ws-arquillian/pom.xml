@@ -9,6 +9,7 @@
   </parent>
 
   <artifactId>scratch-ws-arquillian</artifactId>
+  <packaging>pom</packaging>
 
   <licenses>
     <license>
@@ -23,6 +24,14 @@
     <module>scratch-ws-arquillian-tomcat</module>
     <module>scratch-ws-arquillian-wildfly</module>
   </modules>
-  
+ 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.scratch.ws</groupId>
+        <artifactId>scratch-ws-arquillian-base</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement> 
 </project>
-

@@ -129,7 +129,6 @@
       </wsp:Policy>
     </sp:TransportBinding>
     <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-
       <wsp:Policy>
         <sp:UsernameToken xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Always">
           <wsp:Policy>

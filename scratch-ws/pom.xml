@@ -25,8 +25,31 @@
   </licenses>
 
   <modules>
-    <module>scratch-ws-impl</module>
     <module>scratch-ws-wsdl</module>
+    <module>scratch-ws-wars</module>
+    <!-- not yet..
+    <module>scratch-ws-arquillian</module>
+    -->
   </modules>
+  
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.scratch.ws</groupId>
+        <artifactId>scratch-ws-wsdl</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scratch.ws</groupId>
+        <artifactId>scratch-ws-wars</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scratch.ws</groupId>
+        <artifactId>scratch-ws-arquillian</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>
 

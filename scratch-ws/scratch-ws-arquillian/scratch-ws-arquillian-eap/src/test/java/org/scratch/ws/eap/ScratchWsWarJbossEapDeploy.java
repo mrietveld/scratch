@@ -1,38 +1,35 @@
-package org.kie.tests.wb.tomcat;
+package org.scratch.ws.eap;
 
-import static org.kie.remote.tests.base.DeployUtil.*;
-import static org.kie.tests.wb.base.util.TestConstants.PROJECT_VERSION;
+import static org.scratch.ws.utils.DeployUtil.*;
 
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class KieWbWarTomcatDeploy {
+public class ScratchWsWarJbossEapDeploy {
 
-    protected static final Logger logger = LoggerFactory.getLogger(KieWbWarTomcatDeploy.class);
+    protected static final Logger logger = LoggerFactory.getLogger(ScratchWsWarJbossEapDeploy.class);
 
     static WebArchive createTestWar() {
-        return createTestWar(true);
-    }
-    
-    static WebArchive createTestWar(boolean replace) {
         // Import kie-wb war
-        WebArchive war = getWebArchive("org.kie", "kie-wb-distribution-wars", "tomcat7", PROJECT_VERSION);
+        WebArchive war = getWebArchive("org.scratch.ws", "scratch-ws-wars", "tomcat7", PROJECT_VERSION);
 
         war.addAsWebInfResource("war/logging.properties", "classes/logging.properties");
 
+        boolean replace = false;
         if( replace ) { 
             String [][] jarsToReplace = {
-                    { "org.kie.remote", "kie-remote-services" },
-                    { "org.kie.remote", "kie-remote-common" }
+                    { "org.scratch.ws", "scratch-ws" },
             };
             replaceJars(war, PROJECT_VERSION, jarsToReplace);
         }
-      
+    
+        /**
         String [] jarsToDelete = { "cxf-bundle-jaxrs-2.7.11.jar" };
         deleteJars(war, jarsToDelete);
+        */
         
-        boolean replaceWebXml = true;
+        boolean replaceWebXml = false;
         if( replaceWebXml ) { 
           war.delete("WEB-INF/web.xml");
           war.addAsWebResource("war/web.xml");

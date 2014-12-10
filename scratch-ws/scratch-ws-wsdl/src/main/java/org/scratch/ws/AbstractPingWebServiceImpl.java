@@ -9,6 +9,7 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.jboss.ws.api.annotation.EndpointConfig;
 import org.kie.remote.services.ws.common.ExceptionType;
 import org.kie.remote.services.ws.common.WebServiceFaultInfo;
 import org.scratch.ws.generated.PingRequest;
@@ -18,14 +19,9 @@ import org.scratch.ws.generated.PingWebServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@WebService(targetNamespace = PingWebServiceImpl.NAMESPACE,
-        serviceName = "PingService", 
-        endpointInterface = "org.scratch.ws.generated.PingWebService",
-        portName = "PingServicePort", 
-        name = "PingServicePortType")
-public class PingWebServiceImpl implements PingWebService {
+public abstract class AbstractPingWebServiceImpl implements PingWebService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PingWebServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(AbstractPingWebServiceImpl.class);
     
     public static final String NAMESPACE = "http://services.ws.scratch.org/" + "0.1.0" + "/test";
    

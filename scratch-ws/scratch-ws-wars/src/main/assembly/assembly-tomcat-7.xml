@@ -23,7 +23,6 @@
   <id>tomcat7</id>
   <formats>
     <format>war</format>
-    <format>dir</format>
   </formats>
 
   <includeBaseDirectory>false</includeBaseDirectory>
@@ -36,16 +35,27 @@
       <directory>${project.basedir}/src/main/tomcat-7</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}/unpack/wsdl</directory>
+      <includes>
+        <include>*.wsdl</include>
+      </includes>
+      <outputDirectory>WEB-INF/wsdl/</outputDirectory>
+    </fileSet>
   </fileSets>
 
   <dependencySets>
     <dependencySet>
       <includes>
         <include>org.scratch.ws:scratch-ws-wsdl:jar</include>
+        <include>org.jboss.ws.cxf:jbossws-cxf-server:jar</include>
       </includes>
       <outputDirectory>WEB-INF/lib</outputDirectory>
       <useTransitiveFiltering>true</useTransitiveFiltering>
+      <excludes>
+        <exclude>org.slf4j:slf4j-api</exclude>
+      </excludes>
     </dependencySet>
   </dependencySets>
-
+ 
 </assembly>

@@ -11,7 +11,7 @@
   <artifactId>scratch-ws-arquillian-tomcat</artifactId>
   <packaging>jar</packaging>
 
-  <name>KIE Workbench Integration Tests :: Tomcat 7</name>
+  <name>Scratch WS Integration Tests :: Tomcat 7</name>
 
   <properties>
     <tomcat.home>${project.build.directory}/apache-tomcat-${version.org.apache.tomcat}</tomcat.home>
@@ -22,6 +22,11 @@
     <dependency>
       <groupId>org.scratch.ws</groupId>
       <artifactId>scratch-ws-wsdl</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.scratch.ws</groupId>
+      <artifactId>scratch-ws-arquillian-base</artifactId>
       <scope>test</scope>
     </dependency>
     
@@ -78,28 +83,6 @@
       <artifactId>logback-classic</artifactId>
       <scope>test</scope>
     </dependency>
-    
-    <!-- libs necessary for tomcat -->
-    <dependency>
-      <groupId>org.codehaus.btm</groupId>
-      <artifactId>btm</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.btm</groupId>
-      <artifactId>btm-tomcat55-lifecycle</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.jboss.spec.javax.transaction</groupId>
-      <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-      <scope>test</scope>
-    </dependency>
   </dependencies>
 
   <build>
@@ -146,30 +129,6 @@
             <configuration>
               <artifactItems>
                 <artifactItem>
-                  <groupId>org.codehaus.btm</groupId>
-                  <artifactId>btm</artifactId>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.codehaus.btm</groupId>
-                  <artifactId>btm-tomcat55-lifecycle</artifactId>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>com.h2database</groupId>
-                  <artifactId>h2</artifactId>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.jboss.spec.javax.transaction</groupId>
-                  <artifactId>jboss-transaction-api_1.1_spec</artifactId>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
-                </artifactItem>
-                <artifactItem>
                   <groupId>org.slf4j</groupId>
                   <artifactId>slf4j-api</artifactId>
                   <type>jar</type>
@@ -178,12 +137,6 @@
                 <artifactItem>
                   <groupId>org.slf4j</groupId>
                   <artifactId>slf4j-jdk14</artifactId>
-                  <type>jar</type>
-                  <overWrite>false</overWrite>
-                </artifactItem>
-                <artifactItem>
-                  <groupId>org.jboss.spec.javax.security.jacc</groupId>
-                  <artifactId>jboss-jacc-api_1.4_spec</artifactId>
                   <type>jar</type>
                   <overWrite>false</overWrite>
                 </artifactItem>

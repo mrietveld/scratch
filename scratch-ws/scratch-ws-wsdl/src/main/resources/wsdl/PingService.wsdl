@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.ws.scratch.org/VERSION/test"
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" name="PingService"
-  targetNamespace="http://services.ws.scratch.org/VERSION/test">
+<definitions name="PingService" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.ws.scratch.org/VERSION/test" targetNamespace="http://services.ws.scratch.org/VERSION/test"
+  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy"
+  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsaws="http://www.w3.org/2006/05/addressing/wsdl"
+  xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+
+
   <!-- JAX-WS Customizations: Wrapper styles, async. -->
   <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
     <jaxws:enableWrapperStyle>true</jaxws:enableWrapperStyle>
     <jaxws:enableAsyncMapping>false</jaxws:enableAsyncMapping>
   </jaxws:bindings>
+
   <types xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
       jxb:extensionBindingPrefixes="xjc" jxb:version="1.0" targetNamespace="http://services.ws.scratch.org/VERSION/test" version="1.0">
@@ -79,8 +84,10 @@
       </fault>
     </operation>
   </portType>
-  <binding name="PingServiceBinding" type="tns:PingServicePortType">
-    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document" />
+  <binding name="PingServicePlainTextBinding" type="tns:PingServicePortType">
+    <wsp:PolicyReference URI="#UnsecureTransportPolicy" />
+    <soap:binding style="document"
+      transport="http://schemas.xmlsoap.org/soap/http" />
     <operation name="ping">
       <soap:operation soapAction="" />
       <input>
@@ -94,49 +101,99 @@
       </fault>
     </operation>
   </binding>
+  <binding name="PingServiceSslBinding" type="tns:PingServicePortType">
+    <wsp:PolicyReference URI="#SslTransportPolicy" />
+    <soap:binding style="document"
+      transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="ping">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="PingServiceException">
+        <soap:fault name="PingServiceException" use="literal" />
+      </fault>
+    </operation>
+  </binding>
+  
   <service name="PingService">
     <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
       <jaxws:class name="PingServiceClient" />
     </jaxws:bindings>
-    <port name="PingServicePort" binding="tns:PingServiceBinding">
+    <port name="PingServicePlainTextPort" binding="tns:PingServicePlainTextBinding">
       <wsp:PolicyReference 
-        xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy"
-        URI="#UP_policy" />
+        xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy" 
+        URI="#UnsecureTransportPolicy" />
+      <soap:address location="REPLACE_WITH_ACTUAL_URL" />
+    </port>
+    <port name="PingServiceSslPort" binding="tns:PingServiceSslBinding">
+      <wsp:PolicyReference 
+        xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy" 
+        URI="#SslTransportPolicy" />
       <soap:address location="REPLACE_WITH_ACTUAL_URL" />
     </port>
   </service>
 
-  <wsp:Policy wsu:Id="UP_policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
-    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
-    <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-      <wsp:Policy>
-        <sp:IncludeTimestamp />
-        <sp:TransportToken>
+  <wsp:Policy wsu:Id="UnsecureTransportPolicy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaws:UsingAddressing/>
+        <sp:SupportingTokens>
           <wsp:Policy>
-            <sp:HttpsToken />
+            <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:WssUsernameToken10 />
+              </wsp:Policy>
+            </sp:UsernameToken>
           </wsp:Policy>
-        </sp:TransportToken>
-        <sp:Layout>
-          <wsp:Policy>
-            <sp:Strict />
-          </wsp:Policy>
-        </sp:Layout>
-        <sp:AlgorithmSuite>
-          <wsp:Policy>
-            <sp:Basic128 />
-          </wsp:Policy>
-        </sp:AlgorithmSuite>
-      </wsp:Policy>
-    </sp:TransportBinding>
-    <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-      <wsp:Policy>
-        <sp:UsernameToken xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/Always">
-          <wsp:Policy>
-            <sp:WssUsernameToken11 />
-          </wsp:Policy>
-        </sp:UsernameToken>
-      </wsp:Policy>
-    </sp:SupportingTokens>
+        </sp:SupportingTokens>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+
+  <wsp:Policy wsu:Id="SslTransportPolicy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <wsaws:UsingAddressing/>
+          <sp:TransportBinding>
+            <wsp:Policy>
+              <sp:TransportToken>
+                <wsp:Policy>
+                  <sp:HttpsToken RequireClientCertificate="false" />
+                </wsp:Policy>
+              </sp:TransportToken>
+              <sp:Layout>
+                <wsp:Policy>
+                  <sp:Lax />
+                </wsp:Policy>
+              </sp:Layout>
+              <sp:IncludeTimestamp />
+              <sp:AlgorithmSuite>
+                <wsp:Policy>
+                  <sp:Basic128 />
+                </wsp:Policy>
+              </sp:AlgorithmSuite>
+            </wsp:Policy>
+          </sp:TransportBinding>
+          <sp:Wss10>
+            <wsp:Policy>
+              <sp:MustSupportRefKeyIdentifier />
+            </wsp:Policy>
+          </sp:Wss10>
+          <sp:SignedSupportingTokens>
+            <wsp:Policy>
+              <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+                <wsp:Policy>
+                  <sp:WssUsernameToken10 />
+                </wsp:Policy>
+              </sp:UsernameToken>
+            </wsp:Policy>
+          </sp:SignedSupportingTokens>
+      </wsp:All>
+    </wsp:ExactlyOne>
   </wsp:Policy>
 
 </definitions>

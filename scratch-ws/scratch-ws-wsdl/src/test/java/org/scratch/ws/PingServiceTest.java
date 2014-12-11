@@ -24,95 +24,108 @@ import org.scratch.ws.generated.PingWebService;
 
 public class PingServiceTest {
 
-        protected static URL [] wsdlURL = new URL[2];
-        protected static QName serviceName;
-        protected static QName [] portName = new QName[2];
+    protected static URL[] wsdlURL = new URL[2];
+    protected static QName serviceName;
+    protected static QName[] portName = new QName[2];
 
-        private final static Random random = new Random();
-        private final static AtomicLong idGen = new AtomicLong(random.nextInt(10000));
-        
-        static {
-           serviceName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingService");
-           portName[0] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServicePlainTextPort");
-           portName[1] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServiceSslPort");
+    private final static Random random = new Random();
+    private final static AtomicLong idGen = new AtomicLong(random.nextInt(10000));
+
+    static {
+        serviceName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingService");
+        portName[0] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServicePlainTextPort");
+        portName[1] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServiceSslPort");
+    }
+
+    protected static Endpoint[] eps = new Endpoint[2];
+
+    @BeforeClass
+    public static void setUp() throws Exception {
+        {
+            String address = "http://localhost:9000/ws/PingService";
+            URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
+            assertNotNull("Null URL for wsdl resource", url);
+            PingWebService webServiceImpl = new PingWebServicePlainTextImpl();
+            eps[0] = setupPingServiceEndpoint(url, address, webServiceImpl);
+            wsdlURL[0] = new URL(address + "?wsdl");
         }
-
-        protected static Endpoint [] eps = new Endpoint [2];
-
-        @BeforeClass
-        public static void setUp() throws Exception {
-            { 
-                String address = "http://localhost:9000/ws/PingService";
-                URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
-                assertNotNull("Null URL for wsdl resource", url);
-                PingWebService webServiceImpl = new PingWebServicePlainTextImpl();
-                eps[0] = setupPingServiceEndpoint(url, address, "PingServicePlainTextPort", webServiceImpl);
-                 wsdlURL[0] = new URL(address + "?wsdl");
-            }
-            {
-                String address = "http://localhost:9000/ws/ssl/PingService";
-                URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
-                assertNotNull("Null URL for wsdl resource", url);
-                PingWebService webServiceImpl = new PingWebServiceSimpleSslImpl();
-                eps[1] = setupPingServiceEndpoint(url, address, "PingServiceSslPort", webServiceImpl);
-                wsdlURL[1] = new URL(address + "?wsdl");
-            }
+        {
+            String address = "http://localhost:9000/ws/ssl/PingService";
+            URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
+            assertNotNull("Null URL for wsdl resource", url);
+            PingWebService webServiceImpl = new PingWebServiceSimpleSslImpl();
+            eps[1] = setupPingServiceEndpoint(url, address, webServiceImpl);
+            wsdlURL[1] = new URL(address + "?wsdl");
         }
+    }
 
-        
-        @AfterClass
-        public static void tearDown() {
-            for( Endpoint ep : eps ) { 
-                try {
-                    ep.stop();
-                } catch (Throwable t) {
-                    System.out.println("Error thrown: " + t.getMessage());
-                }
+    @AfterClass
+    public static void tearDown() {
+        for( Endpoint ep : eps ) {
+            try {
+                ep.stop();
+            } catch( Throwable t ) {
+                System.out.println("Error thrown: " + t.getMessage());
             }
         }
+    }
 
-        private PingServiceClient getPingServiceClient(URL wsdlURL) {
-           return new PingServiceClient(wsdlURL, serviceName);
-        }
+    private PingServiceClient getPingServiceClient( URL wsdlURL ) {
+        return new PingServiceClient(wsdlURL, serviceName);
+    }
+
+    private PingRequest createRequest() {
+        String name = UUID.randomUUID().toString();
+        long id = idGen.getAndIncrement();
+        PingRequest req = new PingRequest();
+        req.setId(id);
+        req.setRequestName(name);
+        req.setRequestSize(name.getBytes().length);
+        return req;
+    }
+
+    @Test
+    public void testPlainPingWebServiceImpl() throws Exception {
+        // setup
+        PingServiceClient psc = getPingServiceClient(wsdlURL[0]);
+        PingWebService pws = psc.getPingServicePlainTextPort();
+        BindingProvider bindingProxy = (BindingProvider) pws;
         
-        private PingRequest createRequest() { 
-            String name = UUID.randomUUID().toString();
-            long id = idGen.getAndIncrement();
-            PingRequest req = new PingRequest();
-            req.setId(id);
-            req.setRequestName(name);
-            req.setRequestSize(name.getBytes().length); 
-            return req;
-        }
-        
-        @Test
-        public void testPlainPingWebServiceImpl() throws Exception {
-           PingServiceClient tsc = getPingServiceClient(wsdlURL[0]);
-           PingWebService tws = tsc.getPingServicePlainTextPort();
-           BindingProvider bindingProxy = (BindingProvider) tws;
-           bindingProxy.getRequestContext().put(SecurityConstants.USERNAME, "mary");
-           bindingProxy.getRequestContext().put(SecurityConstants.PASSWORD, "mary123@");
-           
-           PingRequest req = createRequest();
-           PingResponse resp = tws.ping(req);
-           
-           assertNotNull( "Null ping response", resp );
-           assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
-           assertNotNull("Ping request id", resp.getRequestId());
-           assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());
+        // do request without auth
+        PingRequest req = createRequest();
+        PingResponse resp = null;
+        try { 
+            resp = pws.ping(req);
+            fail("The WS call should not have succeeded without authentication");
+        } catch( SOAPFaultException soapfe ) { 
+            assertTrue( soapfe.getMessage().contains("No username") );
         }
 
-        @Test
-        public void testSslPingWebServiceImpl() throws Exception {
-           PingServiceClient tsc = getPingServiceClient(wsdlURL[1]);
-           PingWebService tws = tsc.getPingServiceSslPort();
-           
-           PingRequest req = createRequest();
-           try { 
-               PingResponse resp = tws.ping(req);
-               fail( "Ping should have failed due to no SSL authentication");
-           } catch( SOAPFaultException soapfe ) { 
-              assertTrue( soapfe.getMessage().contains("Not an HTTPs connection"));
-           }
+        // setup auth
+        bindingProxy.getRequestContext().put(SecurityConstants.USERNAME, "mary");
+        bindingProxy.getRequestContext().put(SecurityConstants.PASSWORD, "mary123@");
+       
+        // req with auth
+        resp = pws.ping(req);
+       
+        // test response
+        assertNotNull("Null ping response", resp);
+        assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
+        assertNotNull("Ping request id", resp.getRequestId());
+        assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());
+    }
+
+    @Test
+    public void testSslPingWebServiceImpl() throws Exception {
+        PingServiceClient tsc = getPingServiceClient(wsdlURL[1]);
+        PingWebService tws = tsc.getPingServiceSslPort();
+
+        PingRequest req = createRequest();
+        try {
+            PingResponse resp = tws.ping(req);
+            fail("Ping should have failed due to no SSL authentication");
+        } catch( SOAPFaultException soapfe ) {
+            assertTrue(soapfe.getMessage().contains("Not an HTTPs connection"));
         }
+    }
 }

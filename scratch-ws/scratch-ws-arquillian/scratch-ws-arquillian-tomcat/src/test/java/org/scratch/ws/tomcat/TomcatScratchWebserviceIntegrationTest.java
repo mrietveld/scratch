@@ -17,7 +17,9 @@
  */
 package org.scratch.ws.tomcat;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 import static org.scratch.ws.tomcat.ScratchWsWarTomcatDeploy.createTestWar;
 
 import java.net.MalformedURLException;
@@ -37,7 +39,6 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
-import org.jsoup.Connection.Request;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.scratch.ws.AbstractPingWebServiceImpl;
@@ -64,7 +65,7 @@ public class TomcatScratchWebserviceIntegrationTest {
 
     @Deployment(testable = false, name = "tomcat")
     public static Archive<?> createWar() {
-        return createTestWar();
+        return createTestWar(false);
     }
 
     @ArquillianResource

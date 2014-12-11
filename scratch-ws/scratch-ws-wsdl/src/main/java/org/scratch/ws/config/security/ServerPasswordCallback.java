@@ -23,6 +23,7 @@ public class ServerPasswordCallback implements CallbackHandler {
         WSPasswordCallback pc = (WSPasswordCallback) callbacks[0];
 
         String user = pc.getIdentifier();
+        System.out.println("Password callback: " + user );
         String pass = null;
         try { 
             ServerPasswordManager pwdMgr = getServerPasswordManager();

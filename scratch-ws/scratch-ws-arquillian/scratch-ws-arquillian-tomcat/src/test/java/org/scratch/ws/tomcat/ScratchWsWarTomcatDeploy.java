@@ -10,29 +10,15 @@ public class ScratchWsWarTomcatDeploy {
 
     protected static final Logger logger = LoggerFactory.getLogger(ScratchWsWarTomcatDeploy.class);
 
-    static WebArchive createTestWar() {
+    static WebArchive createTestWar(boolean replace) {
         // Import kie-wb war
         WebArchive war = getWebArchive("org.scratch.ws", "scratch-ws-wars", "tomcat7", PROJECT_VERSION);
 
         war.addAsWebInfResource("war/logging.properties", "classes/logging.properties");
 
-        boolean replace = false;
         if( replace ) { 
-            String [][] jarsToReplace = {
-                    { "org.scratch.ws", "scratch-ws" },
-            };
-            replaceJars(war, PROJECT_VERSION, jarsToReplace);
-        }
-    
-        /**
-        String [] jarsToDelete = { "cxf-bundle-jaxrs-2.7.11.jar" };
-        deleteJars(war, jarsToDelete);
-        */
-        
-        boolean replaceWebXml = false;
-        if( replaceWebXml ) { 
           war.delete("WEB-INF/web.xml");
-          war.addAsWebResource("war/web.xml");
+          war.addAsWebResource("WEB-INF/web.xml", "WEB-INF/web.xml");
         }
         
         return war;

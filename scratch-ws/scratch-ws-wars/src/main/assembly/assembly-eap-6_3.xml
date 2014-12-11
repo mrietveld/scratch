@@ -36,6 +36,13 @@
       <directory>${project.basedir}/src/main/eap-6_3</directory>
       <outputDirectory>.</outputDirectory>
     </fileSet>
+    <fileSet>
+      <directory>${project.build.directory}/unpack/wsdl</directory>
+      <includes>
+        <include>*.wsdl</include>
+      </includes>
+      <outputDirectory>WEB-INF/wsdl/</outputDirectory>
+    </fileSet>
   </fileSets>
 
   <dependencySets>
@@ -45,6 +52,10 @@
       </includes>
       <outputDirectory>WEB-INF/lib</outputDirectory>
       <useTransitiveFiltering>true</useTransitiveFiltering>
+      <excludes>
+        <exclude>org.slf4j:slf4j-api</exclude>
+        <exclude>org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.2_spec:jar</exclude>
+      </excludes>
     </dependencySet>
   </dependencySets>
 

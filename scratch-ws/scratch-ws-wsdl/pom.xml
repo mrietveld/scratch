@@ -96,12 +96,12 @@
     <dependency>
       <groupId>org.jboss.spec.javax.xml.ws</groupId>
       <artifactId>jboss-jaxws-api_2.2_spec</artifactId>
-      <scope>provided</scope>
+      <!-- <scope>provided</scope> -->
     </dependency>
     <dependency>
       <groupId>javax.jws</groupId>
       <artifactId>jsr181-api</artifactId>
-      <scope>provided</scope>
+      <!--  <scope>provided</scope> -->
     </dependency>
     <dependency>
       <groupId>org.jboss.spec.javax.servlet</groupId>
@@ -118,6 +118,11 @@
     <dependency>
       <groupId>org.apache.cxf</groupId>
       <artifactId>cxf-rt-transports-http-jetty</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.ws.cxf</groupId>
+      <artifactId>jbossws-cxf-client</artifactId>
       <scope>test</scope>
     </dependency>
     

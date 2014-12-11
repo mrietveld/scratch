@@ -2,6 +2,7 @@ package org.scratch.ws;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.scratch.ws.config.ScratchWsCxfServlet.setupPingServiceEndpoint;
 
 import java.net.URL;
 import java.util.Random;
@@ -9,8 +10,10 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Endpoint;
 
+import org.apache.cxf.ws.security.SecurityConstants;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,14 +43,23 @@ public class PingServiceTest {
         public static void setUp() throws Exception {
             { 
                 String address = "http://localhost:9000/ws/PingService";
+                URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
+                assertNotNull("Null URL for wsdl resource", url);
+                PingWebService webServiceImpl = new PingWebServicePlainTextImpl();
+                eps[0] = setupPingServiceEndpoint(url, address, "PingServicePlainTextPort", webServiceImpl);
                 wsdlURL[0] = new URL(address + "?wsdl");
-                eps[0] = Endpoint.publish(address, new PingWebServicePlainTextImpl());
             }
-            String address = "http://localhost:9000/ws/ssl/PingService";
-            wsdlURL[1] = new URL(address + "?wsdl");
-            eps[1] = Endpoint.publish(address, new PingWebServiceSimpleSslImpl());
+            {
+                String address = "http://localhost:9000/ws/ssl/PingService";
+                URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
+                assertNotNull("Null URL for wsdl resource", url);
+                PingWebService webServiceImpl = new PingWebServiceSimpleSslImpl();
+                eps[1] = setupPingServiceEndpoint(url, address, "PingServiceSslPort", webServiceImpl);
+                wsdlURL[1] = new URL(address + "?wsdl");
+            }
         }
 
+        
         @AfterClass
         public static void tearDown() {
             for( Endpoint ep : eps ) { 
@@ -63,6 +75,9 @@ public class PingServiceTest {
         public void testPlainPingWebServiceImpl() throws Exception {
            PingServiceClient tsc = new PingServiceClient(wsdlURL[0], serviceName);
            PingWebService tws = tsc.getPingServicePlainTextPort();
+           BindingProvider bindingProxy = (BindingProvider) tws;
+           bindingProxy.getRequestContext().put(SecurityConstants.USERNAME, "mary");
+           bindingProxy.getRequestContext().put(SecurityConstants.PASSWORD, "mary123@");
            
            String name = UUID.randomUUID().toString();
            long id = idGen.getAndIncrement();

@@ -24,10 +24,13 @@
       <groupId>org.scratch.ws</groupId>
       <artifactId>scratch-ws-wsdl</artifactId>
     </dependency>
-    
     <dependency>
       <groupId>org.jboss.ws.cxf</groupId>
       <artifactId>jbossws-cxf-server</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.spec.javax.xml.ws</groupId>
+      <artifactId>jboss-jaxws-api_2.2_spec</artifactId>
     </dependency>
   </dependencies>
 

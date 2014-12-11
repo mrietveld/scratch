@@ -29,10 +29,13 @@
     <!-- for Byteman plugin -->
     <version.org.jboss.byteman>2.1.4.1</version.org.jboss.byteman>
     <version.org.jboss.as>7.2.0.Final</version.org.jboss.as>
+
+    <override.version.org.jboss.as>7.4.0.Final-redhat-19</override.version.org.jboss.as>
+    <version.org.jboss.as.dist>7.4.0.Final-redhat-19</version.org.jboss.as.dist>
   </properties>
 
   <dependencies>
-      <!--  base -->
+    <!-- base -->
     <dependency>
       <groupId>org.scratch.ws</groupId>
       <artifactId>scratch-ws-wsdl</artifactId>
@@ -43,7 +46,7 @@
       <artifactId>scratch-ws-arquillian-base</artifactId>
       <scope>test</scope>
     </dependency>
-    
+
     <!-- arquillian -->
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
@@ -65,6 +68,7 @@
     <dependency>
       <groupId>org.jboss.as</groupId>
       <artifactId>jboss-as-arquillian-container-managed</artifactId>
+      <version>${version.org.jboss.as}</version>
       <scope>test</scope>
     </dependency>
 
@@ -88,6 +92,32 @@
     </dependency>
 
   </dependencies>
+
+ <!-- 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.jboss.as</groupId>
+        <artifactId>jboss-as-server</artifactId>
+        <version>${version.org.jboss.as.dist}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.as</groupId>
+        <artifactId>jboss-as-connector</artifactId>
+        <version>${version.org.jboss.as.dist}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.msc</groupId>
+        <artifactId>jboss-msc</artifactId>
+        <version>1.0.4.GA-redhat-1</version>
+        <scope>runtime</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  -->
+
 
   <build>
     <testResources>
@@ -133,17 +163,6 @@
     </pluginManagement>
 
     <plugins>
-
-
-      <!-- only run when -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-        <configuration>
-          <skipTests>${skip.integration.tests}</skipTests>
-        </configuration>
-      </plugin>
-
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -164,163 +183,123 @@
         </configuration>
       </plugin>
 
+      <!-- 1. install server in the build/target dir -->
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-jboss</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.jboss.as</groupId>
+                  <artifactId>jboss-as-dist</artifactId>
+                  <type>zip</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 2. install files with user/password information in the server dir -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-user-config</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/test/resources-eap-6/config</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+          <execution>
+            <id>copy-ssl-files</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${jboss.server.name}/standalone/configuration/ssl</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/test/resources/ssl/server</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 3. modify server configuration -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xml-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <id>modify-standalone-full</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>transform</goal>
+            </goals>
+            <configuration>
+              <transformationSets>
+                <transformationSet>
+                  <dir>${project.build.directory}/${jboss.server.name}/standalone/configuration</dir>
+                  <outputDir>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDir>
+                  <includes>
+                    <include>standalone-full.xml</include>
+                  </includes>
+                  <stylesheet>src/test/resources-eap-6/xslt/addDebugLogging.xslt</stylesheet>
+                </transformationSet>
+              </transformationSets>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>com.google.code.maven-replacer-plugin</groupId>
+        <artifactId>replacer</artifactId>
+        <executions>
+          <execution>
+            <id>fix-broken-junit-reports</id>
+            <phase>post-integration-test</phase>
+            <goals>
+              <goal>replace</goal>
+            </goals>
+            <configuration>
+              <basedir>${project.build.directory}/failsafe-reports</basedir>
+              <includes>
+                <include>TEST*xml</include>
+              </includes>
+              <unescape>true</unescape>
+              <tokenValueMap>${basedir}/replace-tokenFile.txt</tokenValueMap>
+              <ignoreErrors>true</ignoreErrors>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
-  <profiles>
-    <profile>
-      <id>integration-tests</id>
-      <properties>
-        <skip.integration.tests>false</skip.integration.tests>
-        <override.version.org.jboss.as>7.4.0.Final-redhat-19</override.version.org.jboss.as>
-        <version.org.jboss.as.dist>7.4.0.Final-redhat-19</version.org.jboss.as.dist>
-      </properties>
-
-      <dependencyManagement>
-        <dependencies>
-          <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-server</artifactId>
-            <version>${version.org.jboss.as.dist}</version>
-            <scope>runtime</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.jboss.as</groupId>
-            <artifactId>jboss-as-connector</artifactId>
-            <version>${version.org.jboss.as.dist}</version>
-            <scope>runtime</scope>
-          </dependency>
-          <dependency>
-            <groupId>org.jboss.msc</groupId>
-            <artifactId>jboss-msc</artifactId>
-            <version>1.0.4.GA-redhat-1</version>
-            <scope>runtime</scope>
-          </dependency>
-
-        </dependencies>
-      </dependencyManagement>
-
-      <build>
-        <plugins>
-
-          <!-- 1. install server in the build/target dir -->
-          <plugin>
-            <artifactId>maven-dependency-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>unpack-jboss</id>
-                <phase>generate-test-resources</phase>
-                <goals>
-                  <goal>unpack</goal>
-                </goals>
-                <configuration>
-                  <artifactItems>
-                    <artifactItem>
-                      <groupId>org.jboss.as</groupId>
-                      <artifactId>jboss-as-dist</artifactId>
-                      <type>zip</type>
-                      <overWrite>false</overWrite>
-                      <outputDirectory>${project.build.directory}</outputDirectory>
-                    </artifactItem>
-                  </artifactItems>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- 2. install files with user/password information in the server dir -->
-          <plugin>
-            <artifactId>maven-resources-plugin</artifactId>
-            <executions>
-              <execution>
-                <id>copy-user-config</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>src/test/resources-eap-6/config</directory>
-                      <filtering>false</filtering>
-                    </resource>
-                  </resources>
-                  <overwrite>true</overwrite>
-                </configuration>
-              </execution>
-              <execution>
-                <id>copy-ssl-files</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>copy-resources</goal>
-                </goals>
-                <configuration>
-                  <outputDirectory>${project.build.directory}/${jboss.server.name}/standalone/configuration/ssl</outputDirectory>
-                  <resources>
-                    <resource>
-                      <directory>src/test/resources/ssl/server</directory>
-                      <filtering>false</filtering>
-                    </resource>
-                  </resources>
-                  <overwrite>true</overwrite>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <!-- 3. modify server configuration -->
-          <plugin>
-            <groupId>org.codehaus.mojo</groupId>
-            <artifactId>xml-maven-plugin</artifactId>
-            <version>1.0</version>
-            <executions>
-              <execution>
-                <id>modify-standalone-full</id>
-                <phase>process-test-resources</phase>
-                <goals>
-                  <goal>transform</goal>
-                </goals>
-                <configuration>
-                  <transformationSets>
-                    <transformationSet>
-                      <dir>${project.build.directory}/${jboss.server.name}/standalone/configuration</dir>
-                      <outputDir>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDir>
-                      <includes>
-                        <include>standalone-full.xml</include>
-                      </includes>
-                      <stylesheet>src/test/resources-eap-6/xslt/addDebugLogging.xslt</stylesheet>
-                    </transformationSet>
-                  </transformationSets>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-
-          <plugin>
-            <groupId>com.google.code.maven-replacer-plugin</groupId>
-            <artifactId>replacer</artifactId>
-            <executions>
-              <execution>
-                <id>fix-broken-junit-reports</id>
-                <phase>post-integration-test</phase>
-                <goals>
-                  <goal>replace</goal>
-                </goals>
-                <configuration>
-                  <basedir>${project.build.directory}/failsafe-reports</basedir>
-                  <includes>
-                    <include>TEST*xml</include>
-                  </includes>
-                  <unescape>true</unescape>
-                  <tokenValueMap>${basedir}/replace-tokenFile.txt</tokenValueMap>
-                  <ignoreErrors>true</ignoreErrors>
-                </configuration>
-              </execution>
-            </executions>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>

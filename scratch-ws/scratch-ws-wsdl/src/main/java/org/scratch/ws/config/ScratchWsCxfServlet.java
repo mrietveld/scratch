@@ -25,6 +25,9 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
     private static final long serialVersionUID = 2824057877125098622L;
 
     public static final String SERVICE_NAME = "PingService";
+    public static final String PLAIN_TEXT_SUFFIX = SERVICE_NAME;
+    public static final String SSL_SUFFIX = "/ssl/" + SERVICE_NAME;
+    
     public static final String PLAIN_TEXT_ADDRESS = "http://localhost:" + 8080 + "/ws/" + SERVICE_NAME;
     public static final String SSL_ADDRESS = "https://localhost:" + 8080 + "/ws/ssl/" + SERVICE_NAME;
             
@@ -37,28 +40,18 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
       Bus bus = getBus();
       BusFactory.setDefaultBus(bus);
       bus.getExtension(PolicyEngine.class).setEnabled(true);
-  
-      String [] wsdlPaths = { 
-              "/wsdl/PingService.wsdl",
-              "wsdl/PingService.wsdl",
-              "/WEB-INF/wsdl/PingService.wsdl",
-              "WEB-INF/wsdl/PingService.wsdl",
-              "PingService.wsdl"
-          };
-      URL wsdl = null;
-      for( String path : wsdlPaths ) { 
-          wsdl = ScratchWsCxfServlet.class.getResource(path);
-         System.out.println( "[!] [" + ( wsdl != null ) + "] " + path);
-         if( wsdl != null ) { 
-             break;
-         }
+ 
+      String wsdlPath = "/wsdl/PingService.wsdl";
+      URL wsdl = ScratchWsCxfServlet.class.getResource(wsdlPath);
+      if( wsdl == null ) { 
+          throw new IllegalStateException("No wsdl for PingService could be found at path [" + wsdlPath + "]");
       }
     
-      setupPingServiceEndpoint(wsdl, PLAIN_TEXT_ADDRESS, new PingWebServicePlainTextImpl());
-      setupPingServiceEndpoint(wsdl, SSL_ADDRESS, new PingWebServiceSimpleSslImpl());
+      setupPingServiceEndpoint(wsdl, PLAIN_TEXT_SUFFIX, "PingServicePlainTextPort", new PingWebServicePlainTextImpl());
+      setupPingServiceEndpoint(wsdl, SSL_SUFFIX, "PingServiceSslPort", new PingWebServiceSimpleSslImpl());
     }
     
-    private void setupPingServiceEndpoint( URL wsdlUrl, String address, PingWebService webServiceImpl ) { 
+    public static Endpoint setupPingServiceEndpoint( URL wsdlUrl, String address, String portName, PingWebService webServiceImpl ) { 
       // setup the plain text PingService endpoint
       EndpointImpl ep = (EndpointImpl) Endpoint.create(webServiceImpl);
       ep.setEndpointName(new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingService"));
@@ -68,5 +61,6 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
       ep.getServer().getEndpoint().getEndpointInfo().setProperty(
               SecurityConstants.CALLBACK_HANDLER, 
               new ServerPasswordCallback());
+      return ep;
     }
 }

@@ -3,7 +3,6 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-  <!-- 
   <servlet>
     <servlet-name>ScratchWsCXFServlet</servlet-name>
     <servlet-class>org.scratch.ws.config.ScratchWsCxfServlet</servlet-class>
@@ -14,8 +13,8 @@
     <servlet-name>ScratchWsCXFServlet</servlet-name>
     <url-pattern>/ws/*</url-pattern>
   </servlet-mapping>
- -->
 
+  <!-- 
    <servlet>
       <servlet-name>PlainTextPingService</servlet-name>
       <servlet-class>org.scratch.ws.PingWebServicePlainTextImpl</servlet-class>
@@ -33,5 +32,6 @@
       <servlet-name>SslPingService</servlet-name>
       <url-pattern>/ws/ssl/PingService</url-pattern>
    </servlet-mapping>
+ -->
     
 </web-app>

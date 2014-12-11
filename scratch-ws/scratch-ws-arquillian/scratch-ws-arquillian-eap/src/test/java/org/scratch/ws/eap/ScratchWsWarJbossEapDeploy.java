@@ -12,9 +12,7 @@ public class ScratchWsWarJbossEapDeploy {
 
     static WebArchive createTestWar() {
         // Import kie-wb war
-        WebArchive war = getWebArchive("org.scratch.ws", "scratch-ws-wars", "tomcat7", PROJECT_VERSION);
-
-        war.addAsWebInfResource("war/logging.properties", "classes/logging.properties");
+        WebArchive war = getWebArchive("org.scratch.ws", "scratch-ws-wars", "eap6_3", PROJECT_VERSION);
 
         boolean replace = false;
         if( replace ) { 
@@ -24,15 +22,10 @@ public class ScratchWsWarJbossEapDeploy {
             replaceJars(war, PROJECT_VERSION, jarsToReplace);
         }
     
-        /**
-        String [] jarsToDelete = { "cxf-bundle-jaxrs-2.7.11.jar" };
-        deleteJars(war, jarsToDelete);
-        */
-        
-        boolean replaceWebXml = false;
+        boolean replaceWebXml = true;
         if( replaceWebXml ) { 
           war.delete("WEB-INF/web.xml");
-          war.addAsWebResource("war/web.xml");
+          war.addAsWebResource("WEB-INF/web.xml");
         }
         
         return war;

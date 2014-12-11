@@ -236,6 +236,11 @@
         <artifactId>jbossws-cxf-server</artifactId>
         <version>${version.org.jboss.ws.cxf}</version>
       </dependency>
+      <dependency>
+        <groupId>org.jboss.ws.cxf</groupId>
+        <artifactId>jbossws-cxf-client</artifactId>
+        <version>${version.org.jboss.ws.cxf}</version>
+      </dependency>
 
       <!-- other WS -->
       <dependency>
@@ -267,7 +272,6 @@
         <groupId>org.jboss.spec.javax.xml.ws</groupId>
         <artifactId>jboss-jaxws-api_2.2_spec</artifactId>
         <version>2.0.2.Final</version>
-        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>javax.jws</groupId>

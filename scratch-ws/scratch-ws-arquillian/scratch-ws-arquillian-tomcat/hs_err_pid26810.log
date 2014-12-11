@@ -1,0 +1,744 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x000000336ea89abb, pid=26810, tid=140571508283136
+#
+# JRE version: 6.0_45-b06
+# Java VM: Java HotSpot(TM) 64-Bit Server VM (20.45-b01 mixed mode linux-amd64 compressed oops)
+# Problematic frame:
+# C  [libc.so.6+0x89abb]  unsigned long+0x15b
+#
+# If you would like to submit a bug report, please visit:
+#   http://java.sun.com/webapps/bugreport/crash.jsp
+# The crash happened outside the Java Virtual Machine in native code.
+# See problematic frame for where to report the bug.
+#
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x00007fd95400f800):  JavaThread "main" [_thread_in_native, id=26817, stack(0x00007fd95ac11000,0x00007fd95ad12000)]
+
+siginfo:si_signo=SIGSEGV: si_errno=0, si_code=1 (SEGV_MAPERR), si_addr=0x00007fd95ba55000
+
+Registers:
+RAX=0x0000000000000000, RBX=0x0000000000007361, RCX=0x00000000000003b0, RDX=0x000000000000735d
+RSP=0x00007fd95ad0a7b8, RBP=0x00007fd95ba49272, RSI=0x00007fd95ba55000, RDI=0x00007fd9541bf654
+R8 =0x00007fd954000088, R9 =0x0000000000000001, R10=0x0000000000007362, R11=0x0000000000004000
+R12=0x00007fd95457d220, R13=0x0000000000002e79, R14=0x00007fd9540ca2f0, R15=0x0000000000006c63
+RIP=0x000000336ea89abb, EFLAGS=0x0000000000010206, CSGSFS=0x0000000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+Top of Stack: (sp=0x00007fd95ad0a7b8)
+0x00007fd95ad0a7b8:   00007fd95a4563a3 000000005ad0a7e0
+0x00007fd95ad0a7c8:   00007fd9540ca540 00007fd9540ca2f0
+0x00007fd95ad0a7d8:   0000000000000000 00000000b5105e45
+0x00007fd95ad0a7e8:   00007fd95ad0a850 0000000000000030
+0x00007fd95ad0a7f8:   00007fd95a4565c4 00007fd95400f800
+0x00007fd95ad0a808:   00007fd95ad0a850 00007fd95400f9d0
+0x00007fd95ad0a818:   0000000000000030 00007fd95ad0aca8
+0x00007fd95ad0a828:   0000000000000030 0000000000000001
+0x00007fd95ad0a838:   00007fd95a44e797 00007fd95ad0a850
+0x00007fd95ad0a848:   00007fd9540ca2f0 617263732f67726f
+0x00007fd95ad0a858:   672f73772f686374 6465746172656e65
+0x00007fd95ad0a868:   726553676e69502f 65696c4365636976
+0x00007fd95ad0a878:   7373616c632e746e 000000005ad0a800
+0x00007fd95ad0a888:   00007fd954030bc0 0000000000000000
+0x00007fd95ad0a898:   00007fd95b12e688 00007fd9540100b0
+0x00007fd95ad0a8a8:   00007fd900000000 00007fd95400f800
+0x00007fd95ad0a8b8:   00000000d82e9040 0000000088200090
+0x00007fd95ad0a8c8:   00000000d82e6a80 00000000d82e6aa0
+0x00007fd95ad0a8d8:   00000000d82e6b00 00007fd95400f800
+0x00007fd95ad0a8e8:   00007fd95400e300 00007fd95ad0aca0
+0x00007fd95ad0a8f8:   00007fd94b010168 00007fd94b219490
+0x00007fd95ad0a908:   00007fd95ad0a8b8 00007fd95ad0a8f9
+0x00007fd95ad0a918:   0000000800000002 00007fd95400f800
+0x00007fd95ad0a928:   00007fd954010100 00007fd95400e4f0
+0x00007fd95ad0a938:   00007fd95400dfa0 00007fd95400dfb0
+0x00007fd95ad0a948:   00007fd95400e300 00007fd95400f800
+0x00007fd95ad0a958:   00007fd95ad0a900 00007fd95400e4f0
+0x00007fd95ad0a968:   00007fd95400dfa0 00007fd95400dfb0
+0x00007fd95ad0a978:   00007fd95400e388 00007fd95ad0ab40
+0x00007fd95ad0a988:   00007fd95400f800 0000000000000000
+0x00007fd95ad0a998:   0000000000000000 0000000000000000
+0x00007fd95ad0a9a8:   00007fd95400f800 00007fd95ad0a9f0 
+
+Instructions: (pc=0x000000336ea89abb)
+0x000000336ea89a9b:   fe ff ff f3 c3 4c 8b 1d 49 46 30 00 49 39 d3 4c
+0x000000336ea89aab:   0f 47 da 4c 89 d9 49 83 e3 f8 48 c1 e9 03 74 05
+0x000000336ea89abb:   f3 48 a5 66 90 4c 29 da 48 f7 c2 f8 ff ff ff 75
+0x000000336ea89acb:   14 83 e2 07 48 8b 44 24 f8 0f 85 8f fe ff ff f3 
+
+Register to memory mapping:
+
+RAX=0x0000000000000000 is an unknown value
+RBX=0x0000000000007361 is an unknown value
+RCX=0x00000000000003b0 is an unknown value
+RDX=0x000000000000735d is an unknown value
+RSP=0x00007fd95ad0a7b8 is pointing into the stack for thread: 0x00007fd95400f800
+RBP=0x00007fd95ba49272 is an unknown value
+RSI=0x00007fd95ba55000 is an unknown value
+RDI=0x00007fd9541bf654 is an unknown value
+R8 =0x00007fd954000088 is an unknown value
+R9 =0x0000000000000001 is an unknown value
+R10=0x0000000000007362 is an unknown value
+R11=0x0000000000004000 is an unknown value
+R12=0x00007fd95457d220 is an unknown value
+R13=0x0000000000002e79 is an unknown value
+R14=0x00007fd9540ca2f0 is an unknown value
+R15=0x0000000000006c63 is an unknown value
+
+
+Stack: [0x00007fd95ac11000,0x00007fd95ad12000],  sp=0x00007fd95ad0a7b8,  free space=997k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+C  [libc.so.6+0x89abb]  unsigned long+0x15b
+
+Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
+J  java.util.zip.ZipFile.getEntry(JLjava/lang/String;Z)J
+J  java.util.zip.ZipFile.getEntry(Ljava/lang/String;)Ljava/util/zip/ZipEntry;
+J  sun.misc.URLClassPath.getResource(Ljava/lang/String;Z)Lsun/misc/Resource;
+j  java.net.URLClassLoader$1.run()Ljava/lang/Object;+26
+v  ~StubRoutines::call_stub
+j  java.security.AccessController.doPrivileged(Ljava/security/PrivilegedExceptionAction;Ljava/security/AccessControlContext;)Ljava/lang/Object;+0
+j  java.net.URLClassLoader.findClass(Ljava/lang/String;)Ljava/lang/Class;+13
+j  java.lang.ClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;+47
+j  sun.misc.Launcher$AppClassLoader.loadClass(Ljava/lang/String;Z)Ljava/lang/Class;+41
+j  java.lang.ClassLoader.loadClass(Ljava/lang/String;)Ljava/lang/Class;+3
+v  ~StubRoutines::call_stub
+j  org.scratch.ws.tomcat.TomcatScratchWebserviceIntegrationTest.webserviceTest()V+14
+v  ~StubRoutines::call_stub
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+87
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+161
+j  org.junit.runners.model.FrameworkMethod$1.runReflectiveCall()Ljava/lang/Object;+15
+j  org.junit.internal.runners.model.ReflectiveCallable.run()Ljava/lang/Object;+1
+j  org.junit.runners.model.FrameworkMethod.invokeExplosively(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+10
+j  org.jboss.arquillian.junit.Arquillian$6$1.invoke([Ljava/lang/Object;)V+15
+j  org.jboss.arquillian.container.test.impl.execution.LocalTestExecuter.execute(Lorg/jboss/arquillian/container/test/impl/execution/event/LocalExecutionEvent;)V+45
+v  ~StubRoutines::call_stub
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+87
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+161
+j  org.jboss.arquillian.core.impl.ObserverImpl.invoke(Lorg/jboss/arquillian/core/spi/Manager;Ljava/lang/Object;)Z+44
+j  org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers()V+47
+j  org.jboss.arquillian.core.impl.EventContextImpl.proceed()V+17
+j  org.jboss.arquillian.core.impl.ManagerImpl.fire(Ljava/lang/Object;Lorg/jboss/arquillian/core/spi/NonManagedObserver;)V+94
+j  org.jboss.arquillian.core.impl.ManagerImpl.fire(Ljava/lang/Object;)V+3
+j  org.jboss.arquillian.core.impl.EventImpl.fire(Ljava/lang/Object;)V+5
+j  org.jboss.arquillian.container.test.impl.execution.ClientTestExecuter.execute(Lorg/jboss/arquillian/test/spi/event/suite/Test;)V+46
+v  ~StubRoutines::call_stub
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+87
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+161
+j  org.jboss.arquillian.core.impl.ObserverImpl.invoke(Lorg/jboss/arquillian/core/spi/Manager;Ljava/lang/Object;)Z+44
+j  org.jboss.arquillian.core.impl.EventContextImpl.invokeObservers()V+47
+j  org.jboss.arquillian.core.impl.EventContextImpl.proceed()V+17
+j  org.jboss.arquillian.container.test.impl.client.ContainerEventController.createContext(Lorg/jboss/arquillian/core/spi/EventContext;)V+26
+j  org.jboss.arquillian.container.test.impl.client.ContainerEventController.createTestContext(Lorg/jboss/arquillian/core/spi/EventContext;)V+2
+v  ~StubRoutines::call_stub
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+87
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+161
+j  org.jboss.arquillian.core.impl.ObserverImpl.invoke(Lorg/jboss/arquillian/core/spi/Manager;Ljava/lang/Object;)Z+44
+j  org.jboss.arquillian.core.impl.EventContextImpl.proceed()V+66
+j  org.jboss.arquillian.test.impl.TestContextHandler.createTestContext(Lorg/jboss/arquillian/core/spi/EventContext;)V+32
+v  ~StubRoutines::call_stub
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+87
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+161
+j  org.jboss.arquillian.core.impl.ObserverImpl.invoke(Lorg/jboss/arquillian/core/spi/Manager;Ljava/lang/Object;)Z+44
+j  org.jboss.arquillian.core.impl.EventContextImpl.proceed()V+66
+j  org.jboss.arquillian.test.impl.TestContextHandler.createClassContext(Lorg/jboss/arquillian/core/spi/EventContext;)V+56
+v  ~StubRoutines::call_stub
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+87
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+161
+j  org.jboss.arquillian.core.impl.ObserverImpl.invoke(Lorg/jboss/arquillian/core/spi/Manager;Ljava/lang/Object;)Z+44
+j  org.jboss.arquillian.core.impl.EventContextImpl.proceed()V+66
+j  org.jboss.arquillian.test.impl.TestContextHandler.createSuiteContext(Lorg/jboss/arquillian/core/spi/EventContext;)V+20
+v  ~StubRoutines::call_stub
+j  sun.reflect.NativeMethodAccessorImpl.invoke0(Ljava/lang/reflect/Method;Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+0
+j  sun.reflect.NativeMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+87
+j  sun.reflect.DelegatingMethodAccessorImpl.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+6
+j  java.lang.reflect.Method.invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;+161
+j  org.jboss.arquillian.core.impl.ObserverImpl.invoke(Lorg/jboss/arquillian/core/spi/Manager;Ljava/lang/Object;)Z+44
+j  org.jboss.arquillian.core.impl.EventContextImpl.proceed()V+66
+j  org.jboss.arquillian.core.impl.ManagerImpl.fire(Ljava/lang/Object;Lorg/jboss/arquillian/core/spi/NonManagedObserver;)V+94
+j  org.jboss.arquillian.test.impl.EventTestRunnerAdaptor.test(Lorg/jboss/arquillian/test/spi/TestMethodExecutor;)Lorg/jboss/arquillian/test/spi/TestResult;+35
+j  org.jboss.arquillian.junit.Arquillian$6.evaluate()V+15
+j  org.jboss.arquillian.junit.Arquillian$5.evaluate()V+55
+j  org.junit.runners.ParentRunner.runLeaf(Lorg/junit/runners/model/Statement;Lorg/junit/runner/Description;Lorg/junit/runner/notification/RunNotifier;)V+17
+j  org.junit.runners.BlockJUnit4ClassRunner.runChild(Lorg/junit/runners/model/FrameworkMethod;Lorg/junit/runner/notification/RunNotifier;)V+32
+j  org.junit.runners.BlockJUnit4ClassRunner.runChild(Ljava/lang/Object;Lorg/junit/runner/notification/RunNotifier;)V+6
+j  org.junit.runners.ParentRunner$3.run()V+12
+j  org.junit.runners.ParentRunner$1.schedule(Ljava/lang/Runnable;)V+1
+j  org.junit.runners.ParentRunner.runChildren(Lorg/junit/runner/notification/RunNotifier;)V+40
+j  org.junit.runners.ParentRunner.access$000(Lorg/junit/runners/ParentRunner;Lorg/junit/runner/notification/RunNotifier;)V+2
+j  org.junit.runners.ParentRunner$2.evaluate()V+8
+j  org.jboss.arquillian.junit.Arquillian$2.evaluate()V+37
+j  org.jboss.arquillian.junit.Arquillian.multiExecute([Lorg/junit/runners/model/Statement;)V+32
+j  org.jboss.arquillian.junit.Arquillian.access$200(Lorg/jboss/arquillian/junit/Arquillian;[Lorg/junit/runners/model/Statement;)V+2
+j  org.jboss.arquillian.junit.Arquillian$3.evaluate()V+26
+j  org.junit.runners.ParentRunner.run(Lorg/junit/runner/notification/RunNotifier;)V+20
+j  org.jboss.arquillian.junit.Arquillian.run(Lorg/junit/runner/notification/RunNotifier;)V+110
+j  org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(Lorg/eclipse/jdt/internal/junit/runner/TestExecution;)V+72
+j  org.eclipse.jdt.internal.junit.runner.TestExecution.run([Lorg/eclipse/jdt/internal/junit/runner/ITestReference;)V+17
+j  org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests([Ljava/lang/String;Ljava/lang/String;Lorg/eclipse/jdt/internal/junit/runner/TestExecution;)V+61
+j  org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(Lorg/eclipse/jdt/internal/junit/runner/TestExecution;)V+10
+j  org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run()V+70
+j  org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main([Ljava/lang/String;)V+14
+v  ~StubRoutines::call_stub
+
+---------------  P R O C E S S  ---------------
+
+Java Threads: ( => current thread )
+  0x00007fd95457b800 JavaThread "Thread-3" daemon [_thread_blocked, id=26882, stack(0x00007fd94aa61000,0x00007fd94ab62000)]
+  0x00007fd95484a000 JavaThread "GC Daemon" daemon [_thread_blocked, id=26879, stack(0x00007fd94ab62000,0x00007fd94ac63000)]
+  0x00007fd9547c8800 JavaThread "RMI RenewClean-[0:0:0:0:0:0:0:1:50094]" daemon [_thread_blocked, id=26878, stack(0x00007fd94ac63000,0x00007fd94ad64000)]
+  0x00007fd95469d800 JavaThread "RMI Scheduler(0)" daemon [_thread_blocked, id=26877, stack(0x00007fd94ad64000,0x00007fd94ae65000)]
+  0x00007fd954980000 JavaThread "Thread-1" [_thread_in_native, id=26844, stack(0x00007fd958000000,0x00007fd958101000)]
+  0x00007fd95497f000 JavaThread "process reaper" daemon [_thread_in_native, id=26842, stack(0x00007fd958101000,0x00007fd958202000)]
+  0x00007fd9545f4800 JavaThread "ReaderThread" [_thread_in_native, id=26839, stack(0x00007fd958202000,0x00007fd958303000)]
+  0x00007fd9540ab000 JavaThread "Low Memory Detector" daemon [_thread_blocked, id=26837, stack(0x00007fd9586ed000,0x00007fd9587ee000)]
+  0x00007fd9540a8800 JavaThread "C2 CompilerThread1" daemon [_thread_blocked, id=26836, stack(0x00007fd9587ee000,0x00007fd9588ef000)]
+  0x00007fd9540a6000 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=26835, stack(0x00007fd9588ef000,0x00007fd9589f0000)]
+  0x00007fd928001000 JavaThread "JDWP Command Reader" daemon [_thread_in_native, id=26831, stack(0x00007fd9589f0000,0x00007fd958af1000)]
+  0x00007fd9540a3800 JavaThread "JDWP Event Helper Thread" daemon [_thread_blocked, id=26830, stack(0x00007fd958af1000,0x00007fd958bf2000)]
+  0x00007fd9540a0000 JavaThread "JDWP Transport Listener: dt_socket" daemon [_thread_blocked, id=26827, stack(0x00007fd958bf2000,0x00007fd958cf3000)]
+  0x00007fd954091800 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=26825, stack(0x00007fd958df7000,0x00007fd958ef8000)]
+  0x00007fd954075800 JavaThread "Finalizer" daemon [_thread_blocked, id=26824, stack(0x00007fd958ef8000,0x00007fd958ff9000)]
+  0x00007fd954074000 JavaThread "Reference Handler" daemon [_thread_blocked, id=26823, stack(0x00007fd958ff9000,0x00007fd9590fa000)]
+=>0x00007fd95400f800 JavaThread "main" [_thread_in_native, id=26817, stack(0x00007fd95ac11000,0x00007fd95ad12000)]
+
+Other Threads:
+  0x00007fd95406d000 VMThread [stack: 0x00007fd9590fa000,0x00007fd9591fb000] [id=26822]
+  0x00007fd9540b6000 WatcherThread [stack: 0x00007fd9585ec000,0x00007fd9586ed000] [id=26838]
+
+VM state:not at safepoint (normal execution)
+
+VM Mutex/Monitor currently owned by a thread: None
+
+Heap
+ PSYoungGen      total 33152K, used 3219K [0x00000000d80b0000, 0x00000000da480000, 0x0000000100000000)
+  eden space 30016K, 10% used [0x00000000d80b0000,0x00000000d83d4f38,0x00000000d9e00000)
+  from space 3136K, 0% used [0x00000000da170000,0x00000000da170000,0x00000000da480000)
+  to   space 3328K, 0% used [0x00000000d9e00000,0x00000000d9e00000,0x00000000da140000)
+ PSOldGen        total 81856K, used 2655K [0x0000000088200000, 0x000000008d1f0000, 0x00000000d80b0000)
+  object space 81856K, 3% used [0x0000000088200000,0x0000000088497dd8,0x000000008d1f0000)
+ PSPermGen       total 40192K, used 20349K [0x0000000083000000, 0x0000000085740000, 0x0000000088200000)
+  object space 40192K, 50% used [0x0000000083000000,0x00000000843df400,0x0000000085740000)
+
+Code Cache  [0x00007fd94b16f000, 0x00007fd94b3df000, 0x00007fd94e16f000)
+ total_blobs=514 nmethods=229 adapters=247 free_code_cache=49287488 largest_free_block=10688
+
+Dynamic libraries:
+40000000-40009000 r-xp 00000000 fd:01 294816                             /usr/java/jdk1.6.0_45/bin/java
+40108000-4010a000 rwxp 00008000 fd:01 294816                             /usr/java/jdk1.6.0_45/bin/java
+41fc7000-41fe8000 rwxp 00000000 00:00 0                                  [heap]
+83000000-85740000 rwxp 00000000 00:00 0 
+85740000-88200000 rwxp 00000000 00:00 0 
+88200000-8d1f0000 rwxp 00000000 00:00 0 
+8d1f0000-d80b0000 rwxp 00000000 00:00 0 
+d80b0000-da480000 rwxp 00000000 00:00 0 
+da480000-da8a0000 ---p 00000000 00:00 0 
+da8a0000-100000000 rwxp 00000000 00:00 0 
+336e600000-336e620000 r-xp 00000000 fd:01 521742                         /lib64/ld-2.12.so
+336e81f000-336e820000 r-xp 0001f000 fd:01 521742                         /lib64/ld-2.12.so
+336e820000-336e821000 rwxp 00020000 fd:01 521742                         /lib64/ld-2.12.so
+336e821000-336e822000 rwxp 00000000 00:00 0 
+336ea00000-336eb8b000 r-xp 00000000 fd:01 523405                         /lib64/libc-2.12.so
+336eb8b000-336ed8a000 ---p 0018b000 fd:01 523405                         /lib64/libc-2.12.so
+336ed8a000-336ed8e000 r-xp 0018a000 fd:01 523405                         /lib64/libc-2.12.so
+336ed8e000-336ed8f000 rwxp 0018e000 fd:01 523405                         /lib64/libc-2.12.so
+336ed8f000-336ed94000 rwxp 00000000 00:00 0 
+336ee00000-336ee17000 r-xp 00000000 fd:01 546766                         /lib64/libpthread-2.12.so
+336ee17000-336f017000 ---p 00017000 fd:01 546766                         /lib64/libpthread-2.12.so
+336f017000-336f018000 r-xp 00017000 fd:01 546766                         /lib64/libpthread-2.12.so
+336f018000-336f019000 rwxp 00018000 fd:01 546766                         /lib64/libpthread-2.12.so
+336f019000-336f01d000 rwxp 00000000 00:00 0 
+336f200000-336f202000 r-xp 00000000 fd:01 546767                         /lib64/libdl-2.12.so
+336f202000-336f402000 ---p 00002000 fd:01 546767                         /lib64/libdl-2.12.so
+336f402000-336f403000 r-xp 00002000 fd:01 546767                         /lib64/libdl-2.12.so
+336f403000-336f404000 rwxp 00003000 fd:01 546767                         /lib64/libdl-2.12.so
+336f600000-336f683000 r-xp 00000000 fd:01 546761                         /lib64/libm-2.12.so
+336f683000-336f882000 ---p 00083000 fd:01 546761                         /lib64/libm-2.12.so
+336f882000-336f883000 r-xp 00082000 fd:01 546761                         /lib64/libm-2.12.so
+336f883000-336f884000 rwxp 00083000 fd:01 546761                         /lib64/libm-2.12.so
+336fe00000-336fe07000 r-xp 00000000 fd:01 546782                         /lib64/librt-2.12.so
+336fe07000-3370006000 ---p 00007000 fd:01 546782                         /lib64/librt-2.12.so
+3370006000-3370007000 r-xp 00006000 fd:01 546782                         /lib64/librt-2.12.so
+3370007000-3370008000 rwxp 00007000 fd:01 546782                         /lib64/librt-2.12.so
+3380200000-3380216000 r-xp 00000000 fd:01 546784                         /lib64/libnsl-2.12.so
+3380216000-3380415000 ---p 00016000 fd:01 546784                         /lib64/libnsl-2.12.so
+3380415000-3380416000 r-xp 00015000 fd:01 546784                         /lib64/libnsl-2.12.so
+3380416000-3380417000 rwxp 00016000 fd:01 546784                         /lib64/libnsl-2.12.so
+3380417000-3380419000 rwxp 00000000 00:00 0 
+7fd8e8000000-7fd8e8021000 rwxp 00000000 00:00 0 
+7fd8e8021000-7fd8ec000000 ---p 00000000 00:00 0 
+7fd8f0000000-7fd8f0021000 rwxp 00000000 00:00 0 
+7fd8f0021000-7fd8f4000000 ---p 00000000 00:00 0 
+7fd8f4000000-7fd8f4021000 rwxp 00000000 00:00 0 
+7fd8f4021000-7fd8f8000000 ---p 00000000 00:00 0 
+7fd8f8000000-7fd8f8021000 rwxp 00000000 00:00 0 
+7fd8f8021000-7fd8fc000000 ---p 00000000 00:00 0 
+7fd8fc000000-7fd8fc021000 rwxp 00000000 00:00 0 
+7fd8fc021000-7fd900000000 ---p 00000000 00:00 0 
+7fd900000000-7fd900021000 rwxp 00000000 00:00 0 
+7fd900021000-7fd904000000 ---p 00000000 00:00 0 
+7fd904000000-7fd904021000 rwxp 00000000 00:00 0 
+7fd904021000-7fd908000000 ---p 00000000 00:00 0 
+7fd908000000-7fd908021000 rwxp 00000000 00:00 0 
+7fd908021000-7fd90c000000 ---p 00000000 00:00 0 
+7fd90c000000-7fd90c021000 rwxp 00000000 00:00 0 
+7fd90c021000-7fd910000000 ---p 00000000 00:00 0 
+7fd910000000-7fd910021000 rwxp 00000000 00:00 0 
+7fd910021000-7fd914000000 ---p 00000000 00:00 0 
+7fd914000000-7fd914c55000 rwxp 00000000 00:00 0 
+7fd914c55000-7fd918000000 ---p 00000000 00:00 0 
+7fd918000000-7fd918662000 rwxp 00000000 00:00 0 
+7fd918662000-7fd91c000000 ---p 00000000 00:00 0 
+7fd91c000000-7fd91c021000 rwxp 00000000 00:00 0 
+7fd91c021000-7fd920000000 ---p 00000000 00:00 0 
+7fd920000000-7fd920021000 rwxp 00000000 00:00 0 
+7fd920021000-7fd924000000 ---p 00000000 00:00 0 
+7fd924000000-7fd924021000 rwxp 00000000 00:00 0 
+7fd924021000-7fd928000000 ---p 00000000 00:00 0 
+7fd928000000-7fd928023000 rwxp 00000000 00:00 0 
+7fd928023000-7fd92c000000 ---p 00000000 00:00 0 
+7fd92c000000-7fd92c021000 rwxp 00000000 00:00 0 
+7fd92c021000-7fd930000000 ---p 00000000 00:00 0 
+7fd930000000-7fd930021000 rwxp 00000000 00:00 0 
+7fd930021000-7fd934000000 ---p 00000000 00:00 0 
+7fd934000000-7fd934021000 rwxp 00000000 00:00 0 
+7fd934021000-7fd938000000 ---p 00000000 00:00 0 
+7fd938000000-7fd938021000 rwxp 00000000 00:00 0 
+7fd938021000-7fd93c000000 ---p 00000000 00:00 0 
+7fd93c000000-7fd93c021000 rwxp 00000000 00:00 0 
+7fd93c021000-7fd940000000 ---p 00000000 00:00 0 
+7fd940000000-7fd940021000 rwxp 00000000 00:00 0 
+7fd940021000-7fd944000000 ---p 00000000 00:00 0 
+7fd944000000-7fd944021000 rwxp 00000000 00:00 0 
+7fd944021000-7fd948000000 ---p 00000000 00:00 0 
+7fd94aa61000-7fd94aa64000 ---p 00000000 00:00 0 
+7fd94aa64000-7fd94ab62000 rwxp 00000000 00:00 0 
+7fd94ab62000-7fd94ab65000 ---p 00000000 00:00 0 
+7fd94ab65000-7fd94ac63000 rwxp 00000000 00:00 0 
+7fd94ac63000-7fd94ac66000 ---p 00000000 00:00 0 
+7fd94ac66000-7fd94ad64000 rwxp 00000000 00:00 0 
+7fd94ad64000-7fd94ad67000 ---p 00000000 00:00 0 
+7fd94ad67000-7fd94ae65000 rwxp 00000000 00:00 0 
+7fd94ae65000-7fd94ae66000 r-xp 00000000 fd:01 294187                     /usr/java/jdk1.6.0_45/jre/lib/amd64/librmi.so
+7fd94ae66000-7fd94af65000 ---p 00001000 fd:01 294187                     /usr/java/jdk1.6.0_45/jre/lib/amd64/librmi.so
+7fd94af65000-7fd94af66000 rwxp 00000000 fd:01 294187                     /usr/java/jdk1.6.0_45/jre/lib/amd64/librmi.so
+7fd94af66000-7fd94af6d000 r-xp 00000000 fd:01 294178                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnio.so
+7fd94af6d000-7fd94b06c000 ---p 00007000 fd:01 294178                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnio.so
+7fd94b06c000-7fd94b06e000 rwxp 00006000 fd:01 294178                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnio.so
+7fd94b06e000-7fd94b071000 ---p 00000000 00:00 0 
+7fd94b071000-7fd94b3df000 rwxp 00000000 00:00 0 
+7fd94b3df000-7fd94e16f000 rwxp 00000000 00:00 0 
+7fd94e16f000-7fd954000000 r-xp 00000000 fd:01 818708                     /usr/lib/locale/locale-archive
+7fd954000000-7fd954a40000 rwxp 00000000 00:00 0 
+7fd954a40000-7fd958000000 ---p 00000000 00:00 0 
+7fd958000000-7fd958003000 ---p 00000000 00:00 0 
+7fd958003000-7fd958101000 rwxp 00000000 00:00 0 
+7fd958101000-7fd958104000 ---p 00000000 00:00 0 
+7fd958104000-7fd958202000 rwxp 00000000 00:00 0 
+7fd958202000-7fd958205000 ---p 00000000 00:00 0 
+7fd958205000-7fd958334000 rwxp 00000000 00:00 0 
+7fd958334000-7fd958347000 r-xp 00000000 fd:01 294172                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnet.so
+7fd958347000-7fd958448000 ---p 00013000 fd:01 294172                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnet.so
+7fd958448000-7fd95844b000 rwxp 00014000 fd:01 294172                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnet.so
+7fd95844b000-7fd95844c000 r-xs 00004000 fd:04 141983                     /NotBackedUp/mavenRepository/org/jboss/arquillian/container/arquillian-tomcat-common/1.0.0.CR6/arquillian-tomcat-common-1.0.0.CR6.jar
+7fd958450000-7fd958453000 r-xs 01084000 fd:04 165925                     /NotBackedUp/mavenRepository/org/scratch/ws/scratch-ws-wars/0.1.0-SNAPSHOT/scratch-ws-wars-0.1.0-SNAPSHOT-tomcat7.war
+7fd958453000-7fd958456000 r-xs 00027000 fd:01 294735                     /usr/java/jdk1.6.0_45/jre/lib/ext/sunjce_provider.jar
+7fd958456000-7fd95845d000 r-xs 00096000 fd:01 294064                     /usr/java/jdk1.6.0_45/jre/lib/jsse.jar
+7fd95845d000-7fd958460000 r-xs 00013000 fd:01 294118                     /usr/java/jdk1.6.0_45/jre/lib/jce.jar
+7fd958460000-7fd958463000 r-xs 000cc000 fd:01 294738                     /usr/java/jdk1.6.0_45/jre/lib/ext/localedata.jar
+7fd958463000-7fd95846b000 r-xs 00115000 fd:01 294194                     /usr/java/jdk1.6.0_45/jre/lib/resources.jar
+7fd95846b000-7fd95846e000 r-xs 0000a000 fd:04 135094                     /NotBackedUp/mavenRepository/org/jboss/arquillian/container/arquillian-container-spi/1.1.5.Final/arquillian-container-spi-1.1.5.Final.jar
+7fd95846f000-7fd958478000 r-xs 00051000 fd:04 655551                     /NotBackedUp/mavenRepository/ch/qos/logback/logback-core/1.0.9/logback-core-1.0.9.jar
+7fd958478000-7fd95847d000 r-xs 00039000 fd:04 655554                     /NotBackedUp/mavenRepository/ch/qos/logback/logback-classic/1.0.9/logback-classic-1.0.9.jar
+7fd95847d000-7fd95847e000 r-xs 00001000 fd:04 164868                     /NotBackedUp/mavenRepository/org/slf4j/slf4j-jdk14/1.7.6/slf4j-jdk14-1.7.6.jar
+7fd95847e000-7fd958480000 r-xs 00006000 fd:04 156399                     /NotBackedUp/mavenRepository/org/slf4j/slf4j-api/1.7.6/slf4j-api-1.7.6.jar
+7fd958480000-7fd958482000 r-xs 00009000 fd:04 132215                     /NotBackedUp/mavenRepository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar
+7fd958482000-7fd958488000 r-xs 00036000 fd:04 477                        /NotBackedUp/mavenRepository/junit/junit/4.11/junit-4.11.jar
+7fd958488000-7fd95848e000 r-xs 00033000 fd:04 854                        /NotBackedUp/mavenRepository/commons-codec/commons-codec/1.6/commons-codec-1.6.jar
+7fd95848e000-7fd95848f000 r-xs 00001000 fd:04 135465                     /NotBackedUp/mavenRepository/org/jboss/arquillian/testenricher/arquillian-testenricher-initialcontext/1.1.5.Final/arquillian-testenricher-initialcontext-1.1.5.Final.jar
+7fd95848f000-7fd958490000 r-xs 00003000 fd:04 141914                     /NotBackedUp/mavenRepository/org/jboss/arquillian/container/arquillian-tomcat-managed-7/1.0.0.CR6/arquillian-tomcat-managed-7-1.0.0.CR6.jar
+7fd958490000-7fd958493000 r-xs 0000a000 fd:04 135452                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/resolver/shrinkwrap-resolver-api-maven/2.1.1/shrinkwrap-resolver-api-maven-2.1.1.jar
+7fd958493000-7fd958497000 r-xs 0000d000 fd:04 135426                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/shrinkwrap-api/1.2.2/shrinkwrap-api-1.2.2.jar
+7fd958497000-7fd95849b000 r-xs 00015000 fd:04 135125                     /NotBackedUp/mavenRepository/org/jboss/arquillian/container/arquillian-container-test-impl-base/1.1.5.Final/arquillian-container-test-impl-base-1.1.5.Final.jar
+7fd95849b000-7fd95849d000 r-xs 00006000 fd:04 1048681                    /NotBackedUp/mavenRepository/org/easytesting/fest-util/1.1.6/fest-util-1.1.6.jar
+7fd95849d000-7fd9584a0000 r-xs 00011000 fd:04 1048672                    /NotBackedUp/mavenRepository/org/easytesting/fest-assert/1.4/fest-assert-1.4.jar
+7fd9584a0000-7fd9584a2000 r-xs 00008000 fd:04 135122                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-spi/2.0.0-alpha-5/shrinkwrap-descriptors-spi-2.0.0-alpha-5.jar
+7fd9584a2000-7fd9584a5000 r-xs 00008000 fd:04 135117                     /NotBackedUp/mavenRepository/org/jboss/arquillian/config/arquillian-config-impl-base/1.1.5.Final/arquillian-config-impl-base-1.1.5.Final.jar
+7fd9584a5000-7fd9584a6000 r-xs 00001000 fd:04 135116                     /NotBackedUp/mavenRepository/org/jboss/arquillian/config/arquillian-config-api/1.1.5.Final/arquillian-config-api-1.1.5.Final.jar
+7fd9584a6000-7fd9584a9000 r-xs 00011000 fd:04 135109                     /NotBackedUp/mavenRepository/org/jboss/arquillian/container/arquillian-container-impl-base/1.1.5.Final/arquillian-container-impl-base-1.1.5.Final.jar
+7fd9584a9000-7fd9584ab000 r-xs 00004000 fd:04 135106                     /NotBackedUp/mavenRepository/org/jboss/arquillian/test/arquillian-test-impl-base/1.1.5.Final/arquillian-test-impl-base-1.1.5.Final.jar
+7fd9584ab000-7fd9584ad000 r-xs 0000d000 fd:04 135104                     /NotBackedUp/mavenRepository/org/jboss/arquillian/core/arquillian-core-impl-base/1.1.5.Final/arquillian-core-impl-base-1.1.5.Final.jar
+7fd9584ad000-7fd9584af000 r-xs 00005000 fd:04 135093                     /NotBackedUp/mavenRepository/org/jboss/arquillian/container/arquillian-container-test-spi/1.1.5.Final/arquillian-container-test-spi-1.1.5.Final.jar
+7fd9584af000-7fd9584b1000 r-xs 00001000 fd:04 135091                     /NotBackedUp/mavenRepository/org/jboss/arquillian/container/arquillian-container-test-api/1.1.5.Final/arquillian-container-test-api-1.1.5.Final.jar
+7fd9584b1000-7fd9584b3000 r-xs 00005000 fd:04 135088                     /NotBackedUp/mavenRepository/org/jboss/arquillian/core/arquillian-core-spi/1.1.5.Final/arquillian-core-spi-1.1.5.Final.jar
+7fd9584b3000-7fd9584b5000 r-xs 00007000 fd:04 135081                     /NotBackedUp/mavenRepository/org/jboss/arquillian/test/arquillian-test-spi/1.1.5.Final/arquillian-test-spi-1.1.5.Final.jar
+7fd9584b5000-7fd9584b7000 r-xs 00001000 fd:04 135478                     /NotBackedUp/mavenRepository/org/jboss/arquillian/core/arquillian-core-api/1.1.5.Final/arquillian-core-api-1.1.5.Final.jar
+7fd9584b7000-7fd9584b8000 r-xs 00000000 fd:04 135050                     /NotBackedUp/mavenRepository/org/jboss/arquillian/test/arquillian-test-api/1.1.5.Final/arquillian-test-api-1.1.5.Final.jar
+7fd9584b8000-7fd9584ba000 r-xs 00006000 fd:04 135049                     /NotBackedUp/mavenRepository/org/jboss/arquillian/junit/arquillian-junit-core/1.1.5.Final/arquillian-junit-core-1.1.5.Final.jar
+7fd9584ba000-7fd9584bc000 r-xs 00001000 fd:04 135076                     /NotBackedUp/mavenRepository/org/jboss/arquillian/junit/arquillian-junit-container/1.1.5.Final/arquillian-junit-container-1.1.5.Final.jar
+7fd9584bc000-7fd9584be000 r-xs 00004000 fd:04 135453                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/resolver/shrinkwrap-resolver-api/2.1.1/shrinkwrap-resolver-api-2.1.1.jar
+7fd9584be000-7fd9584c2000 r-xs 00027000 fd:04 1058259                    /NotBackedUp/mavenRepository/commons-io/commons-io/2.2/commons-io-2.2.jar
+7fd9584c2000-7fd9584c8000 r-xs 00042000 fd:04 1456515                    /NotBackedUp/mavenRepository/org/jsoup/jsoup/1.7.2/jsoup-1.7.2.jar
+7fd9584c8000-7fd9584c9000 r-xs 00002000 fd:04 1456512                    /NotBackedUp/mavenRepository/org/apache/maven/wagon/wagon-http-shared/2.6/wagon-http-shared-2.6.jar
+7fd9584c9000-7fd9584ca000 r-xs 00003000 fd:04 1456509                    /NotBackedUp/mavenRepository/org/apache/maven/wagon/wagon-http-lightweight/2.6/wagon-http-lightweight-2.6.jar
+7fd9584ca000-7fd9584cf000 r-xs 00041000 fd:04 112                        /NotBackedUp/mavenRepository/commons-lang/commons-lang/2.6/commons-lang-2.6.jar
+7fd9584cf000-7fd9584d0000 r-xs 00002000 fd:04 1456506                    /NotBackedUp/mavenRepository/org/apache/maven/wagon/wagon-file/2.6/wagon-file-2.6.jar
+7fd9584d0000-7fd9584d2000 r-xs 0000b000 fd:04 135488                     /NotBackedUp/mavenRepository/org/apache/maven/wagon/wagon-provider-api/2.6/wagon-provider-api-2.6.jar
+7fd9584d2000-7fd9584d4000 r-xs 00002000 fd:04 131118                     /NotBackedUp/mavenRepository/org/sonatype/plexus/plexus-cipher/1.4/plexus-cipher-1.4.jar
+7fd9584d4000-7fd9584d5000 r-xs 00006000 fd:04 131127                     /NotBackedUp/mavenRepository/org/sonatype/plexus/plexus-sec-dispatcher/1.3/plexus-sec-dispatcher-1.3.jar
+7fd9584d5000-7fd9584d9000 r-xs 00037000 fd:04 1456449                    /NotBackedUp/mavenRepository/org/codehaus/plexus/plexus-utils/3.0.15/plexus-utils-3.0.15.jar
+7fd9584d9000-7fd9584dc000 r-xs 0000d000 fd:04 655690                     /NotBackedUp/mavenRepository/org/codehaus/plexus/plexus-interpolation/1.19/plexus-interpolation-1.19.jar
+7fd9584dc000-7fd9584df000 r-xs 00008000 fd:04 1456503                    /NotBackedUp/mavenRepository/org/apache/maven/maven-settings-builder/3.1.1/maven-settings-builder-3.1.1.jar
+7fd9584df000-7fd9584e1000 r-xs 00009000 fd:04 1456500                    /NotBackedUp/mavenRepository/org/apache/maven/maven-settings/3.1.1/maven-settings-3.1.1.jar
+7fd9584e1000-7fd9584e3000 r-xs 00005000 fd:04 1456497                    /NotBackedUp/mavenRepository/org/apache/maven/maven-repository-metadata/3.1.1/maven-repository-metadata-3.1.1.jar
+7fd9584e3000-7fd9584e5000 r-xs 00000000 fd:04 131149                     /NotBackedUp/mavenRepository/org/codehaus/plexus/plexus-component-annotations/1.5.5/plexus-component-annotations-1.5.5.jar
+7fd9584e5000-7fd9584e9000 r-xs 00023000 fd:04 1456494                    /NotBackedUp/mavenRepository/org/apache/maven/maven-model-builder/3.1.1/maven-model-builder-3.1.1.jar
+7fd9584e9000-7fd9584eb000 r-xs 00024000 fd:04 135484                     /NotBackedUp/mavenRepository/org/apache/maven/maven-model/3.1.1/maven-model-3.1.1.jar
+7fd9584eb000-7fd9584ed000 r-xs 0000d000 fd:04 1456491                    /NotBackedUp/mavenRepository/org/apache/maven/maven-aether-provider/3.1.1/maven-aether-provider-3.1.1.jar
+7fd9584ed000-7fd9584ef000 r-xs 00007000 fd:04 1456488                    /NotBackedUp/mavenRepository/org/eclipse/aether/aether-connector-wagon/0.9.0.M2/aether-connector-wagon-0.9.0.M2.jar
+7fd9584ef000-7fd9584f3000 r-xs 0001d000 fd:04 787812                     /NotBackedUp/mavenRepository/org/eclipse/aether/aether-util/0.9.0.M2/aether-util-0.9.0.M2.jar
+7fd9584f3000-7fd9584f5000 r-xs 00003000 fd:04 1456485                    /NotBackedUp/mavenRepository/org/eclipse/aether/aether-spi/0.9.0.M2/aether-spi-0.9.0.M2.jar
+7fd9584f5000-7fd9584f9000 r-xs 00020000 fd:04 1456482                    /NotBackedUp/mavenRepository/org/eclipse/aether/aether-impl/0.9.0.M2/aether-impl-0.9.0.M2.jar
+7fd9584f9000-7fd9584fd000 r-xs 0001d000 fd:04 1456479                    /NotBackedUp/mavenRepository/org/eclipse/aether/aether-api/0.9.0.M2/aether-api-0.9.0.M2.jar
+7fd9584fd000-7fd9584fe000 r-xs 00003000 fd:04 135047                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/resolver/shrinkwrap-resolver-spi/2.1.1/shrinkwrap-resolver-spi-2.1.1.jar
+7fd9584fe000-7fd9584ff000 r-xs 00000000 fd:04 135046                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/resolver/shrinkwrap-resolver-spi-maven/2.1.1/shrinkwrap-resolver-spi-maven-2.1.1.jar
+7fd9584ff000-7fd958503000 r-xs 00021000 fd:04 135045                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/resolver/shrinkwrap-resolver-impl-maven/2.1.1/shrinkwrap-resolver-impl-maven-2.1.1.jar
+7fd958503000-7fd958504000 r-xs 00000000 fd:04 135424                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/shrinkwrap-spi/1.2.2/shrinkwrap-spi-1.2.2.jar
+7fd958504000-7fd958509000 r-xs 00029000 fd:04 135128                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/shrinkwrap-impl-base/1.2.2/shrinkwrap-impl-base-1.2.2.jar
+7fd958509000-7fd95850b000 r-xs 00000000 fd:04 165935                     /NotBackedUp/mavenRepository/org/scratch/ws/scratch-ws-arquillian-base/0.1.0-SNAPSHOT/scratch-ws-arquillian-base-0.1.0-SNAPSHOT.jar
+7fd95850b000-7fd95850e000 r-xs 0000d000 fd:04 664461                     /NotBackedUp/mavenRepository/org/jboss/spec/javax/xml/ws/jboss-jaxws-api_2.2_spec/2.0.2.Final/jboss-jaxws-api_2.2_spec-2.0.2.Final.jar
+7fd95850e000-7fd958515000 r-xs 0002e000 fd:04 1310740                    /NotBackedUp/mavenRepository/org/apache/deltaspike/core/deltaspike-core-api/1.0.0/deltaspike-core-api-1.0.0.jar
+7fd958515000-7fd958516000 r-xs 00000000 fd:04 655642                     /NotBackedUp/mavenRepository/javax/inject/javax.inject/1/javax.inject-1.jar
+7fd958516000-7fd958517000 r-xs 00001000 fd:04 655563                     /NotBackedUp/mavenRepository/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar
+7fd958517000-7fd958518000 r-xs 00001000 fd:04 132395                     /NotBackedUp/mavenRepository/org/jboss/spec/javax/interceptor/jboss-interceptors-api_1.1_spec/1.0.0.Beta1/jboss-interceptors-api_1.1_spec-1.0.0.Beta1.jar
+7fd958518000-7fd95851b000 r-xs 0000a000 fd:04 655631                     /NotBackedUp/mavenRepository/javax/enterprise/cdi-api/1.0-SP4/cdi-api-1.0-SP4.jar
+7fd95851b000-7fd958520000 r-xs 0001c000 fd:04 165462                     /NotBackedUp/mavenRepository/org/jboss/ws/jbossws-spi/2.3.0.Final/jbossws-spi-2.3.0.Final.jar
+7fd958520000-7fd958523000 r-xs 0000c000 fd:04 159481                     /NotBackedUp/mavenRepository/org/jboss/ws/jbossws-api/1.0.2.Final/jbossws-api-1.0.2.Final.jar
+7fd958523000-7fd958532000 r-xs 00076000 fd:04 1310727                    /NotBackedUp/mavenRepository/joda-time/joda-time/1.6.2/joda-time-1.6.2.jar
+7fd958532000-7fd958542000 r-xs 00086000 fd:04 159555                     /NotBackedUp/mavenRepository/org/opensaml/xmltooling/1.3.2-1/xmltooling-1.3.2-1.jar
+7fd958542000-7fd958556000 r-xs 00077000 fd:04 159551                     /NotBackedUp/mavenRepository/org/opensaml/openws/1.4.2-1/openws-1.4.2-1.jar
+7fd958556000-7fd95857e000 r-xs 00123000 fd:04 159545                     /NotBackedUp/mavenRepository/org/opensaml/opensaml/2.5.1-1/opensaml-2.5.1-1.jar
+7fd95857e000-7fd95858b000 r-xs 00090000 fd:04 162657                     /NotBackedUp/mavenRepository/org/apache/santuario/xmlsec/1.5.6/xmlsec-1.5.6.jar
+7fd95858b000-7fd958591000 r-xs 00067000 fd:04 790263                     /NotBackedUp/mavenRepository/org/apache/ws/security/wss4j/1.6.15/wss4j-1.6.15.jar
+7fd958591000-7fd958593000 r-xs 00010000 fd:04 1054344                    /NotBackedUp/mavenRepository/org/apache/neethi/neethi/3.0.3/neethi-3.0.3.jar
+7fd958593000-7fd958598000 r-xs 0002e000 fd:04 1053931                    /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-ws-policy/2.7.10/cxf-rt-ws-policy-2.7.10.jar
+7fd958598000-7fd95859a000 r-xs 0000d000 fd:04 524319                     /NotBackedUp/mavenRepository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar
+7fd95859a000-7fd9585b3000 r-xs 00112000 fd:04 659256                     /NotBackedUp/mavenRepository/net/sf/ehcache/ehcache-core/2.5.1/ehcache-core-2.5.1.jar
+7fd9585b3000-7fd9585be000 r-xs 00097000 fd:04 677022                     /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-ws-security/2.7.10/cxf-rt-ws-security-2.7.10.jar
+7fd9585be000-7fd9585c0000 r-xs 00012000 fd:04 1053929                    /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-ws-addr/2.7.10/cxf-rt-ws-addr-2.7.10.jar
+7fd9585c0000-7fd9585c2000 r-xs 0000f000 fd:04 1053927                    /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-frontend-simple/2.7.10/cxf-rt-frontend-simple-2.7.10.jar
+7fd9585c2000-7fd9585c4000 r-xs 00008000 fd:04 1053926                    /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-bindings-xml/2.7.10/cxf-rt-bindings-xml-2.7.10.jar
+7fd9585c4000-7fd9585c6000 r-xs 0001e000 fd:04 1053921                    /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-databinding-jaxb/2.7.10/cxf-rt-databinding-jaxb-2.7.10.jar
+7fd9585c6000-7fd9585ca000 r-xs 0002e000 fd:04 1053920                    /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-bindings-soap/2.7.10/cxf-rt-bindings-soap-2.7.10.jar
+7fd9585ca000-7fd9585cb000 r-xs 0000a000 fd:04 786964                     /NotBackedUp/mavenRepository/asm/asm/3.3.1/asm-3.3.1.jar
+7fd9585cb000-7fd9585cd000 r-xs 00013000 fd:04 788153                     /NotBackedUp/mavenRepository/xml-resolver/xml-resolver/1.2/xml-resolver-1.2.jar
+7fd9585cd000-7fd9585d3000 r-xs 00059000 fd:04 677018                     /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-frontend-jaxws/2.7.10/cxf-rt-frontend-jaxws-2.7.10.jar
+7fd9585d3000-7fd9585d9000 r-xs 0003a000 fd:04 677029                     /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-transports-http/2.7.10/cxf-rt-transports-http-2.7.10.jar
+7fd9585d9000-7fd9585ec000 r-xs 000c4000 fd:04 1049583                    /NotBackedUp/mavenRepository/com/sun/xml/bind/jaxb-impl/2.1.13/jaxb-impl-2.1.13.jar
+7fd9585ec000-7fd9585ed000 ---p 00000000 00:00 0 
+7fd9585ed000-7fd9586ed000 rwxp 00000000 00:00 0 
+7fd9586ed000-7fd9586f0000 ---p 00000000 00:00 0 
+7fd9586f0000-7fd9587ee000 rwxp 00000000 00:00 0 
+7fd9587ee000-7fd9587f1000 ---p 00000000 00:00 0 
+7fd9587f1000-7fd9588ef000 rwxp 00000000 00:00 0 
+7fd9588ef000-7fd9588f2000 ---p 00000000 00:00 0 
+7fd9588f2000-7fd9589f0000 rwxp 00000000 00:00 0 
+7fd9589f0000-7fd9589f3000 ---p 00000000 00:00 0 
+7fd9589f3000-7fd958af1000 rwxp 00000000 00:00 0 
+7fd958af1000-7fd958af4000 ---p 00000000 00:00 0 
+7fd958af4000-7fd958bf2000 rwxp 00000000 00:00 0 
+7fd958bf2000-7fd958bf5000 ---p 00000000 00:00 0 
+7fd958bf5000-7fd958cf3000 rwxp 00000000 00:00 0 
+7fd958cf3000-7fd958cf6000 r-xp 00000000 fd:01 294183                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libdt_socket.so
+7fd958cf6000-7fd958df5000 ---p 00003000 fd:01 294183                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libdt_socket.so
+7fd958df5000-7fd958df7000 rwxp 00002000 fd:01 294183                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libdt_socket.so
+7fd958df7000-7fd958dfa000 ---p 00000000 00:00 0 
+7fd958dfa000-7fd958ef8000 rwxp 00000000 00:00 0 
+7fd958ef8000-7fd958efb000 ---p 00000000 00:00 0 
+7fd958efb000-7fd958ff9000 rwxp 00000000 00:00 0 
+7fd958ff9000-7fd958ffc000 ---p 00000000 00:00 0 
+7fd958ffc000-7fd9590fa000 rwxp 00000000 00:00 0 
+7fd9590fa000-7fd9590fb000 ---p 00000000 00:00 0 
+7fd9590fb000-7fd959734000 rwxp 00000000 00:00 0 
+7fd959734000-7fd9598cd000 r-xs 03087000 fd:01 294733                     /usr/java/jdk1.6.0_45/jre/lib/rt.jar
+7fd9598cd000-7fd9598f5000 rwxp 00000000 00:00 0 
+7fd9598f5000-7fd9598f6000 ---p 00000000 00:00 0 
+7fd9598f6000-7fd9599f6000 rwxp 00000000 00:00 0 
+7fd9599f6000-7fd9599f7000 ---p 00000000 00:00 0 
+7fd9599f7000-7fd959af7000 rwxp 00000000 00:00 0 
+7fd959af7000-7fd959af8000 ---p 00000000 00:00 0 
+7fd959af8000-7fd959bf8000 rwxp 00000000 00:00 0 
+7fd959bf8000-7fd959bf9000 ---p 00000000 00:00 0 
+7fd959bf9000-7fd959d0d000 rwxp 00000000 00:00 0 
+7fd959d0d000-7fd959d22000 rwxp 00000000 00:00 0 
+7fd959d22000-7fd959d4a000 rwxp 00000000 00:00 0 
+7fd959d4a000-7fd959fa2000 rwxp 00000000 00:00 0 
+7fd959fa2000-7fd959fb6000 rwxp 00000000 00:00 0 
+7fd959fb6000-7fd959fcb000 rwxp 00000000 00:00 0 
+7fd959fcb000-7fd959ff3000 rwxp 00000000 00:00 0 
+7fd959ff3000-7fd95a24a000 rwxp 00000000 00:00 0 
+7fd95a24a000-7fd95a25d000 rwxp 00000000 00:00 0 
+7fd95a25d000-7fd95a25f000 ---p 00000000 00:00 0 
+7fd95a25f000-7fd95a38a000 rwxp 00000000 00:00 0 
+7fd95a38a000-7fd95a395000 rwxp 00000000 00:00 0 
+7fd95a395000-7fd95a44b000 rwxp 00000000 00:00 0 
+7fd95a44b000-7fd95a459000 r-xp 00000000 fd:01 294192                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libzip.so
+7fd95a459000-7fd95a55b000 ---p 0000e000 fd:01 294192                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libzip.so
+7fd95a55b000-7fd95a55e000 rwxp 00010000 fd:01 294192                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libzip.so
+7fd95a55e000-7fd95a55f000 rwxp 00000000 00:00 0 
+7fd95a55f000-7fd95a56b000 r-xp 00000000 fd:01 537254                     /lib64/libnss_files-2.12.so
+7fd95a56b000-7fd95a76b000 ---p 0000c000 fd:01 537254                     /lib64/libnss_files-2.12.so
+7fd95a76b000-7fd95a76c000 r-xp 0000c000 fd:01 537254                     /lib64/libnss_files-2.12.so
+7fd95a76c000-7fd95a76d000 rwxp 0000d000 fd:01 537254                     /lib64/libnss_files-2.12.so
+7fd95a76d000-7fd95a76f000 r-xs 00003000 fd:04 135469                     /NotBackedUp/mavenRepository/org/jboss/arquillian/testenricher/arquillian-testenricher-resource/1.1.5.Final/arquillian-testenricher-resource-1.1.5.Final.jar
+7fd95a76f000-7fd95a772000 r-xs 0000c000 fd:04 142016                     /NotBackedUp/mavenRepository/org/jboss/arquillian/protocol/arquillian-protocol-servlet/1.1.5.Final/arquillian-protocol-servlet-1.1.5.Final.jar
+7fd95a772000-7fd95a779000 r-xs 0005d000 fd:04 677017                     /NotBackedUp/mavenRepository/org/apache/cxf/cxf-rt-core/2.7.10/cxf-rt-core-2.7.10.jar
+7fd95a779000-7fd95a77d000 r-xs 0002a000 fd:04 1557                       /NotBackedUp/mavenRepository/wsdl4j/wsdl4j/1.6.3/wsdl4j-1.6.3.jar
+7fd95a77d000-7fd95a782000 r-xs 00032000 fd:04 1049068                    /NotBackedUp/mavenRepository/org/apache/geronimo/specs/geronimo-javamail_1.4_spec/1.7.1/geronimo-javamail_1.4_spec-1.7.1.jar
+7fd95a782000-7fd95a787000 r-xs 00024000 fd:04 1054343                    /NotBackedUp/mavenRepository/org/apache/ws/xmlschema/xmlschema-core/2.1.0/xmlschema-core-2.1.0.jar
+7fd95a787000-7fd95a78b000 r-xs 00029000 fd:04 1049064                    /NotBackedUp/mavenRepository/org/codehaus/woodstox/stax2-api/3.1.1/stax2-api-3.1.1.jar
+7fd95a78b000-7fd95a791000 r-xs 00070000 fd:04 1049062                    /NotBackedUp/mavenRepository/org/codehaus/woodstox/woodstox-core-asl/4.2.0/woodstox-core-asl-4.2.0.jar
+7fd95a791000-7fd95a794000 r-xp 00000000 fd:01 294168                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnpt.so
+7fd95a794000-7fd95a893000 ---p 00003000 fd:01 294168                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnpt.so
+7fd95a893000-7fd95a894000 rwxp 00002000 fd:01 294168                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libnpt.so
+7fd95a894000-7fd95a8ca000 r-xp 00000000 fd:01 294157                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libjdwp.so
+7fd95a8ca000-7fd95a9c9000 ---p 00036000 fd:01 294157                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libjdwp.so
+7fd95a9c9000-7fd95a9d3000 rwxp 00035000 fd:01 294157                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libjdwp.so
+7fd95a9d3000-7fd95a9fc000 r-xp 00000000 fd:01 294147                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libjava.so
+7fd95a9fc000-7fd95aafb000 ---p 00029000 fd:01 294147                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libjava.so
+7fd95aafb000-7fd95ab02000 rwxp 00028000 fd:01 294147                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libjava.so
+7fd95ab02000-7fd95ab0f000 r-xp 00000000 fd:01 294164                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libverify.so
+7fd95ab0f000-7fd95ac0e000 ---p 0000d000 fd:01 294164                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libverify.so
+7fd95ac0e000-7fd95ac11000 rwxp 0000c000 fd:01 294164                     /usr/java/jdk1.6.0_45/jre/lib/amd64/libverify.so
+7fd95ac11000-7fd95ac14000 ---p 00000000 00:00 0 
+7fd95ac14000-7fd95ad12000 rwxp 00000000 00:00 0 
+7fd95ad12000-7fd95b630000 r-xp 00000000 fd:01 294160                     /usr/java/jdk1.6.0_45/jre/lib/amd64/server/libjvm.so
+7fd95b630000-7fd95b732000 ---p 0091e000 fd:01 294160                     /usr/java/jdk1.6.0_45/jre/lib/amd64/server/libjvm.so
+7fd95b732000-7fd95b8e8000 rwxp 00920000 fd:01 294160                     /usr/java/jdk1.6.0_45/jre/lib/amd64/server/libjvm.so
+7fd95b8e8000-7fd95b925000 rwxp 00000000 00:00 0 
+7fd95b925000-7fd95b92c000 r-xp 00000000 fd:01 294154                     /usr/java/jdk1.6.0_45/jre/lib/amd64/jli/libjli.so
+7fd95b92c000-7fd95ba2d000 ---p 00007000 fd:01 294154                     /usr/java/jdk1.6.0_45/jre/lib/amd64/jli/libjli.so
+7fd95ba2d000-7fd95ba2f000 rwxp 00008000 fd:01 294154                     /usr/java/jdk1.6.0_45/jre/lib/amd64/jli/libjli.so
+7fd95ba2f000-7fd95ba30000 rwxp 00000000 00:00 0 
+7fd95ba30000-7fd95ba32000 r-xs 00005000 fd:04 135461                     /NotBackedUp/mavenRepository/org/jboss/arquillian/testenricher/arquillian-testenricher-cdi/1.1.5.Final/arquillian-testenricher-cdi-1.1.5.Final.jar
+7fd95ba32000-7fd95ba33000 r-xs 00003000 fd:04 135101                     /NotBackedUp/mavenRepository/org/jboss/shrinkwrap/descriptors/shrinkwrap-descriptors-api-base/2.0.0-alpha-5/shrinkwrap-descriptors-api-base-2.0.0-alpha-5.jar
+7fd95ba33000-7fd95ba47000 r-xs 000f9000 fd:04 677016                     /NotBackedUp/mavenRepository/org/apache/cxf/cxf-api/2.7.10/cxf-api-2.7.10.jar
+7fd95ba47000-7fd95ba48000 r-xs 00001000 fd:04 673664                     /NotBackedUp/mavenRepository/org/kie/remote/ws/kie-remote-ws-common/6.1.0.Final/kie-remote-ws-common-6.1.0.Final.jar
+7fd95ba48000-7fd95ba4a000 r-xs 00005000 fd:04 165866                     /NotBackedUp/mavenRepository/org/scratch/ws/scratch-ws-wsdl/0.1.0-SNAPSHOT/scratch-ws-wsdl-0.1.0-SNAPSHOT.jar
+7fd95ba4a000-7fd95ba52000 rwxs 00000000 fd:01 536041                     /tmp/hsperfdata_mrietvel/26810
+7fd95ba52000-7fd95ba53000 rwxp 00000000 00:00 0 
+7fd95ba53000-7fd95ba54000 r-xp 00000000 00:00 0 
+7fd95ba54000-7fd95ba55000 rwxp 00000000 00:00 0 
+7fffa8dae000-7fffa8dc6000 rwxp 00000000 00:00 0                          [stack]
+7fffa8dff000-7fffa8e00000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 r-xp 00000000 00:00 0                  [vsyscall]
+
+VM Arguments:
+jvm_args: -agentlib:jdwp=transport=dt_socket,suspend=y,address=localhost:43367 -ea -Dfile.encoding=UTF-8 
+java_command: org.eclipse.jdt.internal.junit.runner.RemoteTestRunner -version 3 -port 28053 -testLoaderClass org.eclipse.jdt.internal.junit4.runner.JUnit4TestLoader -loaderpluginname org.eclipse.jdt.junit4.runtime -test org.scratch.ws.tomcat.TomcatScratchWebserviceIntegrationTest:webserviceTest
+Launcher Type: SUN_STANDARD
+
+Environment Variables:
+JAVA_HOME=/usr/java/jdk1.6.0_45
+JRE_HOME=/usr/lib/jvm/java/jre
+PATH=/usr/lib64/qt-3.3/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin:/usr/share/automake-1.11:/sbin:/home/mrietvel/bin:/usr/java/latest/bin:/opt/bin/scala-2.10.1/bin:/home/mrietvel/bin/sbt/bin
+USERNAME=mrietvel
+LD_LIBRARY_PATH=/usr/java/jdk1.6.0_45/jre/lib/amd64/server:/usr/java/jdk1.6.0_45/jre/lib/amd64:/usr/java/jdk1.6.0_45/jre/../lib/amd64
+SHELL=/bin/bash
+DISPLAY=:0.0
+
+Signal Handlers:
+SIGSEGV: [libjvm.so+0x862a30], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGBUS: [libjvm.so+0x862a30], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGFPE: [libjvm.so+0x7106f0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGPIPE: [libjvm.so+0x7106f0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGXFSZ: [libjvm.so+0x7106f0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGILL: [libjvm.so+0x7106f0], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGUSR1: SIG_DFL, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGUSR2: [libjvm.so+0x713520], sa_mask[0]=0x00000004, sa_flags=0x10000004
+SIGHUP: [libjvm.so+0x713120], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGINT: SIG_IGN, sa_mask[0]=0x00000000, sa_flags=0x00000000
+SIGTERM: [libjvm.so+0x713120], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+SIGQUIT: [libjvm.so+0x713120], sa_mask[0]=0x7ffbfeff, sa_flags=0x10000004
+
+
+---------------  S Y S T E M  ---------------
+
+OS:Red Hat Enterprise Linux Workstation release 6.5 (Santiago)
+
+uname:Linux 2.6.32-448.el6.synaptics.x86_64 #1 SMP Wed Mar 12 10:56:57 EDT 2014 x86_64
+libc:glibc 2.12 NPTL 2.12 
+rlimit: STACK 10240k, CORE 0k, NPROC 1024, NOFILE 4096, AS infinity
+load average:0.31 0.48 0.42
+
+/proc/meminfo:
+MemTotal:        7852656 kB
+MemFree:         1104444 kB
+MemAvailable:    3813560 kB
+Buffers:          570932 kB
+Cached:          2008312 kB
+SwapCached:         1960 kB
+Active:          3732520 kB
+Inactive:        2166648 kB
+Active(anon):    2516544 kB
+Inactive(anon):  1009028 kB
+Active(file):    1215976 kB
+Inactive(file):  1157620 kB
+Unevictable:          16 kB
+Mlocked:              16 kB
+SwapTotal:       4194296 kB
+SwapFree:        4177864 kB
+Dirty:              1432 kB
+Writeback:             0 kB
+AnonPages:       3320012 kB
+Mapped:           164144 kB
+Shmem:            205648 kB
+Slab:             710568 kB
+SReclaimable:     588936 kB
+SUnreclaim:       121632 kB
+KernelStack:        4816 kB
+PageTables:        48400 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     8120624 kB
+Committed_AS:    5472192 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:      567904 kB
+VmallocChunk:   34359161724 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:   1792000 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:        8192 kB
+DirectMap2M:     8241152 kB
+
+
+CPU:total 4 (2 cores per cpu, 2 threads per core) family 6 model 37 stepping 5, cmov, cx8, fxsr, mmx, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, ht
+
+/proc/cpuinfo:
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 37
+model name	: Intel(R) Core(TM) i7 CPU       M 620  @ 2.67GHz
+stepping	: 5
+cpu MHz		: 2667.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 0
+initial apicid	: 0
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 popcnt aes lahf_lm ida arat dts tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 5320.03
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 1
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 37
+model name	: Intel(R) Core(TM) i7 CPU       M 620  @ 2.67GHz
+stepping	: 5
+cpu MHz		: 2667.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 0
+cpu cores	: 2
+apicid		: 1
+initial apicid	: 1
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 popcnt aes lahf_lm ida arat dts tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 5320.03
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 2
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 37
+model name	: Intel(R) Core(TM) i7 CPU       M 620  @ 2.67GHz
+stepping	: 5
+cpu MHz		: 2266.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 2
+cpu cores	: 2
+apicid		: 4
+initial apicid	: 4
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 popcnt aes lahf_lm ida arat dts tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 5320.03
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+processor	: 3
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 37
+model name	: Intel(R) Core(TM) i7 CPU       M 620  @ 2.67GHz
+stepping	: 5
+cpu MHz		: 1199.000
+cache size	: 4096 KB
+physical id	: 0
+siblings	: 4
+core id		: 2
+cpu cores	: 2
+apicid		: 5
+initial apicid	: 5
+fpu		: yes
+fpu_exception	: yes
+cpuid level	: 11
+wp		: yes
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx rdtscp lm constant_tsc arch_perfmon pebs bts rep_good xtopology nonstop_tsc aperfmperf pni pclmulqdq dtes64 monitor ds_cpl vmx smx est tm2 ssse3 cx16 xtpr pdcm pcid sse4_1 sse4_2 popcnt aes lahf_lm ida arat dts tpr_shadow vnmi flexpriority ept vpid
+bogomips	: 5320.03
+clflush size	: 64
+cache_alignment	: 64
+address sizes	: 36 bits physical, 48 bits virtual
+power management:
+
+
+
+Memory: 4k page, physical 7852656k(1104444k free), swap 4194296k(4177864k free)
+
+vm_info: Java HotSpot(TM) 64-Bit Server VM (20.45-b01) for linux-amd64 JRE (1.6.0_45-b06), built on Mar 26 2013 14:07:02 by "java_re" with gcc 3.2.2 (SuSE Linux)
+
+time: Wed Dec 10 17:34:35 2014
+elapsed time: 760 seconds
+

@@ -80,7 +80,7 @@ public class JbossEapScratchWebserviceIntegrationTest {
     }
     
     @Test
-    public void webserviceTest() throws PingWebServiceException, MalformedURLException {
+    public void plainTextWebserviceTest() throws PingWebServiceException, MalformedURLException {
         URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
         PingServiceClient tsc = new PingServiceClient(wsdlURL, serviceName);
         PingWebService tws = tsc.getPingServicePlainTextPort();

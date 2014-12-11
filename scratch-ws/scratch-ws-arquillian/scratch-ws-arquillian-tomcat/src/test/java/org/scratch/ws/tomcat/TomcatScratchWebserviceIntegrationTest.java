@@ -17,18 +17,21 @@
  */
 package org.scratch.ws.tomcat;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.scratch.ws.tomcat.ScratchWsWarTomcatDeploy.createTestWar;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
+import javax.xml.ws.soap.SOAPFaultException;
 
+import org.apache.cxf.ws.security.SecurityConstants;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -80,12 +83,25 @@ public class TomcatScratchWebserviceIntegrationTest {
     @Test
     public void webserviceTest() throws PingWebServiceException, MalformedURLException {
         URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
-        PingServiceClient tsc = new PingServiceClient(wsdlURL, serviceName);
-        PingWebService tws = tsc.getPingServicePlainTextPort();
+        PingServiceClient psc = new PingServiceClient(wsdlURL, serviceName);
+        PingWebService pws = psc.getPingServicePlainTextPort();
 
         PingRequest req = createRequest();
-        PingResponse resp = tws.ping(req);
+        PingResponse resp = null;
+        try { 
+            resp = pws.ping(req);
+            fail( "There should have been an authentication fault!");
+        } catch( SOAPFaultException soapfe ) { 
+            // do nothing 
+        }
+       
+        // setup auth
+        Map<String, Object> reqCtx = ((BindingProvider) pws).getRequestContext();
+        reqCtx.put(SecurityConstants.USERNAME, "mary");
+        reqCtx.put(SecurityConstants.PASSWORD, "mary123@");
 
+        resp = pws.ping(req);
+        
         assertNotNull("Null ping response", resp);
         assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
         assertNotNull("Ping request id", resp.getRequestId());

@@ -58,7 +58,6 @@
         <exclude>org.apache.cxf:cxf-*</exclude>
         <exclude>javax.inject:javax.inject</exclude>
         <exclude>org.jboss.ws:jbossws-api</exclude>
-        <exclude>org.jboss.ws:jbossws-spi</exclude>
         <exclude>org.apache.ws.security:wss4j</exclude>
       </excludes>
     </dependencySet>

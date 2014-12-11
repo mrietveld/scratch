@@ -38,25 +38,30 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
         // bus setup
         super.loadBus(servletConfig);
         Bus bus = getBus();
-        BusFactory.setDefaultBus(bus);
-        bus.getExtension(PolicyEngine.class).setEnabled(true);
+       
+        try {
+            // more bus setup
+            BusFactory.setDefaultBus(bus);
+            BusFactory.setThreadDefaultBus(bus);
+           
+            // enable ws-policy, etc.
+            bus.getExtension(PolicyEngine.class).setEnabled(true);
 
-        String wsdlPath = "/wsdl/PingService.wsdl";
-        URL wsdl = ScratchWsCxfServlet.class.getResource(wsdlPath);
-        if( wsdl == null ) {
-            throw new IllegalStateException("No wsdl for PingService could be found at path [" + wsdlPath + "]");
+            // setup and initalize endpoints
+            String wsdlPath = "/wsdl/PingService.wsdl";
+            URL wsdl = ScratchWsCxfServlet.class.getResource(wsdlPath);
+            if( wsdl == null ) {
+                throw new IllegalStateException("No wsdl for PingService could be found at path [" + wsdlPath + "]");
+            }
+            setupPingServiceEndpoint(wsdl, PLAIN_TEXT_SUFFIX, new PingWebServicePlainTextImpl());
+            setupPingServiceEndpoint(wsdl, SSL_SUFFIX, new PingWebServiceSimpleSslImpl());
+        } finally { 
+            BusFactory.setThreadDefaultBus(null);
         }
-
-        setupPingServiceEndpoint(wsdl, PLAIN_TEXT_SUFFIX, new PingWebServicePlainTextImpl());
-        setupPingServiceEndpoint(wsdl, SSL_SUFFIX, new PingWebServiceSimpleSslImpl());
     }
 
     public static Endpoint setupPingServiceEndpoint( URL wsdlUrl, String address, PingWebService webServiceImpl ) {
-        String portName = getPortName(webServiceImpl);
-        
         EndpointImpl ep = (EndpointImpl) Endpoint.create(webServiceImpl);
-//        ep.setEndpointName(new QName(AbstractPingWebServiceImpl.NAMESPACE, portName));
-//        ep.setWsdlLocation(wsdlUrl.getPath());
         ep.setAddress(address);
         ep.getProperties().put(SecurityConstants.CALLBACK_HANDLER, new ServerPasswordCallback());
         
@@ -64,16 +69,4 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
         return ep;
     }
 
-    private static String getPortName( Object obj ) {
-        Class objClass = obj.getClass();
-        WebService webServiceAnno = (WebService) objClass.getAnnotation(WebService.class);
-        if( webServiceAnno == null ) {
-            throw new IllegalStateException(objClass.getSimpleName() + " is not annotated with a @Webservice annotation");
-        }
-        String portName = webServiceAnno.portName();
-        if( portName == null || portName.trim().isEmpty() ) {
-            throw new IllegalStateException("'portName' value missing in " + objClass.getSimpleName() + " @Webservice annotation");
-        }
-        return portName;
-    }
 }

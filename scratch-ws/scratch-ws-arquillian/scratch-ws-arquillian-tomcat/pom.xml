@@ -29,7 +29,15 @@
       <artifactId>scratch-ws-arquillian-base</artifactId>
       <scope>test</scope>
     </dependency>
-    
+   
+    <dependency>
+      <groupId>org.scratch.ws</groupId>
+      <artifactId>scratch-ws-wars</artifactId>
+      <classifier>tomcat7</classifier>
+      <type>war</type>
+      <scope>test</scope>
+    </dependency>
+     
     <!-- arquillian -->
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
@@ -101,6 +109,25 @@
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
+          <execution>
+            <id>check-tomcat-war</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.scratch.ws</groupId>
+                  <artifactId>scratch-ws-wars</artifactId>
+                  <classifier>tomcat7</classifier>
+                  <type>war</type>
+                  <overWrite>false</overWrite>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/deployments</outputDirectory>
+            </configuration>
+          </execution>
           <execution>
             <id>unpack-tomcat</id>
             <phase>generate-test-resources</phase>

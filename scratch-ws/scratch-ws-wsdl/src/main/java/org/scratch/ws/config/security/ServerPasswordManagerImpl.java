@@ -7,11 +7,11 @@ import javax.enterprise.context.ApplicationScoped;
 
 
 @ApplicationScoped
-public class ServerPasswordBean implements ServerPasswordManager {
+public class ServerPasswordManagerImpl implements ServerPasswordManager {
 
     private Map<String, String> userPasswordMap = new ConcurrentHashMap<String, String>();
     
-    public ServerPasswordBean() {
+    public ServerPasswordManagerImpl() {
         // Default constructor
         userPasswordMap.put("mary", "mary123@");
     }

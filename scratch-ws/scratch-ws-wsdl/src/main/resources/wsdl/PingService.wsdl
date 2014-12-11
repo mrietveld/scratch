@@ -1,24 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions name="PingService" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/"
-  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://services.ws.scratch.org/VERSION/test" targetNamespace="http://services.ws.scratch.org/VERSION/test"
-  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://www.w3.org/ns/ws-policy"
+<definitions name="PingService" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:tns="http://services.ws.scratch.org/VERSION/test" 
+  targetNamespace="http://services.ws.scratch.org/VERSION/test"
+  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+  xmlns:wsp="http://www.w3.org/ns/ws-policy"
   xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsaws="http://www.w3.org/2006/05/addressing/wsdl"
-  xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-
+  xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy"
+  xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" >
 
   <!-- JAX-WS Customizations: Wrapper styles, async. -->
-  <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+  <jaxws:bindings> 
     <jaxws:enableWrapperStyle>true</jaxws:enableWrapperStyle>
     <jaxws:enableAsyncMapping>false</jaxws:enableAsyncMapping>
   </jaxws:bindings>
 
   <types xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-      jxb:extensionBindingPrefixes="xjc" jxb:version="1.0" targetNamespace="http://services.ws.scratch.org/VERSION/test" version="1.0">
+    <xs:schema xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
+        xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
+        jxb:extensionBindingPrefixes="xjc" 
+        jxb:version="1.0" 
+        targetNamespace="http://services.ws.scratch.org/VERSION/test" 
+        version="1.0">
       <xs:annotation>
         <xs:appinfo>
-          <jxb:globalBindings collectionType="java.util.LinkedList" fixedAttributeAsConstantProperty="true"
-            generateIsSetMethod="false">
+          <jxb:globalBindings collectionType="java.util.LinkedList" fixedAttributeAsConstantProperty="true" generateIsSetMethod="false">
             <xjc:serializable uid="1" />
           </jxb:globalBindings>
         </xs:appinfo>
@@ -70,7 +78,7 @@
     <part name="fault" element="tns:PingServiceException" />
   </message>
   <portType name="PingServicePortType">
-    <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+    <jaxws:bindings> 
       <jaxws:class name="PingWebService" />
     </jaxws:bindings>
     <operation name="ping">
@@ -78,7 +86,7 @@
       <output wsam:Action="http://services.ws.scratch.org/VERSION/test/PingService/pingResponse" message="tns:pingResponse" />
       <fault message="tns:PingServiceException" name="PingServiceException"
         wsam:Action="http://services.ws.scratch.org/VERSION/test/PingService/ping/Fault/PingServiceException">
-        <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+        <jaxws:bindings> 
           <jaxws:class name="PingWebServiceException" />
         </jaxws:bindings>
       </fault>
@@ -103,8 +111,7 @@
   </binding>
   <binding name="PingServiceSslBinding" type="tns:PingServicePortType">
     <wsp:PolicyReference URI="#SslTransportPolicy" />
-    <soap:binding style="document"
-      transport="http://schemas.xmlsoap.org/soap/http" />
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
     <operation name="ping">
       <soap:operation soapAction="" />
       <input>
@@ -120,7 +127,7 @@
   </binding>
   
   <service name="PingService">
-    <jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws">
+    <jaxws:bindings> 
       <jaxws:class name="PingServiceClient" />
     </jaxws:bindings>
     <port name="PingServicePlainTextPort" binding="tns:PingServicePlainTextBinding">

@@ -11,6 +11,9 @@
   <groupId>org.scratch.ws</groupId>
   <artifactId>scratch-ws</artifactId>
   <packaging>pom</packaging>
+  
+  <name>Scratch Webservices</name>
+  <description>Project to experiment with various WS technologies</description>
 
   <properties>
     <!-- Jboss WS -->
@@ -50,6 +53,22 @@
       <dependency>
         <groupId>org.scratch.ws</groupId>
         <artifactId>scratch-ws-wars</artifactId>
+        <classifier>tomcat7</classifier>
+        <type>war</type>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scratch.ws</groupId>
+        <artifactId>scratch-ws-wars</artifactId>
+        <classifier>eap6_3</classifier>
+        <type>war</type>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.scratch.ws</groupId>
+        <artifactId>scratch-ws-wars</artifactId>
+        <classifier>wildfly8_1</classifier>
+        <type>war</type>
         <version>${project.version}</version>
       </dependency>
       <dependency>
@@ -217,6 +236,12 @@
         <groupId>org.apache.cxf</groupId>
         <artifactId>cxf-rt-transports-http-jetty</artifactId>
         <version>${version.org.apache.cxf}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.geronimo.specs</groupId>
+            <artifactId>geronimo-servlet_3.0_spec</artifactId>
+          </exclusion>
+        </exclusions>
         <scope>test</scope>
       </dependency>
 
@@ -266,7 +291,6 @@
         <groupId>org.jboss.spec.javax.xml.bind</groupId>
         <artifactId>jboss-jaxb-api_2.2_spec</artifactId>
         <version>1.0.4.Final</version>
-        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.jboss.spec.javax.xml.ws</groupId>
@@ -277,13 +301,11 @@
         <groupId>javax.jws</groupId>
         <artifactId>jsr181-api</artifactId>
         <version>1.0-MR1</version>
-        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.jboss.spec.javax.servlet</groupId>
         <artifactId>jboss-servlet-api_3.0_spec</artifactId>
         <version>1.0.2.Final</version>
-        <scope>provided</scope>
       </dependency>
 
       <!-- slf4japi -->

@@ -14,24 +14,4 @@
     <url-pattern>/ws/*</url-pattern>
   </servlet-mapping>
 
-  <!-- 
-   <servlet>
-      <servlet-name>PlainTextPingService</servlet-name>
-      <servlet-class>org.scratch.ws.PingWebServicePlainTextImpl</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>PlainTextPingService</servlet-name>
-      <url-pattern>/ws/PingService</url-pattern>
-   </servlet-mapping>
-    
-   <servlet>
-      <servlet-name>SslPingService</servlet-name>
-      <servlet-class>org.scratch.ws.PingWebServiceSimpleSslImpl</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>SslPingService</servlet-name>
-      <url-pattern>/ws/ssl/PingService</url-pattern>
-   </servlet-mapping>
- -->
-    
 </web-app>

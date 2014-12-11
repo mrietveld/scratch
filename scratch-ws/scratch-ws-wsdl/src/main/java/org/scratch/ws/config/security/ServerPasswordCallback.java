@@ -43,11 +43,21 @@ public class ServerPasswordCallback implements CallbackHandler {
     }
    
     private BeanManager getBeanManager() { 
-        return BeanManagerProvider.getInstance().getBeanManager();
+        try {
+            return BeanManagerProvider.getInstance().getBeanManager();
+        } catch( IllegalStateException ise ) {
+           logger.error( "Returning null bean manager: " + ise.getMessage() );
+           return null;
+        }
     } 
        
     @SuppressWarnings("unchecked")
     public static <T> T createBean(Class<T> beanType, BeanManager beanManager, Annotation... bindings) throws Exception {
+        if( beanManager == null ) { 
+           if( beanType.equals(ServerPasswordManager.class) ) { 
+               return (T) new ServerPasswordManagerImpl();
+           }
+        }
         Set<Bean<?>> beans = beanManager.getBeans( beanType, bindings );
    
         if (beans != null && !beans.isEmpty()) {

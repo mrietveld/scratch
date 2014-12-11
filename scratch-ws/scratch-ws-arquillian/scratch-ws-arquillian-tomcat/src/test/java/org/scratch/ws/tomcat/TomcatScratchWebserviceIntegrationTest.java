@@ -34,6 +34,7 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
+import org.jsoup.Connection.Request;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.scratch.ws.AbstractPingWebServiceImpl;
@@ -66,19 +67,23 @@ public class TomcatScratchWebserviceIntegrationTest {
     @ArquillianResource
     URL deploymentUrl;
 
-    @Test
-    public void webserviceTest() throws PingWebServiceException, MalformedURLException {
-        URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
-        PingServiceClient tsc = new PingServiceClient(wsdlURL, serviceName);
-        PingWebService tws = tsc.getPingServicePlainTextPort();
-
+    private PingRequest createRequest() { 
         String name = UUID.randomUUID().toString();
         long id = idGen.getAndIncrement();
         PingRequest req = new PingRequest();
         req.setId(id);
         req.setRequestName(name);
         req.setRequestSize(name.getBytes().length);
+        return req;
+    }
+    
+    @Test
+    public void webserviceTest() throws PingWebServiceException, MalformedURLException {
+        URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
+        PingServiceClient tsc = new PingServiceClient(wsdlURL, serviceName);
+        PingWebService tws = tsc.getPingServicePlainTextPort();
 
+        PingRequest req = createRequest();
         PingResponse resp = tws.ping(req);
 
         assertNotNull("Null ping response", resp);

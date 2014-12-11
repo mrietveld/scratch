@@ -23,12 +23,15 @@ import static org.scratch.ws.eap.ScratchWsWarJbossEapDeploy.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.namespace.QName;
+import javax.xml.ws.BindingProvider;
 
+import org.apache.cxf.ws.security.SecurityConstants;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -58,7 +61,7 @@ public class JbossEapScratchWebserviceIntegrationTest {
         portName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServicePlainTextPort");
     }
 
-    @Deployment(testable = false, name = "tomcat")
+    @Deployment(testable = false, name = "jboss-eap")
     public static Archive<?> createWar() {
         return createTestWar();
     }
@@ -66,19 +69,26 @@ public class JbossEapScratchWebserviceIntegrationTest {
     @ArquillianResource
     URL deploymentUrl;
 
-    @Test
-    public void webserviceTest() throws PingWebServiceException, MalformedURLException {
-        URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
-        PingServiceClient tsc = new PingServiceClient(wsdlURL, serviceName);
-        PingWebService tws = tsc.getPingServicePlainTextPort();
-
+    private PingRequest createPingRequest() {
         String name = UUID.randomUUID().toString();
         long id = idGen.getAndIncrement();
         PingRequest req = new PingRequest();
         req.setId(id);
         req.setRequestName(name);
-        req.setRequestSize(name.getBytes().length);
+        req.setRequestSize(name.getBytes().length); 
+        return req;
+    }
+    
+    @Test
+    public void webserviceTest() throws PingWebServiceException, MalformedURLException {
+        URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
+        PingServiceClient tsc = new PingServiceClient(wsdlURL, serviceName);
+        PingWebService tws = tsc.getPingServicePlainTextPort();
+        Map<String, Object> reqCtx = ((BindingProvider) tws).getRequestContext();
+        reqCtx.put(SecurityConstants.USERNAME, "mary");
+        reqCtx.put(SecurityConstants.PASSWORD, "mary123@");
 
+        PingRequest req = createPingRequest();
         PingResponse resp = tws.ping(req);
 
         assertNotNull("Null ping response", resp);

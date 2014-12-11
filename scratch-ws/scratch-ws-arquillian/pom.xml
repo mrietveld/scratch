@@ -11,6 +11,8 @@
   <artifactId>scratch-ws-arquillian</artifactId>
   <packaging>pom</packaging>
 
+  <name>Scratch Webservices :: Arquillian testing</name>
+  
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>

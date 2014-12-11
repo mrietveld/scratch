@@ -1,7 +1,6 @@
 package org.scratch.ws;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 import static org.scratch.ws.config.ScratchWsCxfServlet.setupPingServiceEndpoint;
 
 import java.net.URL;
@@ -12,6 +11,7 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
 import javax.xml.ws.Endpoint;
+import javax.xml.ws.soap.SOAPFaultException;
 
 import org.apache.cxf.ws.security.SecurityConstants;
 import org.junit.AfterClass;
@@ -47,7 +47,7 @@ public class PingServiceTest {
                 assertNotNull("Null URL for wsdl resource", url);
                 PingWebService webServiceImpl = new PingWebServicePlainTextImpl();
                 eps[0] = setupPingServiceEndpoint(url, address, "PingServicePlainTextPort", webServiceImpl);
-                wsdlURL[0] = new URL(address + "?wsdl");
+                 wsdlURL[0] = new URL(address + "?wsdl");
             }
             {
                 String address = "http://localhost:9000/ws/ssl/PingService";
@@ -71,21 +71,29 @@ public class PingServiceTest {
             }
         }
 
+        private PingServiceClient getPingServiceClient(URL wsdlURL) {
+           return new PingServiceClient(wsdlURL, serviceName);
+        }
+        
+        private PingRequest createRequest() { 
+            String name = UUID.randomUUID().toString();
+            long id = idGen.getAndIncrement();
+            PingRequest req = new PingRequest();
+            req.setId(id);
+            req.setRequestName(name);
+            req.setRequestSize(name.getBytes().length); 
+            return req;
+        }
+        
         @Test
         public void testPlainPingWebServiceImpl() throws Exception {
-           PingServiceClient tsc = new PingServiceClient(wsdlURL[0], serviceName);
+           PingServiceClient tsc = getPingServiceClient(wsdlURL[0]);
            PingWebService tws = tsc.getPingServicePlainTextPort();
            BindingProvider bindingProxy = (BindingProvider) tws;
            bindingProxy.getRequestContext().put(SecurityConstants.USERNAME, "mary");
            bindingProxy.getRequestContext().put(SecurityConstants.PASSWORD, "mary123@");
            
-           String name = UUID.randomUUID().toString();
-           long id = idGen.getAndIncrement();
-           PingRequest req = new PingRequest();
-           req.setId(id);
-           req.setRequestName(name);
-           req.setRequestSize(name.getBytes().length);
-           
+           PingRequest req = createRequest();
            PingResponse resp = tws.ping(req);
            
            assertNotNull( "Null ping response", resp );
@@ -96,21 +104,15 @@ public class PingServiceTest {
 
         @Test
         public void testSslPingWebServiceImpl() throws Exception {
-           PingServiceClient tsc = new PingServiceClient(wsdlURL[1], serviceName);
+           PingServiceClient tsc = getPingServiceClient(wsdlURL[1]);
            PingWebService tws = tsc.getPingServiceSslPort();
            
-           String name = UUID.randomUUID().toString();
-           long id = idGen.getAndIncrement();
-           PingRequest req = new PingRequest();
-           req.setId(id);
-           req.setRequestName(name);
-           req.setRequestSize(name.getBytes().length);
-           
-           PingResponse resp = tws.ping(req);
-           
-           assertNotNull( "Null ping response", resp );
-           assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
-           assertNotNull("Ping request id", resp.getRequestId());
-           assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());
+           PingRequest req = createRequest();
+           try { 
+               PingResponse resp = tws.ping(req);
+               fail( "Ping should have failed due to no SSL authentication");
+           } catch( SOAPFaultException soapfe ) { 
+              assertTrue( soapfe.getMessage().contains("Not an HTTPs connection"));
+           }
         }
 }

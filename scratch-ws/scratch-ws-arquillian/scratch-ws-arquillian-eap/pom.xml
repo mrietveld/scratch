@@ -47,6 +47,14 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.scratch.ws</groupId>
+      <artifactId>scratch-ws-wars</artifactId>
+      <classifier>eap6_3</classifier>
+      <type>war</type>
+      <scope>test</scope>
+    </dependency>
+    
     <!-- arquillian -->
     <dependency>
       <groupId>org.jboss.arquillian.junit</groupId>
@@ -92,32 +100,6 @@
     </dependency>
 
   </dependencies>
-
- <!-- 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.jboss.as</groupId>
-        <artifactId>jboss-as-server</artifactId>
-        <version>${version.org.jboss.as.dist}</version>
-        <scope>runtime</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.as</groupId>
-        <artifactId>jboss-as-connector</artifactId>
-        <version>${version.org.jboss.as.dist}</version>
-        <scope>runtime</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.jboss.msc</groupId>
-        <artifactId>jboss-msc</artifactId>
-        <version>1.0.4.GA-redhat-1</version>
-        <scope>runtime</scope>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-  -->
-
 
   <build>
     <testResources>
@@ -187,6 +169,25 @@
       <plugin>
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
+          <execution>
+            <id>check-tomcat-war</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.scratch.ws</groupId>
+                  <artifactId>scratch-ws-wars</artifactId>
+                  <classifier>eap6_3</classifier>
+                  <type>war</type>
+                  <overWrite>false</overWrite>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/deployments</outputDirectory>
+            </configuration>
+          </execution>
           <execution>
             <id>unpack-jboss</id>
             <phase>generate-test-resources</phase>

@@ -54,7 +54,7 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
     public static Endpoint setupPingServiceEndpoint( URL wsdlUrl, String address, String portName, PingWebService webServiceImpl ) { 
       // setup the plain text PingService endpoint
       EndpointImpl ep = (EndpointImpl) Endpoint.create(webServiceImpl);
-      ep.setEndpointName(new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingService"));
+      ep.setEndpointName(new QName(AbstractPingWebServiceImpl.NAMESPACE, portName));
       ep.setWsdlLocation(wsdlUrl.getPath());
       ep.setAddress(address);
       ep.publish();

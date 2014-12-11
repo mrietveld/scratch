@@ -50,6 +50,7 @@
         <include>org.scratch.ws:scratch-ws-wsdl:jar</include>
         <include>org.jboss.ws.cxf:jbossws-cxf-server:jar</include>
         <include>org.jboss.spec.javax.xml.ws:jboss-jaxws-api_2.2_spec:jar</include>
+        <include>org.jboss.spec.javax.servlet:jboss-servlet-api_3.0_spec</include>
       </includes>
       <outputDirectory>WEB-INF/lib</outputDirectory>
       <useTransitiveFiltering>true</useTransitiveFiltering>

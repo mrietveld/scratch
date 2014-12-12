@@ -17,23 +17,11 @@
  */
 package org.scratch.ws.tomcat;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 import static org.scratch.ws.tomcat.ScratchWsWarTomcatDeploy.createTestWar;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
-import javax.xml.namespace.QName;
-import javax.xml.ws.BindingProvider;
-import javax.xml.ws.soap.SOAPFaultException;
-
-import org.apache.cxf.ws.security.SecurityConstants;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -41,27 +29,12 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.scratch.ws.AbstractPingWebServiceImpl;
-import org.scratch.ws.generated.PingRequest;
-import org.scratch.ws.generated.PingResponse;
-import org.scratch.ws.generated.PingServiceClient;
-import org.scratch.ws.generated.PingWebService;
 import org.scratch.ws.generated.PingWebServiceException;
+import org.scratch.ws.tests.AbstractBaseWebServiceIntegrationTest;
 
 @RunAsClient
 @RunWith(Arquillian.class)
-public class TomcatScratchWebserviceIntegrationTest {
-
-    protected static QName serviceName;
-    protected static QName portName;
-
-    private final static Random random = new Random();
-    private final static AtomicLong idGen = new AtomicLong(random.nextInt(10000));
-
-    static {
-        serviceName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingService");
-        portName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServicePlainTextPort");
-    }
+public class TomcatScratchWebserviceIntegrationTest extends AbstractBaseWebServiceIntegrationTest {
 
     @Deployment(testable = false, name = "tomcat")
     public static Archive<?> createWar() {
@@ -71,42 +44,8 @@ public class TomcatScratchWebserviceIntegrationTest {
     @ArquillianResource
     URL deploymentUrl;
 
-    private PingRequest createRequest() { 
-        String name = UUID.randomUUID().toString();
-        long id = idGen.getAndIncrement();
-        PingRequest req = new PingRequest();
-        req.setId(id);
-        req.setRequestName(name);
-        req.setRequestSize(name.getBytes().length);
-        return req;
-    }
-    
     @Test
-    public void webserviceTest() throws PingWebServiceException, MalformedURLException {
-        URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
-        PingServiceClient psc = new PingServiceClient(wsdlURL, serviceName);
-        PingWebService pws = psc.getPingServicePlainTextPort();
-
-        PingRequest req = createRequest();
-        PingResponse resp = null;
-        try { 
-            resp = pws.ping(req);
-            fail( "There should have been an authentication fault!");
-        } catch( SOAPFaultException soapfe ) { 
-            // do nothing 
-        }
-       
-        // setup auth
-        Map<String, Object> reqCtx = ((BindingProvider) pws).getRequestContext();
-        reqCtx.put(SecurityConstants.USERNAME, "mary");
-        reqCtx.put(SecurityConstants.PASSWORD, "mary123@");
-
-        resp = pws.ping(req);
-        
-        assertNotNull("Null ping response", resp);
-        assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
-        assertNotNull("Ping request id", resp.getRequestId());
-        assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());
+    public void plainTextWebServieTest() throws PingWebServiceException, MalformedURLException {
+        plainTextServiceTest(deploymentUrl);
     }
-
 }

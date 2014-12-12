@@ -17,21 +17,11 @@
  */
 package org.scratch.ws.eap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.scratch.ws.eap.ScratchWsWarJbossEapDeploy.*;
+import static org.scratch.ws.eap.ScratchWsWarJbossEapDeploy.createTestWar;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicLong;
 
-import javax.xml.namespace.QName;
-import javax.xml.ws.BindingProvider;
-
-import org.apache.cxf.ws.security.SecurityConstants;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
@@ -39,27 +29,12 @@ import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.scratch.ws.AbstractPingWebServiceImpl;
-import org.scratch.ws.generated.PingRequest;
-import org.scratch.ws.generated.PingResponse;
-import org.scratch.ws.generated.PingServiceClient;
-import org.scratch.ws.generated.PingWebService;
 import org.scratch.ws.generated.PingWebServiceException;
+import org.scratch.ws.tests.AbstractBaseWebServiceIntegrationTest;
 
 @RunAsClient
 @RunWith(Arquillian.class)
-public class JbossEapScratchWebserviceIntegrationTest {
-
-    protected static QName serviceName;
-    protected static QName portName;
-
-    private final static Random random = new Random();
-    private final static AtomicLong idGen = new AtomicLong(random.nextInt(10000));
-
-    static {
-        serviceName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingService");
-        portName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServicePlainTextPort");
-    }
+public class JbossEapScratchWebserviceIntegrationTest extends AbstractBaseWebServiceIntegrationTest {
 
     @Deployment(testable = false, name = "jboss-eap")
     public static Archive<?> createWar() {
@@ -69,32 +44,10 @@ public class JbossEapScratchWebserviceIntegrationTest {
     @ArquillianResource
     URL deploymentUrl;
 
-    private PingRequest createPingRequest() {
-        String name = UUID.randomUUID().toString();
-        long id = idGen.getAndIncrement();
-        PingRequest req = new PingRequest();
-        req.setId(id);
-        req.setRequestName(name);
-        req.setRequestSize(name.getBytes().length); 
-        return req;
-    }
     
     @Test
     public void plainTextWebserviceTest() throws PingWebServiceException, MalformedURLException {
-        URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
-        PingServiceClient tsc = new PingServiceClient(wsdlURL, serviceName);
-        PingWebService tws = tsc.getPingServicePlainTextPort();
-        Map<String, Object> reqCtx = ((BindingProvider) tws).getRequestContext();
-        reqCtx.put(SecurityConstants.USERNAME, "mary");
-        reqCtx.put(SecurityConstants.PASSWORD, "mary123@");
-
-        PingRequest req = createPingRequest();
-        PingResponse resp = tws.ping(req);
-
-        assertNotNull("Null ping response", resp);
-        assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
-        assertNotNull("Ping request id", resp.getRequestId());
-        assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());
+        plainTextServiceTest(deploymentUrl);
     }
 
 }

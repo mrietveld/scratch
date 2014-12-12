@@ -17,7 +17,7 @@
  */
 package org.scratch.ws.tests;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -39,9 +39,13 @@ import org.scratch.ws.generated.PingResponse;
 import org.scratch.ws.generated.PingServiceClient;
 import org.scratch.ws.generated.PingWebService;
 import org.scratch.ws.generated.PingWebServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AbstractBaseWebServiceIntegrationTest {
 
+    private final static Logger logger = LoggerFactory.getLogger(AbstractBaseWebServiceIntegrationTest.class);
+    
     protected static QName serviceName;
     protected static QName portName;
 
@@ -53,7 +57,7 @@ public class AbstractBaseWebServiceIntegrationTest {
         portName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServicePlainTextPort");
     }
 
-    private PingRequest createRequest() { 
+    private PingRequest createRequest() {
         String name = UUID.randomUUID().toString();
         long id = idGen.getAndIncrement();
         PingRequest req = new PingRequest();
@@ -62,32 +66,52 @@ public class AbstractBaseWebServiceIntegrationTest {
         req.setRequestSize(name.getBytes().length);
         return req;
     }
-    
-    public void plainTextServiceTest(URL deploymentUrl) throws PingWebServiceException, MalformedURLException {
+
+    public void plainTextServiceTest( URL deploymentUrl ) throws PingWebServiceException, MalformedURLException {
         URL wsdlURL = new URL(deploymentUrl, "ws/PingService?wsdl");
         PingServiceClient psc = new PingServiceClient(wsdlURL, serviceName);
         PingWebService pws = psc.getPingServicePlainTextPort();
 
         PingRequest req = createRequest();
         PingResponse resp = null;
-        try { 
+        try {
             resp = pws.ping(req);
-            fail( "There should have been an authentication fault!");
-        } catch( SOAPFaultException soapfe ) { 
-            // do nothing 
+            fail("There should have been an authentication fault!");
+        } catch( SOAPFaultException soapfe ) {
+            logger.error( "SOAP fault thrown: " + soapfe.getMessage(), soapfe );
+            assertTrue( "Incorrect exception message: " + soapfe.getMessage(), soapfe.getMessage().contains("username"));
+            // do nothing
         }
-       
+
         // setup auth
         Map<String, Object> reqCtx = ((BindingProvider) pws).getRequestContext();
         reqCtx.put(SecurityConstants.USERNAME, "mary");
         reqCtx.put(SecurityConstants.PASSWORD, "mary123@");
 
         resp = pws.ping(req);
-        
+
         assertNotNull("Null ping response", resp);
         assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
         assertNotNull("Ping request id", resp.getRequestId());
         assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());
+
+        // SSL test
+        pws = psc.getPingServiceSslPort();
+
+        req = createRequest();
+
+        reqCtx = ((BindingProvider) pws).getRequestContext();
+        reqCtx.put(SecurityConstants.USERNAME, "mary");
+        reqCtx.put(SecurityConstants.PASSWORD, "mary123@");
+
+        try {
+            resp = pws.ping(req);
+            fail("There should have been an authentication fault related to SSL!");
+        } catch( SOAPFaultException soapfe ) {
+            logger.error( "SOAP fault thrown: " + soapfe.getMessage(), soapfe );
+            assertTrue( "Incorrect exception message: " + soapfe.getMessage(), soapfe.getMessage().toLowerCase().contains("https "));
+            // do nothing
+        }
     }
 
 }

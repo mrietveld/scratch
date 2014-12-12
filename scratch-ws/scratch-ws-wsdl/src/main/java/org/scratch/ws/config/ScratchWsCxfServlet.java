@@ -53,7 +53,6 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
                 throw new IllegalStateException("No wsdl for PingService could be found at path [" + wsdlPath + "]");
             }
             setupPingServiceEndpoint(wsdl, PLAIN_TEXT_SUFFIX, new PingWebServicePlainTextImpl());
-            setupPingServiceEndpoint(wsdl, SSL_SUFFIX, new PingWebServiceSimpleSslImpl());
         } finally { 
             BusFactory.setThreadDefaultBus(null);
         }

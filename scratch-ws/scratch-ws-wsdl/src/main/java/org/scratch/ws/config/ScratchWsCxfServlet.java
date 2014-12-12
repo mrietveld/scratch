@@ -2,9 +2,7 @@ package org.scratch.ws.config;
 
 import java.net.URL;
 
-import javax.jws.WebService;
 import javax.servlet.ServletConfig;
-import javax.xml.namespace.QName;
 import javax.xml.ws.Endpoint;
 
 import org.apache.cxf.Bus;
@@ -13,7 +11,7 @@ import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.servlet.CXFNonSpringServlet;
 import org.apache.cxf.ws.policy.PolicyEngine;
 import org.apache.cxf.ws.security.SecurityConstants;
-import org.scratch.ws.AbstractPingWebServiceImpl;
+import org.jboss.wsf.stack.cxf.client.configuration.JBossWSNonSpringBusFactory;
 import org.scratch.ws.PingWebServicePlainTextImpl;
 import org.scratch.ws.PingWebServiceSimpleSslImpl;
 import org.scratch.ws.config.security.ServerPasswordCallback;
@@ -36,9 +34,10 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
         // TODO: retrieve ports for normal + SSL from servletConfig
 
         // bus setup
-        super.loadBus(servletConfig);
-        Bus bus = getBus();
-       
+        BusFactory busFactory = new JBossWSNonSpringBusFactory();
+        Bus bus = busFactory.createBus();
+        setBus(bus);
+      
         try {
             // more bus setup
             BusFactory.setDefaultBus(bus);

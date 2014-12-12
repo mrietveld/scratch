@@ -1,4 +1,4 @@
-package org.scratch.ws.config;
+package org.scratch.ws.config.xml;
 
 import java.net.URL;
 

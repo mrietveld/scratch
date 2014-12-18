@@ -4,10 +4,14 @@
   xsi:schemaLocation="urn:jboss:jbossws-jaxws-config:4.0 schema/jbossws-jaxws-config_4_0.xsd">
   
   <endpoint-config>
-    <config-name>Custom WS-Security Endpoint</config-name>
+    <config-name>Plain Text Endpoint</config-name>
     <property>
       <property-name>ws-security.callback-handler</property-name>
       <property-value>org.scratch.ws.config.security.ServerPasswordCallback</property-value>
+    </property>
+    <property>
+      <property-name>ws-security.enable.streaming</property-name>
+      <property-value>true</property-value>
     </property>
   </endpoint-config>
   

@@ -17,22 +17,24 @@ import org.apache.cxf.ws.security.SecurityConstants;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.scratch.ws.generated.PingPlainTextServiceClient;
 import org.scratch.ws.generated.PingRequest;
 import org.scratch.ws.generated.PingResponse;
-import org.scratch.ws.generated.PingServiceClient;
+import org.scratch.ws.generated.PingSslServiceClient;
 import org.scratch.ws.generated.PingWebService;
 
 public class PingServiceTest {
 
     protected static URL[] wsdlURL = new URL[2];
-    protected static QName serviceName;
+    protected static QName [] serviceName= new QName[2];
     protected static QName[] portName = new QName[2];
 
     private final static Random random = new Random();
     private final static AtomicLong idGen = new AtomicLong(random.nextInt(10000));
 
     static {
-        serviceName = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingService");
+        serviceName[0] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingPlainTextService");
+        serviceName[1] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingSslService");
         portName[0] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServicePlainTextPort");
         portName[1] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServiceSslPort");
     }
@@ -53,7 +55,7 @@ public class PingServiceTest {
             String address = "http://localhost:9000/ws/ssl/PingService";
             URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
             assertNotNull("Null URL for wsdl resource", url);
-            PingWebService webServiceImpl = new PingWebServiceSimpleSslImpl();
+            PingWebService webServiceImpl = new PingWebServiceSslImpl();
             eps[1] = setupPingServiceEndpoint(url, address, webServiceImpl);
             wsdlURL[1] = new URL(address + "?wsdl");
         }
@@ -70,8 +72,12 @@ public class PingServiceTest {
         }
     }
 
-    private PingServiceClient getPingServiceClient( URL wsdlURL ) {
-        return new PingServiceClient(wsdlURL, serviceName);
+    private PingPlainTextServiceClient getPingPlainTextServiceClient( URL wsdlURL ) {
+        return new PingPlainTextServiceClient(wsdlURL, serviceName[0]);
+    }
+
+    private PingSslServiceClient getPingSslServiceClient( URL wsdlURL ) {
+        return new PingSslServiceClient(wsdlURL, serviceName[1]);
     }
 
     private PingRequest createRequest() {
@@ -87,7 +93,7 @@ public class PingServiceTest {
     @Test
     public void testPlainPingWebServiceImpl() throws Exception {
         // setup
-        PingServiceClient psc = getPingServiceClient(wsdlURL[0]);
+        PingPlainTextServiceClient psc = getPingPlainTextServiceClient(wsdlURL[0]);
         PingWebService pws = psc.getPingServicePlainTextPort();
         BindingProvider bindingProxy = (BindingProvider) pws;
         
@@ -105,7 +111,7 @@ public class PingServiceTest {
         bindingProxy.getRequestContext().put(SecurityConstants.USERNAME, "mary");
         bindingProxy.getRequestContext().put(SecurityConstants.PASSWORD, "mary123@");
        
-        // req with auth
+        // request with auth
         resp = pws.ping(req);
        
         // test response
@@ -113,11 +119,26 @@ public class PingServiceTest {
         assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
         assertNotNull("Ping request id", resp.getRequestId());
         assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());
+        
+        // try plain text on ssl url
+        // setup
+        psc = getPingPlainTextServiceClient(wsdlURL[1]);
+        pws = psc.getPingServicePlainTextPort();
+        bindingProxy = (BindingProvider) pws;
+        bindingProxy.getRequestContext().put(SecurityConstants.USERNAME, "mary");
+        bindingProxy.getRequestContext().put(SecurityConstants.PASSWORD, "mary123@");
+        
+        try { 
+            resp = pws.ping(req);
+            fail("The WS call should not have succeeded without authentication");
+        } catch( SOAPFaultException soapfe ) { 
+            assertTrue( soapfe.getMessage().contains("No username") );
+        }
     }
 
     @Test
     public void testSslPingWebServiceImpl() throws Exception {
-        PingServiceClient tsc = getPingServiceClient(wsdlURL[1]);
+        PingSslServiceClient tsc = getPingSslServiceClient(wsdlURL[1]);
         PingWebService tws = tsc.getPingServiceSslPort();
 
         PingRequest req = createRequest();

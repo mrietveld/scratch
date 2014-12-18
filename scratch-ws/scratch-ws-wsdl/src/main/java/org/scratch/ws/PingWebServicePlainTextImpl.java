@@ -1,12 +1,13 @@
 package org.scratch.ws;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.jws.WebService;
 
 import org.jboss.ws.api.annotation.EndpointConfig;
 
 @WebService(
         portName="PingServicePlainTextPort",
-        serviceName = "PingService", 
+        serviceName = "PingPlainTextService", 
         wsdlLocation="wsdl/PingService.wsdl",
         targetNamespace = PingWebServicePlainTextImpl.NAMESPACE,
         endpointInterface = "org.scratch.ws.generated.PingWebService"

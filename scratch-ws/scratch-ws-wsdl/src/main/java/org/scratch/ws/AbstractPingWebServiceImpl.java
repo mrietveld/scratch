@@ -28,6 +28,9 @@ public abstract class AbstractPingWebServiceImpl implements PingWebService {
     private final static AtomicInteger idGen = new AtomicInteger(0);
     
     public PingResponse ping( PingRequest req ) throws PingWebServiceException {
+        // DBG
+        new Throwable().printStackTrace(System.out);
+        
         if( req == null ) { 
            WebServiceFaultInfo faultInfo = new WebServiceFaultInfo();
            faultInfo.setCorrelationId(null);

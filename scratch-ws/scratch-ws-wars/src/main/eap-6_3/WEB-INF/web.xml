@@ -20,5 +20,15 @@
       <servlet-name>SslPingService</servlet-name>
       <url-pattern>/ws/ssl/PingService</url-pattern>
    </servlet-mapping>
-    
+
+   <security-constraint>
+    <web-resource-collection>
+       <web-resource-name>SSL Webservices</web-resource-name>
+       <url-pattern>/ws/ssl/*</url-pattern>
+     </web-resource-collection>
+     <user-data-constraint>
+       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+     </user-data-constraint>
+   </security-constraint>
+   
 </web-app>

@@ -92,6 +92,9 @@
       </fault>
     </operation>
   </portType>
+ 
+  <!-- plain text --> 
+  
   <binding name="PingServicePlainTextBinding" type="tns:PingServicePortType">
     <wsp:PolicyReference URI="#UnsecureTransportPolicy" />
     <soap:binding style="document"
@@ -109,37 +112,15 @@
       </fault>
     </operation>
   </binding>
-  <binding name="PingServiceSslBinding" type="tns:PingServicePortType">
-    <wsp:PolicyReference URI="#SslTransportPolicy" />
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
-    <operation name="ping">
-      <soap:operation soapAction="" />
-      <input>
-        <soap:body use="literal" />
-      </input>
-      <output>
-        <soap:body use="literal" />
-      </output>
-      <fault name="PingServiceException">
-        <soap:fault name="PingServiceException" use="literal" />
-      </fault>
-    </operation>
-  </binding>
   
-  <service name="PingService">
+  <service name="PingPlainTextService">
     <jaxws:bindings> 
-      <jaxws:class name="PingServiceClient" />
+      <jaxws:class name="PingPlainTextServiceClient" />
     </jaxws:bindings>
     <port name="PingServicePlainTextPort" binding="tns:PingServicePlainTextBinding">
       <wsp:PolicyReference 
         xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy" 
         URI="#UnsecureTransportPolicy" />
-      <soap:address location="REPLACE_WITH_ACTUAL_URL" />
-    </port>
-    <port name="PingServiceSslPort" binding="tns:PingServiceSslBinding">
-      <wsp:PolicyReference 
-        xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy" 
-        URI="#SslTransportPolicy" />
       <soap:address location="REPLACE_WITH_ACTUAL_URL" />
     </port>
   </service>
@@ -160,7 +141,38 @@
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
-
+ 
+  <!-- SSL --> 
+  
+  <binding name="PingServiceSslBinding" type="tns:PingServicePortType">
+    <wsp:PolicyReference URI="#SslTransportPolicy" />
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="ping">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+      <fault name="PingServiceException">
+        <soap:fault name="PingServiceException" use="literal" />
+      </fault>
+    </operation>
+  </binding>
+  
+  <service name="PingSslService">
+    <jaxws:bindings> 
+      <jaxws:class name="PingSslServiceClient" />
+    </jaxws:bindings>
+    <port name="PingServiceSslPort" binding="tns:PingServiceSslBinding">
+      <wsp:PolicyReference 
+        xmlns:wsp="http://schemas.xmlsoap.org/ws/2003/09/policy" 
+        URI="#SslTransportPolicy" />
+      <soap:address location="REPLACE_WITH_ACTUAL_URL" />
+    </port>
+  </service>
+ 
   <wsp:Policy wsu:Id="SslTransportPolicy">
     <wsp:ExactlyOne>
       <wsp:All>

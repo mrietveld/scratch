@@ -13,7 +13,7 @@ import org.apache.cxf.ws.policy.PolicyEngine;
 import org.apache.cxf.ws.security.SecurityConstants;
 import org.jboss.wsf.stack.cxf.client.configuration.JBossWSNonSpringBusFactory;
 import org.scratch.ws.PingWebServicePlainTextImpl;
-import org.scratch.ws.PingWebServiceSimpleSslImpl;
+import org.scratch.ws.PingWebServiceSslImpl;
 import org.scratch.ws.config.security.ServerPasswordCallback;
 import org.scratch.ws.generated.PingWebService;
 
@@ -52,7 +52,9 @@ public class ScratchWsCxfServlet extends CXFNonSpringServlet {
             if( wsdl == null ) {
                 throw new IllegalStateException("No wsdl for PingService could be found at path [" + wsdlPath + "]");
             }
+            System.out.println( ">> ADDING PINGSERVICE TO BUS! <<");
             setupPingServiceEndpoint(wsdl, PLAIN_TEXT_SUFFIX, new PingWebServicePlainTextImpl());
+            setupPingServiceEndpoint(wsdl, SSL_SUFFIX, new PingWebServicePlainTextImpl());
         } finally { 
             BusFactory.setThreadDefaultBus(null);
         }

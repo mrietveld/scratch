@@ -13,7 +13,6 @@ import org.apache.cxf.ws.policy.PolicyEngine;
 import org.apache.cxf.ws.security.SecurityConstants;
 import org.jboss.wsf.stack.cxf.client.configuration.JBossWSNonSpringBusFactory;
 import org.scratch.ws.PingWebServicePlainTextImpl;
-import org.scratch.ws.PingWebServiceSslImpl;
 import org.scratch.ws.config.security.ServerPasswordCallback;
 import org.scratch.ws.generated.PingWebService;
 

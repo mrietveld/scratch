@@ -19,7 +19,7 @@ import org.scratch.ws.generated.PingWebServiceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractPingWebServiceImpl implements PingWebService {
+public class AbstractPingWebServiceImpl implements PingWebService {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractPingWebServiceImpl.class);
     

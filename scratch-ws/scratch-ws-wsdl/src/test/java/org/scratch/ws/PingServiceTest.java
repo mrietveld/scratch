@@ -52,10 +52,10 @@ public class PingServiceTest {
             wsdlURL[0] = new URL(address + "?wsdl");
         }
         {
-            String address = "http://localhost:9000/ws/ssl/PingService";
+            String address = "http://localhost:9001/ws/PingService";
             URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
             assertNotNull("Null URL for wsdl resource", url);
-            PingWebService webServiceImpl = new PingWebServiceSslImpl();
+            PingWebService webServiceImpl = new PingWebServicePlainTextImpl();
             eps[1] = setupPingServiceEndpoint(url, address, webServiceImpl);
             wsdlURL[1] = new URL(address + "?wsdl");
         }
@@ -72,12 +72,12 @@ public class PingServiceTest {
         }
     }
 
-    private PingPlainTextServiceClient getPingPlainTextServiceClient( URL wsdlURL ) {
+    private PingPlainTextServiceClient getPingPlainTextServiceClient( URL wsdlURL ) { 
         return new PingPlainTextServiceClient(wsdlURL, serviceName[0]);
     }
 
-    private PingSslServiceClient getPingSslServiceClient( URL wsdlURL ) {
-        return new PingSslServiceClient(wsdlURL, serviceName[1]);
+    private PingSslServiceClient getPingSslServiceClient( ) {
+        return new PingSslServiceClient(wsdlURL[1], serviceName[1]);
     }
 
     private PingRequest createRequest() {
@@ -119,26 +119,11 @@ public class PingServiceTest {
         assertEquals("Ping name", req.getRequestName(), resp.getRequestName());
         assertNotNull("Ping request id", resp.getRequestId());
         assertEquals("Ping name", req.getId(), resp.getRequestId().longValue());
-        
-        // try plain text on ssl url
-        // setup
-        psc = getPingPlainTextServiceClient(wsdlURL[1]);
-        pws = psc.getPingServicePlainTextPort();
-        bindingProxy = (BindingProvider) pws;
-        bindingProxy.getRequestContext().put(SecurityConstants.USERNAME, "mary");
-        bindingProxy.getRequestContext().put(SecurityConstants.PASSWORD, "mary123@");
-        
-        try { 
-            resp = pws.ping(req);
-            fail("The WS call should not have succeeded without authentication");
-        } catch( SOAPFaultException soapfe ) { 
-            assertTrue( soapfe.getMessage().contains("No username") );
-        }
     }
 
     @Test
     public void testSslPingWebServiceImpl() throws Exception {
-        PingSslServiceClient tsc = getPingSslServiceClient(wsdlURL[1]);
+        PingSslServiceClient tsc = getPingSslServiceClient();
         PingWebService tws = tsc.getPingServiceSslPort();
 
         PingRequest req = createRequest();
@@ -146,7 +131,9 @@ public class PingServiceTest {
             PingResponse resp = tws.ping(req);
             fail("Ping should have failed due to no SSL authentication");
         } catch( SOAPFaultException soapfe ) {
-            assertTrue(soapfe.getMessage().contains("Not an HTTPs connection"));
+            soapfe.printStackTrace();
+            String msg = soapfe.getMessage();
+            assertTrue(msg, msg.contains("Not an HTTPs connection"));
         }
     }
 }

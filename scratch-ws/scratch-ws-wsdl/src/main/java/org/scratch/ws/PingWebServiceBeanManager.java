@@ -7,9 +7,6 @@ import javax.enterprise.context.RequestScoped;
 public class PingWebServiceBeanManager {
 
     @RequestScoped
-    PingWebServicePlainTextImpl plainTextImpl;
-
-    @RequestScoped
-    PingWebServiceSslImpl sslImpl;
+    AbstractPingWebServiceImpl pingServiceImpl;
     
 }

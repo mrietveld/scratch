@@ -285,6 +285,14 @@
             <configuration>
               <rules>
                 <requirePluginVersions />
+                <illegalTransitiveDependencyCheck implementation="de.is24.maven.enforcer.rules.IllegalTransitiveDependencyCheck">
+                  <reportOnly>false</reportOnly>
+                  <suppressTypesFromJavaRuntime>true</suppressTypesFromJavaRuntime>
+                  <regexIgnoredClasses>
+                      <regexIgnoredClass>.+\.generated\..+</regexIgnoredClass>
+                      <regexIgnoredClass>org\.hibernate\..+</regexIgnoredClass>
+                  </regexIgnoredClasses>
+                </illegalTransitiveDependencyCheck>
               </rules>
             </configuration>
           </execution>

@@ -46,8 +46,8 @@ public class JbossEapScratchWebserviceIntegrationTest extends AbstractBaseWebSer
 
     
     @Test
-    public void plainTextWebserviceTest() throws PingWebServiceException, MalformedURLException {
-        plainTextServiceTest(deploymentUrl);
+    public void plainTextWebserviceTest() throws Exception {
+        pingServiceTest(deploymentUrl);
     }
 
 }

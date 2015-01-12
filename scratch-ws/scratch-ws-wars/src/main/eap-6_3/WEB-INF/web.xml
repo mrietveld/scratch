@@ -14,7 +14,7 @@
     
    <servlet>
       <servlet-name>SslPingService</servlet-name>
-      <servlet-class>org.scratch.ws.PingWebServiceSimpleSslImpl</servlet-class>
+      <servlet-class>org.scratch.ws.PingWebServiceSslImpl</servlet-class>
    </servlet>
    <servlet-mapping>
       <servlet-name>SslPingService</servlet-name>

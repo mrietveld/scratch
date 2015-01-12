@@ -11,7 +11,7 @@ import org.jboss.ws.api.annotation.EndpointConfig;
         targetNamespace = PingWebServiceSslImpl.NAMESPACE,
         endpointInterface = "org.scratch.ws.generated.PingWebService"
         )
-@EndpointConfig(configFile = "WEB-INF/jaxws-endpoint-config.xml", configName = "Custom WS-Security Endpoint")
+@EndpointConfig(configFile = "WEB-INF/ssl-endpoint-config.xml", configName = "Custom WS-Security Endpoint")
 public class PingWebServiceSslImpl extends AbstractPingWebServiceImpl {
 
 }

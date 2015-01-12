@@ -22,13 +22,13 @@ rm -f $clientCertificate $serverCertificate
 rm -f $serverKeystore $clientKeystore $serverTruststore
 
 # create client keystore
-$keytool -genkey -keystore $clientKeystore -keyalg RSA -keysize 2048 -alias $clientAlias -storepass $clientKeyPass -storetype $type
+$keytool -genkeypair -keystore $clientKeystore -keyalg RSA -keysize 2048 -alias $clientAlias -storepass $clientKeyPass -storetype $type -dname "cn=client" 
 
 # create client certficate from client keystore
 $keytool -exportcert -keystore $clientKeystore -storetype $type -storepass $clientKeyPass -alias $clientAlias -file $clientCertificate
 
 # create server keystore
-$keytool -genkey -alias $serverAlias -keyalg RSA -keystore $serverKeystore -storepass $serverKeyPass -storetype $type
+$keytool -genkeypair -alias $serverAlias -keyalg RSA -keystore $serverKeystore -storepass $serverKeyPass -storetype $type -dname "cn=server" 
 
 # create server certficate from server keystore
 $keytool -exportcert -keystore $serverKeystore -storetype $type -storepass $serverKeyPass -alias $serverAlias -file $serverCertificate
@@ -49,6 +49,6 @@ $keytool -list -v -keystore $clientKeystore -storepass $clientKeyPass
 testDir=../../../../target/test-classes/ssl
 rm -rf $testDir
 mkdir $testDir
-cp -r * $testDir
+cp -r server/ *.cer *.jks $testDir
 
 rm -f $clientCertificate $serverCertificate

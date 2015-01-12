@@ -272,6 +272,14 @@
                   </includes>
                   <stylesheet>src/test/resources-eap-6/xslt/addDebugLogging.xslt</stylesheet>
                 </transformationSet>
+                  <transformationSet>
+                  <dir>${project.build.directory}/${jboss.server.name}/standalone/configuration</dir>
+                  <outputDir>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDir>
+                  <includes>
+                    <include>standalone-full.xml</include>
+                  </includes>
+                  <stylesheet>src/test/resources-eap-6/xslt/configureHttpSsl.xslt</stylesheet>
+                </transformationSet>
               </transformationSets>
             </configuration>
           </execution>

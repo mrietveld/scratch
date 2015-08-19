@@ -20,7 +20,7 @@
 
   <properties>
     <version.shrinkwrap.resolver>2.0.0</version.shrinkwrap.resolver>
-    <version.arquillian>1.1.1.Final</version.arquillian>
+    <version.arquillian>1.1.8.Final</version.arquillian>
 
     <version.slf4j>1.7.2</version.slf4j>
     <version.resteasy>2.3.7.Final</version.resteasy>

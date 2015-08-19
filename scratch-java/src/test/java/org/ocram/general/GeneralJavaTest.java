@@ -134,5 +134,21 @@ public class GeneralJavaTest extends ScratchBaseTest {
             logger.debug( "" + i + ": " + arguments[i] );
         }
     }
-    
+
+    @Test 
+    public void arrayCopyBoxedPrimitivesTest() { 
+        long [] og = { 1l, 2l , 3l };
+        Long [] of = new Long[3];
+        for( int i = 0; i < og.length; ++i ) { 
+           of[i] = new Long(og[i]);
+        }
+        
+        long [] oh = new long[3];
+        
+        System.arraycopy(of, 0, og, 0, of.length);
+        
+        for( int i = 0; i < og.length; ++i ) { 
+           ++og[i];
+        }
+    }
 }

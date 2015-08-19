@@ -1,7 +1,5 @@
 package org.ocram.jaxb;
 
-import static org.junit.Assert.*;
-
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -14,7 +12,6 @@ import javax.xml.bind.Unmarshaller;
 
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
-import org.ocram.jaxb.objects.Command;
 import org.ocram.jaxb.objects.OneCommand;
 import org.ocram.jaxb.objects.StringHolder;
 import org.ocram.jaxb.objects.TestRequest;

@@ -10,16 +10,37 @@ import org.ocram.ScratchBaseTest;
 public class RegexTest extends ScratchBaseTest {
 
     @Test
-    public void testRegex() {
-        String nietAlleenEenEmailAdres = "marco@log.com;marco@log.com";
-        String regex = "^[\\w]([\\w\\.-]*[\\w])?@[a-zA-Z0-9][\\w\\.-]*[a-zA-Z0-9]\\.[a-zA-Z][a-zA-Z\\.]*[a-zA-Z]$'";
-
-        // assertTrue( alleenEenEmailAdres.matches(regex) );
-        if (nietAlleenEenEmailAdres.matches(regex)) {
-            fail("Hacker krijgt ook een email!");
-        }
+    public void testFloatRegex() {
+        String regex = "^\\d[\\d\\.]{1,9}(E-?\\d{1,2})?f?$";
+        String floot = String.valueOf(Float.MAX_VALUE);
+        assertTrue( "[" + floot + "] | [" + regex + "]", floot.matches(regex));
+        floot = String.valueOf(Float.MIN_NORMAL);
+        assertTrue( "[" + floot + "] | [" + regex + "]", floot.matches(regex));
+        floot = String.valueOf(Float.MIN_VALUE);
+        assertTrue( "[" + floot + "] | [" + regex + "]", floot.matches(regex));
+        floot = String.valueOf(new Float(103030303.0202030504502101f));
+        assertTrue( "[" + floot + "] | [" + regex + "]", floot.matches(regex));
+        System.out.println( floot.length()  + ": " + floot);
+        
+        floot = "1.00f";
+        Float.parseFloat(floot);
+        assertTrue( "[" + floot + "] | [" + regex + "]", floot.matches(regex));
+        floot = "1.00E32f";
+        Float.parseFloat(floot);
+        assertTrue( "[" + floot + "] | [" + regex + "]", floot.matches(regex));
+    
+        floot = ".00f";
+        assertFalse( "[" + floot + "] | [" + regex + "]", floot.matches(regex));
     }
 
+    @Test
+    public void testDotStarRegexes() {
+        String groupId = "Crusaders";
+        String regex = ".rusade.*";
+       
+        assertTrue( "'" + regex + "' does not match '" + groupId + "'", groupId.matches(regex) );
+    }
+    
     @Test
     public void caseInsensitiveExactMatchTest() {
         String[] methodStrs = new String[3];

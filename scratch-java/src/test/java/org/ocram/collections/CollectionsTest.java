@@ -6,16 +6,23 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
+import java.util.TreeSet;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.naming.InitialContext;
 
+import org.drools.core.command.CommandService;
+import org.drools.core.command.Interceptor;
 import org.junit.Test;
+import org.kie.api.command.Command;
+import org.kie.internal.command.Context;
 import org.ocram.ScratchBaseTest;
 import org.ocram.collections.objects.Bam;
 import org.ocram.collections.objects.Bom;
 import org.ocram.collections.objects.BomComparator;
+import org.ocram.collections.objects.ComparableInterceptor;
 
 public class CollectionsTest extends ScratchBaseTest {
 
@@ -148,5 +155,22 @@ public class CollectionsTest extends ScratchBaseTest {
         strList.set(1, "two");
         assertEquals("one", strList.get(0));
         assertEquals("two", strList.get(1));
+    }
+    
+    @Test
+    public void addComparableToTreeSet() { 
+       ComparableInterceptor one = new ComparableInterceptor(1, new Long(1)) ;
+       ComparableInterceptor two = new ComparableInterceptor(2, new Long(2)) ;
+       ComparableInterceptor thr = new ComparableInterceptor(3, new Long(3));
+       
+       Set<ComparableInterceptor> list = new TreeSet<ComparableInterceptor>();
+       list.add(one);
+       list.add(thr);
+       list.add(two);
+       
+       for( ComparableInterceptor cin : list ) { 
+          System.out.println( cin.getInterceptor() ); 
+       }
+       
     }
 }

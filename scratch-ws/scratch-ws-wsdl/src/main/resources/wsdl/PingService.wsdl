@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<definitions name="PingService" 
-  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+<definitions 
   xmlns="http://schemas.xmlsoap.org/wsdl/"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
   xmlns:tns="http://services.ws.scratch.org/VERSION/test" 
-  targetNamespace="http://services.ws.scratch.org/VERSION/test"
-  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+  
+  xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" 
   xmlns:wsp="http://www.w3.org/ns/ws-policy"
-  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsaws="http://www.w3.org/2006/05/addressing/wsdl"
+  xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" 
+  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+  xmlns:wsaws="http://www.w3.org/2006/05/addressing/wsdl"
   xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy"
-  xmlns:jaxws="http://java.sun.com/xml/ns/jaxws" >
+  
+  name="PingService"  
+  targetNamespace="http://services.ws.scratch.org/VERSION/test"
+  >
 
   <!-- JAX-WS Customizations: Wrapper styles, async. -->
   <jaxws:bindings> 

@@ -1,0 +1,357 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.scratch.rest</groupId>
+    <artifactId>scratch-rest</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>scratch-rest-wildfly</artifactId>
+
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
+
+  <properties>
+    <version.org.wildfly>8.2.1.Final</version.org.wildfly>
+    <wildfly.server.name>wildfly-${version.org.wildfly}</wildfly.server.name>
+    
+    <version.org.jboss.shrinkwrap.resolver>2.0.0</version.org.jboss.shrinkwrap.resolver>
+    <version.org.jboss.arquillian>1.1.2.Final-wildfly-1</version.org.jboss.arquillian>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      
+        <!-- arquillian -->
+      <!-- Override dependency resolver with test version. This must go *BEFORE* the Arquillian BOM. -->
+      <dependency>
+        <groupId>org.jboss.shrinkwrap.resolver</groupId>
+        <artifactId>shrinkwrap-resolver-bom</artifactId>
+        <version>${version.org.jboss.shrinkwrap.resolver}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <!-- arquillian: contains all versions for specific arquillian artifacts -->
+      <dependency>
+        <groupId>org.jboss.arquillian</groupId>
+        <artifactId>arquillian-bom</artifactId>
+        <version>${version.org.jboss.arquillian}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.xnio</groupId>
+        <artifactId>xnio-api</artifactId>
+        <version>3.2.2.Final</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.xnio</groupId>
+        <artifactId>xnio-nio</artifactId>
+        <version>3.2.2.Final</version>
+      </dependency>
+      </dependencies>
+  </dependencyManagement>
+  
+  <dependencies>
+    <dependency>
+      <groupId>org.jboss.spec.javax.servlet</groupId>
+      <artifactId>jboss-servlet-api_3.0_spec</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+      <version>1.0-SP4</version>
+    </dependency>
+
+    <!-- rest -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>jaxrs-api</artifactId>
+    </dependency>
+    <dependency>
+      <!-- resteasy logging -->
+      <groupId>commons-logging</groupId>
+      <artifactId>commons-logging</artifactId>
+      <version>1.1.1</version>
+    </dependency>
+
+    <!-- jaxb -->
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxb-provider</artifactId>
+    </dependency>
+
+    <!-- logging -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    
+    <!-- arquillian -->
+    <dependency>
+      <groupId>org.jboss.arquillian.junit</groupId>
+      <artifactId>arquillian-junit-container</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-api-maven</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- shrinkwrap -->
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap</groupId>
+      <artifactId>shrinkwrap-impl-base</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-impl-maven</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-api-maven</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.shrinkwrap.resolver</groupId>
+      <artifactId>shrinkwrap-resolver-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
+    <!-- arquillian wildfly -->
+    <dependency>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-arquillian-container-managed</artifactId>
+      <version>${version.org.wildfly}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-arquillian-common</artifactId>
+      <version>${version.org.wildfly}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.wildfly</groupId>
+      <artifactId>wildfly-arquillian-protocol-jmx</artifactId>
+      <version>${version.org.wildfly}</version>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- wildfly -->
+    <dependency>
+      <groupId>org.jboss.xnio</groupId>
+      <artifactId>xnio-api</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <scope>test</scope>
+    </dependency>
+        <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <version>3.0.10.Final</version>
+    </dependency>
+  </dependencies>
+  
+
+  <build>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+        <filtering>true</filtering>
+      </testResource>
+      <testResource>
+        <directory>src/test/resources-wildfly8</directory>
+        <filtering>false</filtering>
+      </testResource>
+    </testResources>
+
+    <!-- running tests -->
+    <plugins>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+          <fork>true</fork>
+          <meminitial>256m</meminitial>
+          <maxmem>1024m</maxmem>
+          <showDeprecation>false</showDeprecation>
+          <showWarnings>false</showWarnings>
+          <compilerArguments>
+            <source>1.7</source>
+            <target>1.7</target>
+          </compilerArguments>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.8</version>
+        <executions>
+          <execution>
+            <id>reserve-network-ports</id>
+            <goals>
+              <goal>reserve-network-port</goal>
+            </goals>
+            <phase>initialize</phase>
+            <configuration>
+              <portNames>
+                <portName>wildfly.server.port</portName>
+                <portName>wildfly.mgmt.server.port</portName>
+              </portNames>
+              <outputFile>src/test/resources/port.properties</outputFile>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <systemPropertyVariables>
+            <jboss.server.port>${wildfly.server.port}</jboss.server.port>
+            <jboss.mgmt.server.port>${wildfly.mgmt.server.port}</jboss.mgmt.server.port>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>integration-test</id>
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>verify</id>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <argLine>-Xms512m -Xmx1024m -XX:MaxPermSize=512m</argLine>
+          <systemPropertyVariables>
+            <jboss.server.port>${jboss.server.port}</jboss.server.port>
+            <jboss.mgmt.server.port>${jboss.mgmt.server.port}</jboss.mgmt.server.port>
+          </systemPropertyVariables>
+        </configuration>
+      </plugin>
+
+      <!-- testing with jboss AS 7 -->
+      <!-- 1. install server in the build/target dir -->
+      <plugin>
+        <artifactId>maven-dependency-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>unpack-jboss</id>
+            <phase>generate-test-resources</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+            <configuration>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.wildfly</groupId>
+                  <artifactId>wildfly-dist</artifactId>
+                  <version>${version.org.wildfly}</version>
+                  <type>zip</type>
+                  <overWrite>false</overWrite>
+                  <outputDirectory>${project.build.directory}</outputDirectory>
+                </artifactItem>
+              </artifactItems>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- 2. install files with user/password information in the server dir -->
+      <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>copy-user-config</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.build.directory}/${wildfly.server.name}/standalone/configuration</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>src/test/resources-wildfly-8/config</directory>
+                  <filtering>false</filtering>
+                </resource>
+              </resources>
+              <overwrite>true</overwrite>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- 3. modify server configuration -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xml-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <id>modify-standalone-full</id>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>transform</goal>
+            </goals>
+            <configuration>
+              <transformationSets>
+                <transformationSet>
+                  <dir>${project.build.directory}/${jboss.server.name}/standalone/configuration</dir>
+                  <outputDir>${project.build.directory}/${jboss.server.name}/standalone/configuration</outputDir>
+                  <includes>
+                    <include>standalone-full.xml</include>
+                  </includes>
+                  <stylesheet>src/test/resources-wildfly8/xslt/addDebugLogging.xslt</stylesheet>
+                </transformationSet>
+              </transformationSets>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>

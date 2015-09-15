@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.servlet.AsyncContext;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,7 @@ public class AsyncTestResource {
 
     @GET
     @Path("/ping")
+    @RolesAllowed(value={"rest"})
     public Response ping() {
         System.out.println("PING!");
         return Response.ok().build();

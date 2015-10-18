@@ -7,9 +7,13 @@ import java.lang.reflect.TypeVariable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 import org.junit.Test;
 import org.ocram.ScratchBaseTest;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ReflectionTest extends ScratchBaseTest {
 
     @Test
@@ -34,7 +38,7 @@ public class ReflectionTest extends ScratchBaseTest {
                 if (ptype instanceof TypeVariable) {
                     TypeVariable typeVar = (TypeVariable) ptype;
                     logger.debug("tv: " + typeVar.getName());
-                    for( Type bound : typeVar.getBounds() ) { 
+                    for( Type bound : typeVar.getBounds() ) {
                        logger.debug( bound.getClass().getName() );
                     }
                 }
@@ -42,9 +46,9 @@ public class ReflectionTest extends ScratchBaseTest {
             }
         }
     }
-    
+
     @Test
-    public void packageFolderTest() { 
+    public void packageFolderTest() {
         String pkgFolder = this.getClass().getPackage().toString();
         pkgFolder = pkgFolder.replace("package ", "");
         pkgFolder = pkgFolder.replaceAll("\\.", File.separator);
@@ -52,4 +56,30 @@ public class ReflectionTest extends ScratchBaseTest {
         assertTrue( pkgFolder, pkgFolder.endsWith("reflection"));
     }
 
+
+    @Test
+    public void annotation() {
+        String pkgFolder = this.getClass().getPackage().toString();
+    }
+
+    @Test
+    public void packageNameTest() {
+        Package pkg = this.getClass().getPackage();
+
+        System.out.println( "Name: " + pkg.getName() );
+        System.out.println( "Spec title: " + pkg.getSpecificationTitle() );
+        System.out.println( "Impl title: " + pkg.getImplementationTitle() );
+
+        pkg = String.class.getPackage();
+
+        System.out.println( "Name: " + pkg.getName() );
+        System.out.println( "Spec title: " + pkg.getSpecificationTitle() );
+        System.out.println( "Impl title: " + pkg.getImplementationTitle() );
+
+        pkg = int.class.getPackage();
+        System.out.println( "Name: " + pkg.getName() );
+        System.out.println( "Spec title: " + pkg.getSpecificationTitle() );
+        System.out.println( "Impl title: " + pkg.getImplementationTitle() );
+
+    }
 }

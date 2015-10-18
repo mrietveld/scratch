@@ -149,4 +149,12 @@ public class RegexTest extends ScratchBaseTest {
         assertFalse( "huh?", og.matches("[xzwfg]s$") );
     }
     
+    @Test
+    public void scratch() { 
+        String pat = "^(TRUE|FALSE)$";
+        assertTrue("TRUE".matches(pat));
+        assertTrue("FALSE".matches(pat));
+        assertTrue(Boolean.parseBoolean("TRUE"));
+        assertTrue(!Boolean.parseBoolean("FALSE"));
+    }
 }

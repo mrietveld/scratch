@@ -7,14 +7,21 @@ public class StackTraceTest extends ScratchBaseTest {
 
     @Test
     public void og() {
+        String thisMethodName = "og";
+
         assertEquals(this.getClass().getName(), new Throwable().getStackTrace()[0].getClassName());
-        assertEquals("og", new Throwable().getStackTrace()[0].getMethodName());
-        unsupported(this.getClass());
+        assertEquals(thisMethodName, new Throwable().getStackTrace()[0].getMethodName());
+
+        try {
+            unsupported(this.getClass());
+        } catch( UnsupportedOperationException uoe ) {
+            assertTrue( "Incorrect message in UOE", uoe.getMessage().contains(thisMethodName) );
+        }
     }
-    
-    static void unsupported(Class<?> realClass) { 
+
+    static void unsupported(Class<?> realClass) {
         String methodName = (new Throwable()).getStackTrace()[1].getMethodName();
-        throw new UnsupportedOperationException(methodName + " is not supported on the JAXB " + realClass.getSimpleName() + " implementation.");
+        throw new UnsupportedOperationException(methodName + " is not supported on the " + realClass.getSimpleName() + " implementation.");
     }
 
 }

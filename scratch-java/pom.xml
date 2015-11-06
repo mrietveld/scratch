@@ -22,6 +22,7 @@
 
     <jbpm.version>6.3.0-SNAPSHOT</jbpm.version>
     <drools.version>6.3.0-SNAPSHOT</drools.version>
+    <roaster.version>2.13.0.Final</roaster.version>
   </properties>
 
   <dependencies>
@@ -92,6 +93,11 @@
       <artifactId>jbpm-audit</artifactId>
       <version>${jbpm.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.kie</groupId>
+      <artifactId>kie-ci</artifactId>
+      <version>${drools.version}</version>
+    </dependency>
 
     <!-- persistence -->
     <dependency>
@@ -139,13 +145,29 @@
       <artifactId>spring-beans</artifactId>
       <version>${spring.version}</version>
     </dependency>
- 
+
     <dependency>
-      <groupId>org.kie</groupId>
-      <artifactId>kie-ci</artifactId>
-      <version>6.0.1.Final</version>
-    </dependency>  
-   
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jboss.forge.roaster</groupId>
+      <artifactId>roaster-api</artifactId>
+      <version>${roaster.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.forge.roaster</groupId>
+      <artifactId>roaster-jdt</artifactId>
+      <version>${roaster.version}</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>asm</groupId>
+      <artifactId>asm</artifactId>
+    </dependency>
+
     <!-- logging -->
     <dependency>
       <artifactId>slf4j-api</artifactId>
@@ -175,42 +197,42 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>2.3.1</version>
       </plugin>
-      
-        <!-- 3. modify server configuration -->
-         <plugin>
-           <groupId>org.codehaus.mojo</groupId>
-           <artifactId>xml-maven-plugin</artifactId>
-           <version>1.0</version>                      
-           <executions>                        
-             <execution>
-               <phase>process-test-resources</phase>
-               <goals>
-                 <goal>transform</goal>
-               </goals>
-               <configuration>                                 
-                 <transformationSets>
-                   <transformationSet> 
-                     <dir>${project.build.directory}/test-classes/</dir>
-                     <outputDir>${project.build.directory}/test-classes/</outputDir> 
-                     <includes> 
-                       <include>standalone-full.xml</include> 
-                     </includes>
-                     <stylesheet>src/test/resources/xslt/changeJmsMessagingConfig.xslt</stylesheet>
-                   </transformationSet> 
-                   <transformationSet> 
-                     <dir>${project.build.directory}/test-classes/</dir>
-                     <outputDir>${project.build.directory}/test-classes/</outputDir> 
-                     <includes> 
-                       <include>standalone-full.xml</include> 
-                     </includes>
-                     <stylesheet>src/test/resources/xslt/addDebugLogging.xslt</stylesheet>
-                   </transformationSet> 
-                 </transformationSets>
-               </configuration>
-             </execution>
-           </executions>
-         </plugin> 
-         
+
+      <!-- 3. modify server configuration -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>xml-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <phase>process-test-resources</phase>
+            <goals>
+              <goal>transform</goal>
+            </goals>
+            <configuration>
+              <transformationSets>
+                <transformationSet>
+                  <dir>${project.build.directory}/test-classes/</dir>
+                  <outputDir>${project.build.directory}/test-classes/</outputDir>
+                  <includes>
+                    <include>standalone-full.xml</include>
+                  </includes>
+                  <stylesheet>src/test/resources/xslt/changeJmsMessagingConfig.xslt</stylesheet>
+                </transformationSet>
+                <transformationSet>
+                  <dir>${project.build.directory}/test-classes/</dir>
+                  <outputDir>${project.build.directory}/test-classes/</outputDir>
+                  <includes>
+                    <include>standalone-full.xml</include>
+                  </includes>
+                  <stylesheet>src/test/resources/xslt/addDebugLogging.xslt</stylesheet>
+                </transformationSet>
+              </transformationSets>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
 

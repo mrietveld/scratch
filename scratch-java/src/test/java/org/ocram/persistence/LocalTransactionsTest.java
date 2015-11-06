@@ -1,12 +1,15 @@
 package org.ocram.persistence;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 import org.junit.After;
 import org.junit.Before;
@@ -47,6 +50,7 @@ public class LocalTransactionsTest extends ScratchBaseTest {
 
         et.begin();
         printStatus(et, "begin");
+
 
         Stuff stuff = new Stuff("gold", "virtual", 100100);
 
@@ -109,5 +113,5 @@ public class LocalTransactionsTest extends ScratchBaseTest {
         logger.debug( delegate.getClass().getName() );
         em.close();
     }
-    
+
 }

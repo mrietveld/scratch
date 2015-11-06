@@ -2,12 +2,14 @@ package org.ocram.persistence;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.UserTransaction;
 
 import org.junit.After;
@@ -75,7 +77,19 @@ public class JtaTransactionsTest extends ScratchBaseTest {
         ut = PersistenceUtil.findUserTransaction();
         ut.begin();
         try {
+
             em = emf.createEntityManager();
+
+            CriteriaBuilder builder = em.getCriteriaBuilder();
+            CriteriaQuery criteriaQuery = builder.createQuery(Stuff.class);
+            Root<Stuff> stuffRoot = criteriaQuery.from(Stuff.class);
+            // empty .and() (or .or()) in subquery causes exception
+            Predicate emptyAndPredicate = builder.and();
+            Predicate normalPredicate = builder.equal(stuffRoot.get("id"), 1);
+            criteriaQuery.where(builder.or(emptyAndPredicate, normalPredicate));
+
+            Query query = em.createQuery(criteriaQuery);
+            List<Stuff> results = query.getResultList();
 
             List<Stuff> stuffList = em.createQuery("Select s from Stuff s").getResultList();
 

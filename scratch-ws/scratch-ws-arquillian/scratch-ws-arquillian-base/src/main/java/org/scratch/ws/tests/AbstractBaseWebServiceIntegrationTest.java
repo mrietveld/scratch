@@ -1,10 +1,10 @@
 /*
  * JBoss, Home of Professional Open Source
- * 
+ *
  * Copyright 2012, Red Hat Middleware LLC, and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -61,7 +61,7 @@ import org.slf4j.LoggerFactory;
 public class AbstractBaseWebServiceIntegrationTest {
 
     private final static Logger logger = LoggerFactory.getLogger(AbstractBaseWebServiceIntegrationTest.class);
-    
+
     protected static QName [] serviceName = new QName[2];
     protected static QName [] portName = new QName[2];
 
@@ -71,27 +71,27 @@ public class AbstractBaseWebServiceIntegrationTest {
     static {
         serviceName[0] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingPlainTextService");
         portName[0] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServicePlainTextPort");
-        serviceName[0] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingSslService");
-        portName[0] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServiceSslPort");
+        serviceName[1] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingSslService");
+        portName[1] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServiceSslPort");
     }
 
     private static final String CLIENT_KEYSTORE_PASSWORD = "CLIENT_KEYSTORE_PASSWORD";
-    
+
     private static void setupTLS(Object port) throws FileNotFoundException, IOException, GeneralSecurityException {
             String keyStoreLoc = "src/main/resources/ssl/client_keystore.jks";
             HTTPConduit httpConduit = (HTTPConduit) ClientProxy.getClient(port).getConduit();
-     
+
             TLSClientParameters tlsCP = new TLSClientParameters();
             KeyStore keyStore = KeyStore.getInstance("JKS");
             keyStore.load(new FileInputStream(keyStoreLoc), null);
             KeyManager[] myKeyManagers = getKeyManagers(keyStore, CLIENT_KEYSTORE_PASSWORD);
             tlsCP.setKeyManagers(myKeyManagers);
-     
+
             KeyStore trustStore = KeyStore.getInstance("JKS");
             trustStore.load(new FileInputStream(keyStoreLoc), null);
             TrustManager[] myTrustStoreKeyManagers = getTrustManagers(trustStore);
             tlsCP.setTrustManagers(myTrustStoreKeyManagers);
-            
+
             httpConduit.setTlsClientParameters(tlsCP);
         }
 
@@ -100,13 +100,13 @@ public class AbstractBaseWebServiceIntegrationTest {
             fac.init(trustStore);
             return fac.getTrustManagers();
         }
-        
+
         private static KeyManager[] getKeyManagers(KeyStore keyStore, String keyPassword) throws GeneralSecurityException, IOException {
             KeyManagerFactory fac = KeyManagerFactory.getInstance("RSA");
             fac.init(keyStore, null);
             return fac.getKeyManagers();
         }
-        
+
     private PingRequest createRequest() {
         String name = UUID.randomUUID().toString();
         long id = idGen.getAndIncrement();
@@ -147,7 +147,7 @@ public class AbstractBaseWebServiceIntegrationTest {
 
         // SSL test
         URL sslWsdlUrl = new URL( "https", deploymentUrl.getHost(), 8443, wsdlURL.getFile() + "ws/ssl/PingService?wsdl" );
-        PingSslServiceClient pssc = new PingSslServiceClient(sslWsdlUrl, serviceName[1]); 
+        PingSslServiceClient pssc = new PingSslServiceClient(sslWsdlUrl, serviceName[1]);
         pws = pssc.getPingServiceSslPort();
         setupTLS(pws);
 

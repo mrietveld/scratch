@@ -10,7 +10,7 @@
 
   <artifactId>scratch-ws-wsdl</artifactId>
   <packaging>jar</packaging>
-  
+
   <name>Scratch Webservices :: WSDL and implementation code</name>
 
   <licenses>
@@ -25,7 +25,6 @@
     <dependency>
       <groupId>org.kie.remote.ws</groupId>
       <artifactId>kie-remote-ws-common</artifactId>
-      <version>6.1.0.Final</version>
     </dependency>
 
     <!-- CXF -->
@@ -67,16 +66,16 @@
       <groupId>org.jboss.ws.cxf</groupId>
       <artifactId>jbossws-cxf-client</artifactId>
     </dependency>
-   
-   <!-- CDI --> 
-   <dependency>
-     <groupId>javax.enterprise</groupId>
-     <artifactId>cdi-api</artifactId>
-   </dependency>
-   <dependency>
-     <groupId>org.apache.deltaspike.core</groupId>
-     <artifactId>deltaspike-core-api</artifactId>
-   </dependency>
+
+    <!-- CDI -->
+    <dependency>
+      <groupId>javax.enterprise</groupId>
+      <artifactId>cdi-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.deltaspike.core</groupId>
+      <artifactId>deltaspike-core-api</artifactId>
+    </dependency>
 
     <!-- logging -->
     <dependency>
@@ -103,9 +102,21 @@
       <groupId>org.jboss.spec.javax.servlet</groupId>
       <artifactId>jboss-servlet-api_3.0_spec</artifactId>
     </dependency>
+    <!--  
     <dependency>
       <groupId>javax.jws</groupId>
       <artifactId>jsr181-api</artifactId>
+    </dependency>
+    -->
+
+    <!-- JAXB -->
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.xml.bind</groupId>
+      <artifactId>jaxb-impl</artifactId>
     </dependency>
 
     <!-- test -->
@@ -225,7 +236,8 @@
               <replacements>
                 <replacement>
                   <token>VERSION = ".*</token>
-                  <value>VERSION = "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";</value>
+                  <value>VERSION =
+                    "${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}";</value>
                 </replacement>
               </replacements>
             </configuration>

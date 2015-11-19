@@ -40,11 +40,6 @@
     <version.org.apache.tomcat>7.0.32</version.org.apache.tomcat>
     <version.org.jboss.arquillian.container.tomcat>1.0.0.CR6</version.org.jboss.arquillian.container.tomcat>
     
-    <!-- jboss as  -->
-    <jboss.server.name>jboss-eap-6.3</jboss.server.name>
-    <version.org.jboss.as.dist>7.4.0.Final-redhat-19</version.org.jboss.as.dist>
-    <override.version.org.jboss.as>7.2.0.Final</override.version.org.jboss.as>
-    
     <!-- jetty -->    
     <version.org.mortbay.jetty>6.1.12</version.org.mortbay.jetty>
   </properties>

@@ -15,25 +15,25 @@ public class ScratchWsWarJbossEapDeploy {
         WebArchive war = getWebArchive("org.scratch.ws", "scratch-ws-wars", "eap6_3", PROJECT_VERSION);
 
         boolean replace = false;
-        if( replace ) { 
+        if( replace ) {
             String [][] jarsToReplace = {
                     { "org.scratch.ws", "scratch-ws-wsdl" },
             };
             replaceJars(war, PROJECT_VERSION, jarsToReplace);
         }
-    
-        boolean replaceWebXml = true;
-        if( replaceWebXml ) { 
+
+        boolean replaceWebXml = false;
+        if( replaceWebXml ) {
           war.delete("WEB-INF/web.xml");
           war.addAsWebResource("WEB-INF/web.xml", "WEB-INF/web.xml");
         }
-        
+
         return war;
     }
 
-    protected void printTestName() { 
+    protected void printTestName() {
         StackTraceElement ste = new Throwable().getStackTrace()[1];
         logger.info( "] Starting " + ste.getMethodName());
     }
-    
+
 }

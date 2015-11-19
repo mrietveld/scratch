@@ -3,32 +3,53 @@
 <web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
-   <servlet>
-      <servlet-name>PlainTextPingService</servlet-name>
-      <servlet-class>org.scratch.ws.PingWebServicePlainTextImpl</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>PlainTextPingService</servlet-name>
-      <url-pattern>/ws/PingService</url-pattern>
-   </servlet-mapping>
-    
-   <servlet>
-      <servlet-name>SslPingService</servlet-name>
-      <servlet-class>org.scratch.ws.PingWebServiceSslImpl</servlet-class>
-   </servlet>
-   <servlet-mapping>
-      <servlet-name>SslPingService</servlet-name>
-      <url-pattern>/ws/ssl/PingService</url-pattern>
-   </servlet-mapping>
+  <servlet>
+    <servlet-name>PlainTextPingService</servlet-name>
+    <servlet-class>org.scratch.ws.PingWebServicePlainTextImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PlainTextPingService</servlet-name>
+    <url-pattern>/ws/PingService</url-pattern>
+  </servlet-mapping>
 
-   <security-constraint>
+  <security-constraint>
     <web-resource-collection>
-       <web-resource-name>SSL Webservices</web-resource-name>
-       <url-pattern>/ws/ssl/*</url-pattern>
-     </web-resource-collection>
-     <user-data-constraint>
-       <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-     </user-data-constraint>
-   </security-constraint>
-   
+      <web-resource-name>WebServiceBasicAuth</web-resource-name>
+      <description>application security constraints</description>
+      <url-pattern>/ws/PingService*</url-pattern>
+      <http-method>GET</http-method>
+      <http-method>POST</http-method>
+    </web-resource-collection>
+    <auth-constraint>
+      <role-name>User</role-name>
+    </auth-constraint>
+  </security-constraint>
+  <login-config>
+    <auth-method>BASIC</auth-method>
+    <realm-name>ApplicationRealm</realm-name>
+  </login-config>
+
+  <security-role>
+    <role-name>User</role-name>
+  </security-role>
+
+  <servlet>
+    <servlet-name>SslPingService</servlet-name>
+    <servlet-class>org.scratch.ws.PingWebServiceSslImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SslPingService</servlet-name>
+    <url-pattern>/ws/ssl/PingService</url-pattern>
+  </servlet-mapping>
+
+  <security-constraint>
+    <web-resource-collection>
+      <web-resource-name>SSL Webservices</web-resource-name>
+      <url-pattern>/ws/ssl/*</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
+
 </web-app>

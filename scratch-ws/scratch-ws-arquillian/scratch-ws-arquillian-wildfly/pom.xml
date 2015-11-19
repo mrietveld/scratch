@@ -27,12 +27,15 @@
 
     <version.org.wildfly>8.1.0.Final</version.org.wildfly>
     <wildfly.server.name>wildfly-${version.org.wildfly}</wildfly.server.name>
+    
+    <version.org.kie>6.3.0.Final</version.org.kie>
   </properties>
 
   <dependencies>
     <dependency>
       <groupId>org.kie.remote</groupId>
       <artifactId>kie-remote-client</artifactId>
+      
       <scope>test</scope>
     </dependency>
     <dependency>

@@ -1,8 +1,18 @@
 package org.scratch.ws;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static org.scratch.ws.config.ScratchWsCxfServlet.setupPingServiceEndpoint;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Random;
 import java.util.UUID;
@@ -39,13 +49,31 @@ public class PingServiceTest {
         portName[1] = new QName(AbstractPingWebServiceImpl.NAMESPACE, "PingServiceSslPort");
     }
 
+    private final static String WSDL_PATH = "/wsdl/PingService.wsdl";
+
     protected static Endpoint[] eps = new Endpoint[2];
 
     @BeforeClass
     public static void setUp() throws Exception {
+        InputStream wsdlIn = PingServiceTest.class.getResourceAsStream(WSDL_PATH);
+        assertNotNull(wsdlIn);
+        String wsdlContent = readInputStreamAsString(wsdlIn);
+        wsdlIn.close();
+
+        if( wsdlContent.contains("VERSION") ) {
+            // replace content
+            wsdlContent = wsdlContent.replaceAll("VERSION", ServicesVersion.VERSION);
+
+            // replace file
+            URL wsdlUrl = PingServiceTest.class.getResource(WSDL_PATH);
+            FileWriter fileWriter = new FileWriter(new File(wsdlUrl.toURI()));
+            fileWriter.write(wsdlContent);
+            fileWriter.close();
+        }
+
         {
             String address = "http://localhost:9000/ws/PingService";
-            URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
+            URL url = PingServiceTest.class.getResource(WSDL_PATH);
             assertNotNull("Null URL for wsdl resource", url);
             PingWebService webServiceImpl = new PingWebServicePlainTextImpl();
             eps[0] = setupPingServiceEndpoint(url, address, webServiceImpl);
@@ -53,12 +81,24 @@ public class PingServiceTest {
         }
         {
             String address = "http://localhost:9001/ws/PingService";
-            URL url = PingServiceTest.class.getResource("/wsdl/PingService.wsdl");
+            URL url = PingServiceTest.class.getResource(WSDL_PATH);
             assertNotNull("Null URL for wsdl resource", url);
-            PingWebService webServiceImpl = new PingWebServicePlainTextImpl();
+            PingWebService webServiceImpl = new PingWebServiceSslImpl();
             eps[1] = setupPingServiceEndpoint(url, address, webServiceImpl);
             wsdlURL[1] = new URL(address + "?wsdl");
         }
+    }
+
+    public static String readInputStreamAsString( InputStream in ) throws IOException {
+        BufferedInputStream bis = new BufferedInputStream(in);
+        ByteArrayOutputStream buf = new ByteArrayOutputStream();
+        int result = bis.read();
+        while( result != -1 ) {
+            byte b = (byte) result;
+            buf.write(b);
+            result = bis.read();
+        }
+        return buf.toString();
     }
 
     @AfterClass
@@ -72,7 +112,7 @@ public class PingServiceTest {
         }
     }
 
-    private PingPlainTextServiceClient getPingPlainTextServiceClient( URL wsdlURL ) { 
+    private PingPlainTextServiceClient getPingPlainTextServiceClient( URL wsdlURL ) {
         return new PingPlainTextServiceClient(wsdlURL, serviceName[0]);
     }
 
@@ -96,24 +136,24 @@ public class PingServiceTest {
         PingPlainTextServiceClient psc = getPingPlainTextServiceClient(wsdlURL[0]);
         PingWebService pws = psc.getPingServicePlainTextPort();
         BindingProvider bindingProxy = (BindingProvider) pws;
-        
+
         // do request without auth
         PingRequest req = createRequest();
         PingResponse resp = null;
-        try { 
+        try {
             resp = pws.ping(req);
             fail("The WS call should not have succeeded without authentication");
-        } catch( SOAPFaultException soapfe ) { 
+        } catch( SOAPFaultException soapfe ) {
             assertTrue( soapfe.getMessage().contains("No username") );
         }
 
         // setup auth
         bindingProxy.getRequestContext().put(SecurityConstants.USERNAME, "mary");
         bindingProxy.getRequestContext().put(SecurityConstants.PASSWORD, "mary123@");
-       
+
         // request with auth
         resp = pws.ping(req);
-       
+
         // test response
         assertNotNull("Null ping response", resp);
         assertEquals("Ping name", req.getRequestName(), resp.getRequestName());

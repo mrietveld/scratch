@@ -19,7 +19,6 @@
     post-integration-test: fix weird characters in failsafe reports -->
   <properties>
 
-    <jboss.server.name>jboss-eap-6.3</jboss.server.name>
     <skip.integration.tests>true</skip.integration.tests>
 
     <server.keystore.password>SERVER_KEYSTORE_PASSWORD</server.keystore.password>
@@ -30,8 +29,9 @@
     <version.org.jboss.byteman>2.1.4.1</version.org.jboss.byteman>
     <version.org.jboss.as>7.2.0.Final</version.org.jboss.as>
 
-    <override.version.org.jboss.as>7.4.0.Final-redhat-19</override.version.org.jboss.as>
-    <version.org.jboss.as.dist>7.4.0.Final-redhat-19</version.org.jboss.as.dist>
+    <jboss.server.name>jboss-eap-6.4</jboss.server.name>
+    <override.version.org.jboss.as>7.5.4.Final-redhat-3</override.version.org.jboss.as>
+    <version.org.jboss.as.dist>${override.version.org.jboss.as}</version.org.jboss.as.dist>
   </properties>
 
   <dependencies>
@@ -76,7 +76,6 @@
     <dependency>
       <groupId>org.jboss.as</groupId>
       <artifactId>jboss-as-arquillian-container-managed</artifactId>
-      <version>${version.org.jboss.as}</version>
       <scope>test</scope>
     </dependency>
 
@@ -170,7 +169,7 @@
         <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>check-tomcat-war</id>
+            <id>check-eap-war</id>
             <phase>generate-test-resources</phase>
             <goals>
               <goal>copy</goal>
@@ -185,7 +184,7 @@
                   <overWrite>false</overWrite>
                 </artifactItem>
               </artifactItems>
-              <outputDirectory>${project.build.directory}/deployments</outputDirectory>
+              <outputDirectory>${project.build.directory}/wars</outputDirectory>
             </configuration>
           </execution>
           <execution>

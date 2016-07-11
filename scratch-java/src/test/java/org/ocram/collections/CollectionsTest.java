@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -27,11 +28,11 @@ import org.ocram.collections.objects.ComparableInterceptor;
 public class CollectionsTest extends ScratchBaseTest {
 
     @Test
-    public void og() throws Exception { 
+    public void og() throws Exception {
         InitialContext ctx = new InitialContext();
         logger.warn( ctx.getClass().getName());
     }
-    
+
     @Test
     public void arrayTest() {
 
@@ -114,6 +115,13 @@ public class CollectionsTest extends ScratchBaseTest {
         Class<?>[] cl = { this.getClass() };
         List<Class<?>> cls = new ArrayList<Class<?>>(Arrays.asList(cl));
         cls.add(Bam.class);
+
+        try {
+           Arrays.asList(cl).add(this.getClass());
+           fail("You can not add to Arrays.asList(..) results..." );
+        } catch( UnsupportedOperationException uoe ) {
+           // no -op
+        }
     }
 
     @Test
@@ -123,30 +131,30 @@ public class CollectionsTest extends ScratchBaseTest {
         map.put("one", val);
         map.values().remove(val);
         assertEquals(null, map.get("one"));
-        
+
         map.put("one", val);
         map.put("one", new Object());
         map.values().remove(val);
         assertNotEquals(null, map.get("one"));
     }
-    
+
     @Test
-    public void emptyListIteration() {
-        List<String> emptyList = Collections.emptyList(); 
-        for( String og : emptyList ) { 
+    public void emptySetIteration() {
+        Set<String> emptyList = Collections.emptySet();
+        for( String og : emptyList ) {
             System.out.println( "WTF?" );
         }
     }
-    
+
     @Test(expected=NullPointerException.class)
     public void concurrentHashMapNullKey() {
         ConcurrentHashMap<String, Object> chm = new ConcurrentHashMap<String, Object>();
         chm.put("adsf", "asdf");
         chm.get(null);
     }
-    
+
     @Test
-    public void arrayListSizeGet() { 
+    public void arrayListSizeGet() {
         String [] content = { null, null };
         List<String> strList = Arrays.asList(content);
         assertNull(strList.get(0));
@@ -156,21 +164,35 @@ public class CollectionsTest extends ScratchBaseTest {
         assertEquals("one", strList.get(0));
         assertEquals("two", strList.get(1));
     }
-    
+
     @Test
-    public void addComparableToTreeSet() { 
+    public void addComparableToTreeSet() {
        ComparableInterceptor one = new ComparableInterceptor(1, new Long(1)) ;
        ComparableInterceptor two = new ComparableInterceptor(2, new Long(2)) ;
        ComparableInterceptor thr = new ComparableInterceptor(3, new Long(3));
-       
+
        Set<ComparableInterceptor> list = new TreeSet<ComparableInterceptor>();
        list.add(one);
        list.add(thr);
        list.add(two);
-       
-       for( ComparableInterceptor cin : list ) { 
-          System.out.println( cin.getInterceptor() ); 
+
+       for( ComparableInterceptor cin : list ) {
+          System.out.println( cin.getInterceptor() );
        }
-       
+
+    }
+
+    @Test
+    public void listIteratorTest() {
+        List<Integer> list = new ArrayList<>();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+
+        ListIterator<Integer> iter = list.listIterator(list.size());
+        while( iter.hasPrevious() ) {
+           System.out.println( iter.previous() );
+        }
+
     }
 }

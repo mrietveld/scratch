@@ -1,11 +1,16 @@
 package org.ocram.reflection;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
+import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
+import java.security.ProtectionDomain;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +20,9 @@ import java.util.Set;
 import javax.persistence.criteria.Predicate;
 
 import org.drools.persistence.jpa.JpaTimerJobInstance;
+import org.hibernate.transform.AliasToBeanConstructorResultTransformer;
 import org.junit.Test;
+import org.kie.internal.utils.KieService;
 import org.ocram.ScratchBaseTest;
 import org.reflections.util.ClasspathHelper;
 
@@ -70,5 +77,41 @@ public class ClassTest extends ScratchBaseTest {
         assertTrue( proxy == proxy );
 
     }
+
+    @Test
+    public void classNameTest() {
+        System.out.println( "N: [" + this.getClass().getName() + "]" );
+        System.out.println( "C: [" + this.getClass().getCanonicalName() + "]" );
+    }
+
+    @Test
+    public void codeSourceTest() throws URISyntaxException {
+
+        Class [] classes = {
+                StackTraceElement.class,
+            Integer.class,
+            this.getClass(),
+            KieService.class,
+        };
+
+        for( Class clazz : classes ) {
+            ProtectionDomain domain = clazz.getProtectionDomain();
+            CodeSource source = domain.getCodeSource();
+
+            String loc = ( source == null ) ? "null" : source.getLocation().toURI().toString();
+            System.out.println( clazz.getName() + ": " + loc );
+        }
+    }
+
+    public Object callOnlyStaticMethods(String name, Class [] parameterTypes, Object [] parameters) throws Exception {
+
+        // use getDeclaredMethod and setAccessible if you want to call non-public methods
+        Method method =  this.getClass().getMethod(name, parameterTypes);
+        if( ! Modifier.isStatic(method.getModifiers()) ) {
+            throw new UnsupportedOperationException("Only static methods may be called, " + method.getName() + " is not static!");
+        }
+        return method.invoke(null, parameters);
+    }
+
 
 }

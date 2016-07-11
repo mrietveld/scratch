@@ -17,4 +17,5 @@ public class ClassLoadingTest extends ScratchBaseTest {
         String classLoc = ProcessInstance.class.getProtectionDomain().getCodeSource().getLocation().toExternalForm();
         System.out.println( classLoc );
     }
+
 }

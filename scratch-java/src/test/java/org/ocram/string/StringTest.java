@@ -111,13 +111,13 @@ public class StringTest extends ScratchBaseTest {
 
     @Test
     public void testTest() {
-       for( int i = 0; i < hexArray.length; ++i ) { 
-          System.out.println( 
+       for( int i = 0; i < hexArray.length; ++i ) {
+          System.out.println(
                   hexArray[i]
                   + " : "  + (int) hexArray[i]
                   );
           int j = 16*i;
-          System.out.println( 
+          System.out.println(
                   j  + " : " + (j >>> 4) );
        }
     }
@@ -125,13 +125,13 @@ public class StringTest extends ScratchBaseTest {
     @Test
     public void byteArrayAsString() {
 
-        String[] vals = { 
-                "a long string containing spaces and other characters +ěš@#$%^*()_{}\\/.,", 
+        String[] vals = {
+                "a long string containing spaces and other characters +ěš@#$%^*()_{}\\/.,",
                 "Ampersand in the string &.",
                 "\"quoted string\"" };
 
         for( int i = 0; i < vals.length; ++i ) {
-            
+
             System.out.println(i + " [" + vals[i] + "] " + vals[i].length());
             String out = stringToHex(vals[i]);
             System.out.println( out.length() + " [" + out + "]");
@@ -146,14 +146,14 @@ public class StringTest extends ScratchBaseTest {
         byte[] bytes = stringToBytes(in);
         return DatatypeConverter.printBase64Binary(bytes);
     }
-    
+
     public static String hexToString( String in ) {
         byte [] bytes = DatatypeConverter.parseBase64Binary(in);
         return bytesToString(bytes);
     }
 
     // The following methods bypass issues with string encoding
-    
+
     public static byte[] stringToBytes( String str ) {
         char[] buffer = str.toCharArray();
         byte[] b = new byte[buffer.length << 1];
@@ -174,13 +174,19 @@ public class StringTest extends ScratchBaseTest {
         }
         return new String(buffer);
     }
-    
+
     @Test
-    public void replaceAll() { 
+    public void replaceAll() {
         String with = "ggg";
         String og = "asdf fff";
-        og.replaceAll("fff", with);
+        og = og.replaceAll("fff", with);
         assertTrue( "Replace all failed: [" + og + "]", og.contains(with) );
     }
 
+    @Test
+    public void split() {
+       String [] parts = "0g".split("_");
+       parts.clone();
+       parts.getClass();
+    }
 }

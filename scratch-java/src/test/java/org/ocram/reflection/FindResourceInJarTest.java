@@ -32,13 +32,6 @@ public class FindResourceInJarTest extends ScratchBaseTest {
         path = "/org/ocram/properties/";
         internalLoadResources(path, true);
 
-        // classpath
-        path = "META-INF/services/org.xml.sax.driver";
-        internalLoadResources(path, false);
-
-        path = "repo/test/";
-        internalLoadResources(path, true);
-
         // file
         String content = "test file created by " + this.getClass().getSimpleName();
 

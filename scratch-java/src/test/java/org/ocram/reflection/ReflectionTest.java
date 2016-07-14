@@ -77,9 +77,7 @@ public class ReflectionTest extends ScratchBaseTest {
         System.out.println( "Impl title: " + pkg.getImplementationTitle() );
 
         pkg = int.class.getPackage();
-        System.out.println( "Name: " + pkg.getName() );
-        System.out.println( "Spec title: " + pkg.getSpecificationTitle() );
-        System.out.println( "Impl title: " + pkg.getImplementationTitle() );
+        assertNull( "Primitives should not have a package!", pkg );
 
     }
 }

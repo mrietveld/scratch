@@ -107,15 +107,12 @@ public class GeneralJavaTest extends ScratchBaseTest {
                 case 1:
                     arguments[i++] = een + twe + dri + vie + fij;
                 case 2:
-                    assertNotNull( "vie", vie);
                     arguments[i++] = vie.concat(een);
                 case 3:
-                    assertNotNull( "thr", thr);
                     arguments[i++] = Integer.toString(thr);
                 case 4:
                     arguments[i++] = Integer.toString(ich.geta_1());
                 case 5:
-                    assertNotNull( "ni", ni);
                     arguments[i++] = Integer.toString(ni.geta_4());
                 case 6:
                     arguments[i++] = dri + one + two;
@@ -135,10 +132,13 @@ public class GeneralJavaTest extends ScratchBaseTest {
         }
     }
 
+
+    // Java 8 is stricter with object references!
+
     @Test
     public void arrayCopyBoxedPrimitivesTest() {
         long [] og = { 1l, 2l , 3l };
-        Long [] of = new Long[3];
+        long [] of = new long[3];
         for( int i = 0; i < og.length; ++i ) {
            of[i] = new Long(og[i]);
         }

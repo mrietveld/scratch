@@ -7,6 +7,7 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Proxy;
 import java.lang.reflect.Type;
+import java.lang.reflect.TypeVariable;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.CodeSource;
@@ -50,14 +51,26 @@ public class ClassTest extends ScratchBaseTest {
         assertTrue( "URLs found for non-existent package?!?", urls.isEmpty() );
     }
 
+    private List<String> listField = new ArrayList<String>(0);
+
     @Test
     public void paramTypesTest() {
         List<String> list = new ArrayList<String>(0);
         Type paramType = list.getClass().getGenericInterfaces()[0];
         assertTrue( paramType instanceof ParameterizedType );
         assertTrue( ((ParameterizedType) paramType).getRawType().equals(List.class) );
-        Type genType = ((ParameterizedType) paramType).getActualTypeArguments()[0];
-        assertTrue( genType.equals(String.class));
+        TypeVariable genType = (TypeVariable) ((ParameterizedType) paramType).getActualTypeArguments()[0];
+
+        // Type info is not available for decl's in methods
+        assertTrue( ((TypeVariable) genType).getTypeName(), genType.getTypeName().equals("E"));
+
+        paramType = listField.getClass().getGenericInterfaces()[0];
+        assertTrue( paramType instanceof ParameterizedType );
+        assertTrue( ((ParameterizedType) paramType).getRawType().equals(List.class) );
+        genType = (TypeVariable) ((ParameterizedType) paramType).getActualTypeArguments()[0];
+
+        // Type info is not available for fields
+        assertTrue( ((TypeVariable) genType).getTypeName(), genType.getTypeName().equals("E"));
     }
 
     @Test

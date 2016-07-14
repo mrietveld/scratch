@@ -76,6 +76,7 @@ public class JaxbTest extends ScratchBaseTest {
         String out = serialize(ctx, true, testReq);
         logger.info( out);
         TestRequest rebornReq = (TestRequest) deserialize(ctx, out, TestRequest.class);
+        Object wtf = rebornReq.getCommands().get(2);
         assertEquals( 2, rebornReq.getCommands().size() );
     }
 

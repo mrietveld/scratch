@@ -39,7 +39,7 @@
     <jdbc.password>jbpm5</jdbc.password>
 
     <version.arquillian>1.0.0.Final</version.arquillian>
-    <version.httpcomponents>4.2.1</version.httpcomponents>
+    <version.httpcomponents>4.5.13</version.httpcomponents>
   </properties>
 
   <dependencies>

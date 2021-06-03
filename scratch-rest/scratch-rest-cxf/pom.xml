@@ -21,7 +21,7 @@
   <properties>
     <version.org.jboss.as>7.5.2.Final-redhat-2</version.org.jboss.as> 
     <version.org.apache.cxf>2.7.14</version.org.apache.cxf>
-    <version.org.apache.httpcomponents>4.4.1</version.org.apache.httpcomponents>
+    <version.org.apache.httpcomponents>4.5.13</version.org.apache.httpcomponents>
     
     <jboss.server.name>jboss-eap-6.4</jboss.server.name> 
   </properties>
